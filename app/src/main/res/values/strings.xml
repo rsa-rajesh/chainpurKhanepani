@@ -1,0 +1,45 @@
+<resources>
+
+
+    <string name="onboarding_slide1_title">Create an account</string>
+    <string name="onboarding_slide1_desc">User will be able to give you live, chat and meet
+        with people nearby.</string>
+
+    <string name="onboarding_slide2_title">Login to your account</string>
+    <string name="onboarding_slide2_desc">Connect helps you locate the people around you who
+        are closest from your home.</string>
+
+    <string name="onboarding_slide3_title">Login to your account</string>
+    <string name="onboarding_slide3_desc">User will be able to give you live, chat and meet
+        with people nearby.</string>
+
+
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="onboard_first_title">Swift Delivery</string>
+    <string name="onboard_first_details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mi dignissim lacus dolor massa tortor et risus facilisis. Accumsan elit et amet convallis magna lacus.</string>
+
+    <string name="onboard_second_title">Chat directly with Seller</string>
+    <string name="onboard_second_details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mi dignissim lacus dolor massa tortor et risus facilisis. Accumsan elit et amet convallis magna lacus.</string>
+
+    <string name="onboard_third_title">Quick action with QR</string>
+    <string name="onboard_third_details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mi dignissim lacus dolor massa tortor et risus facilisis. Accumsan elit et amet convallis magna lacus.</string>
+
+
+    <string-array name="month">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+
+</resources>
