@@ -11,7 +11,11 @@ import com.ouattararomuald.slider.SliderAdapter
 import com.ouattararomuald.slider.loaders.glide.GlideImageLoaderFactory
 import android.text.Html
 import androidx.core.text.parseAsHtml
+import com.heartsun.pithuwakhanipani.ui.about.AboutAppActivity
+import com.heartsun.pithuwakhanipani.ui.about.AboutOrganizationActivity
+import com.heartsun.pithuwakhanipani.ui.contact.ContactActivity
 import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.MeroKhaniPaniActivity
+import com.heartsun.pithuwakhanipani.ui.noticeBoard.NoticeBoardActivity
 import com.heartsun.pithuwakhanipani.ui.sameetee.SameeteeSelectionActivity
 import com.heartsun.pithuwakhanipani.ui.waterRate.WaterRateActivity
 
@@ -71,14 +75,17 @@ class HomeActivity : BaseActivity() {
                 cvSamparka,
                 cvSastakoBarama,
                 cvSuchanaPati,
-                tvPoweredBy
+                tvPoweredBy,
+                tvVersion
             ).forEach {
                 it.setOnClickListener { view ->
                     when (view) {
                         cvPanikoDar -> {
+                            activateViews(false)
                             startActivity(WaterRateActivity.newIntent(this@HomeActivity))
                         }
                         cvMeroKahiPani -> {
+                            activateViews(false)
                             startActivity(MeroKhaniPaniActivity.newIntent(this@HomeActivity))
                         }
                         cvNayaDhara -> {
@@ -89,13 +96,19 @@ class HomeActivity : BaseActivity() {
                             startActivity(SameeteeSelectionActivity.newIntent(this@HomeActivity))
                         }
                         cvSamparka -> {
-                            // TODO: 8/3/2021
-                        }
+                            activateViews(false)
+                            startActivity(ContactActivity.newIntent(this@HomeActivity))                        }
                         cvSastakoBarama -> {
-                            // TODO: 8/3/2021
+                            activateViews(false)
+                            startActivity(AboutOrganizationActivity.newIntent(this@HomeActivity))
                         }
                         cvSuchanaPati -> {
-                            // TODO: 8/3/2021
+                            activateViews(false)
+                            startActivity(NoticeBoardActivity.newIntent(this@HomeActivity))
+                        }
+                        tvVersion -> {
+                            activateViews(false)
+                            startActivity(AboutAppActivity.newIntent(this@HomeActivity))
                         }
                         tvPoweredBy -> {
                             val url = "https://www.heartsun.com.np/"

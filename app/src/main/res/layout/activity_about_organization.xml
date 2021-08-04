@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.about.AboutOrganizationActivity">
+
+    <ImageView
+        android:src="@drawable/logo"
+        android:rotationY="180"
+        android:alpha=".1"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_22sdp"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_layout" />
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/cvNotice"
+        android:layout_margin="@dimen/_12sdp"
+        app:cardBackgroundColor="@color/tiles_background_color"
+        app:cardCornerRadius="@dimen/_4sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:strokeColor="@color/primary_color"
+        app:strokeWidth="1dp">
+
+        <ScrollView
+            android:scrollbars="none"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_12sdp">
+<TextView
+    android:id="@+id/tvAboutOrg"
+    android:gravity="start"
+    android:text=""
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+
+
+        </ScrollView>
+
+    </com.google.android.material.card.MaterialCardView>
+    <ImageView
+        android:src="@drawable/ic_water_tap"
+        android:rotationY="180"
+        android:alpha=".15"
+        app:layout_constraintEnd_toEndOf="@id/cvNotice"
+        android:layout_marginTop="@dimen/_22sdp"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        app:layout_constraintTop_toTopOf="@id/cvNotice"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

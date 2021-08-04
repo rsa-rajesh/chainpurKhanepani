@@ -14,6 +14,21 @@
         android:theme="@style/Theme.Khanipani.NoActionBar"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".ui.about.AboutAppActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.contact.ContactActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.about.AboutOrganizationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.noticeBoard.NoticeDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.noticeBoard.NoticeBoardActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.sameetee.SameeteeListActivity"
             android:exported="true" />
         <activity
