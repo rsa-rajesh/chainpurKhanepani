@@ -10,16 +10,27 @@ class Prefs(private val sharedPreferences: SharedPreferences) {
         const val PREF_UNIQUE_ID = "prefs.UNIQUE_ID"
         const val PREF_LOGGED_IN = "prefs.LOGGED_IN"
         const val PREF_TOKEN = "prefs.TOKEN"
-
-        const val UserDetails = "prefs.UserDetails"
         const val UserID = "prefs.UserID"
-
         const val PHONE_NUMBER = "prefs.phone_number"
         const val EMAIL = "prefs.email"
+        const val IMAGE_DB = "prefs.image_db"
+        const val RECORD_DB = "prefs.record_db"
 
-        const val TIME_RESEND = "prefs.time_resend"
-        const val VERIFY_WAITING = "prefs.verify_waiting"
+
     }
+
+
+    var imageDb: String?
+        get() = sharedPreferences.getString(IMAGE_DB, "")
+        set(value) {
+            sharedPreferences.edit { putString(IMAGE_DB, value) }
+        }
+
+    var recordDb: String?
+        get() = sharedPreferences.getString(RECORD_DB, "")
+        set(value) {
+            sharedPreferences.edit { putString(RECORD_DB, value) }
+        }
 
 
     var isFirstTime: Boolean
@@ -36,11 +47,7 @@ class Prefs(private val sharedPreferences: SharedPreferences) {
         }
 
 
-    var isVerifyWaiting: Boolean
-        get() = sharedPreferences.getBoolean(VERIFY_WAITING, false)
-        set(value) {
-            sharedPreferences.edit { putBoolean(VERIFY_WAITING, value) }
-        }
+
 
     var authToken: String?
         get() {
@@ -64,13 +71,7 @@ class Prefs(private val sharedPreferences: SharedPreferences) {
             }
         }
 
-    var timeResend: String?
-        get() {
-            return sharedPreferences.getString(TIME_RESEND, "0")
-        }
-        set(value) {
-            sharedPreferences.edit { putString(TIME_RESEND, value) }
-        }
+
 
 
     var phoneNumber: String?

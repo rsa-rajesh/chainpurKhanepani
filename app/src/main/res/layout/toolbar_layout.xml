@@ -6,6 +6,7 @@
     android:layout_height="?attr/actionBarSize"
     android:background="@color/primary_color"
     android:fitsSystemWindows="true"
+    android:elevation="@dimen/_200sdp"
     android:minHeight="0dp"
     app:contentInsetStart="0dp"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
