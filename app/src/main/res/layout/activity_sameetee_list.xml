@@ -13,11 +13,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clEmptyList"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/background"
         android:elevation="@dimen/_8sdp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
@@ -52,16 +52,14 @@
                     android:id="@+id/tvCompanyTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_marginHorizontal="@dimen/_22sdp"
+                    android:gravity="center"
                     android:text="कृपया तपाइँको दर्ता नम्बर थप्न को लागी 'नयाँ थप्नुहोस्' मा क्लिक गर्नुहोस्"
                     android:textColor="@color/sub_text_color"
                     android:textSize="@dimen/_10sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvCompanyName" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
         </LinearLayout>
@@ -71,40 +69,41 @@
 
 
     <TextView
-
-        android:text="Year: 2076"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
         android:background="@drawable/bg_view"
         android:backgroundTint="@color/tiles_background_color"
-        android:paddingHorizontal="@dimen/_8sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:textColor="@color/main_text_color"
-        android:textSize="@dimen/_14sdp"
         android:drawableEnd="@drawable/ic_baseline_arrow_down"
         android:drawableTint="@color/primary_color"
-        app:layout_constraintTop_toTopOf="@id/btMakePDF"
+        android:paddingHorizontal="@dimen/_8sdp"
+        android:text="Year: 2076"
+        android:textColor="@color/main_text_color"
+        android:textSize="@dimen/_14sdp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/btMakePDF"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btMakePDF" />
 
 
     <com.google.android.material.button.MaterialButton
-        app:strokeColor="@color/colorGrey"
         android:id="@+id/btMakePDF"
-        android:layout_width="wrap_content"
         style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_16sdp"
         android:text="PDF बनाउनुहोस्"
         app:icon="@drawable/ic_pdf_file"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:strokeColor="@color/colorGrey" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginBottom="@dimen/_12sdp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:id="@+id/rvMembers"
         android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_12sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btMakePDF"
         tools:itemCount="9"

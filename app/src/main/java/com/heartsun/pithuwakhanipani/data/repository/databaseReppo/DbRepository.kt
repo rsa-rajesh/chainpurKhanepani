@@ -1,15 +1,17 @@
 package com.heartsun.pithuwakhanipani.data.repository.databaseReppo
 
-import com.heartsun.pithuwakhanipani.data.dao.TBLReadingSetupDao
-import com.heartsun.pithuwakhanipani.data.dao.TBLReadingSetupDtlDao
-import com.heartsun.pithuwakhanipani.data.dao.TblTapTypeMasterDao
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.heartsun.pithuwakhanipani.data.dao.*
 import com.heartsun.pithuwakhanipani.data.database.KanipaniDatabase
-import com.heartsun.pithuwakhanipani.domain.dbmodel.TBLReadingSetup
-import com.heartsun.pithuwakhanipani.domain.dbmodel.TBLReadingSetupDtl
-import com.heartsun.pithuwakhanipani.domain.dbmodel.TblTapTypeMaster
+import com.heartsun.pithuwakhanipani.domain.dbmodel.*
 import kotlinx.coroutines.flow.Flow
 
 class DbRepository(database: KanipaniDatabase) {
+
+
+
+    //for tap types and rates -- starts
 
     private var tblReadingSetupDtlDao: TBLReadingSetupDtlDao = database.tBLReadingSetupDtlDao()
     private var tblReadingSetupDao: TBLReadingSetupDao = database.tBLReadingSetupDao()
@@ -50,8 +52,51 @@ class DbRepository(database: KanipaniDatabase) {
         tblTapTypeMasterDao.deleteAll()
     }
 
+    //for tap types and rates -- ends
 
 
+
+
+
+    //for member types and members -- starts
+
+    private var tblBoardMemberType: TblBoardMemberTypeDao = database.tblBoardMemberTypeDao()
+    private var tblContact: TblContactDao = database.tblContactDao()
+
+
+    val tblContacts: Flow<List<TblContact>> =
+        tblContact.getAllData()
+
+
+
+     suspend fun getContactList(memberTypeId: Int): Flow<List<TblContact>> {
+       return tblContact.getFilteredContacts(memberTypeId)
+    }
+
+
+
+    suspend fun insert(tblContacts: TblContact) {
+        tblContact.insert(table = tblContacts)
+    }
+
+    suspend fun deleteAll(tblContacts: TblContact) {
+        tblContact.deleteAll()
+    }
+
+
+    val tblBoardMemberTypes: Flow<List<TblBoardMemberType>> =
+        tblBoardMemberType.getAllData()
+
+    suspend fun insert(tblBoardMemberTypes: TblBoardMemberType) {
+        tblBoardMemberType.insert(table = tblBoardMemberTypes)
+    }
+
+    suspend fun deleteAll(tblBoardMemberTypes: TblBoardMemberType) {
+        tblBoardMemberType.deleteAll()
+    }
+
+
+    //for member types and members -- ends
 
     suspend fun deleteAll() {
         tblReadingSetupDtlDao.deleteAll()

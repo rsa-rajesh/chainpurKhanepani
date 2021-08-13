@@ -42,5 +42,35 @@ data class TblTapTypeMaster (
     @ColumnInfo(name = "TapTypeID")
     val TapTypeID: Int,
     @ColumnInfo(name = "TapTypeName")
-    val TapTypeName: String?,
+    val TapTypeName: String,
+)
+
+
+@Entity(tableName = "tblContact")
+data class TblContact (
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "ContID")
+    val ContID: Int,
+    @ColumnInfo(name = "ContactName")
+    val ContactName: String?,
+    @ColumnInfo(name = "ContactNumber")
+    val ContactNumber: String?,
+    @ColumnInfo(name = "IsActive")
+    val IsActive: Int,
+    @ColumnInfo(name = "Post")
+    val Post: String?,
+    @ColumnInfo(name = "MemberType")
+    val MemberType: Int,
+    @ColumnInfo(name = "Tenure")
+    val Tenure: String?,
+)
+
+
+@Entity(tableName = "tblBoardMemberType")
+data class TblBoardMemberType (
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "MemTypeID")
+    val MemTypeID: Int,
+    @ColumnInfo(name = "MemberType")
+    val MemberType: String?,
 )

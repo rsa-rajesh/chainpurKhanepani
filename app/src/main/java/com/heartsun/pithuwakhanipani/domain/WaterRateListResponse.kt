@@ -2,9 +2,7 @@ package com.heartsun.pithuwakhanipani.domain
 
 
 import com.google.gson.annotations.SerializedName
-import com.heartsun.pithuwakhanipani.domain.dbmodel.TBLReadingSetup
-import com.heartsun.pithuwakhanipani.domain.dbmodel.TBLReadingSetupDtl
-import com.heartsun.pithuwakhanipani.domain.dbmodel.TblTapTypeMaster
+import com.heartsun.pithuwakhanipani.domain.dbmodel.*
 
 data class WaterRateListResponse(
 
@@ -13,3 +11,9 @@ data class WaterRateListResponse(
     val tapType: List<TblTapTypeMaster>,
 
 )
+
+data class MembersListResponse(
+
+    val tblContact: List<TblContact>,
+    val tblBoardMemberType: List<TblBoardMemberType>,
+    )

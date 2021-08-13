@@ -6,21 +6,20 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.heartsun.pithuwakhanipani.data.dao.TBLReadingSetupDao
-import com.heartsun.pithuwakhanipani.data.dao.TBLReadingSetupDtlDao
-import com.heartsun.pithuwakhanipani.data.dao.TblTapTypeMasterDao
-import com.heartsun.pithuwakhanipani.domain.dbmodel.TBLReadingSetup
-import com.heartsun.pithuwakhanipani.domain.dbmodel.TBLReadingSetupDtl
-import com.heartsun.pithuwakhanipani.domain.dbmodel.TblTapTypeMaster
+import com.heartsun.pithuwakhanipani.data.dao.*
+import com.heartsun.pithuwakhanipani.domain.dbmodel.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [TBLReadingSetupDtl::class,TBLReadingSetup::class,TblTapTypeMaster::class], version = 1)
+@Database(entities = [TBLReadingSetupDtl::class,TBLReadingSetup::class,TblTapTypeMaster::class,TblContact::class,TblBoardMemberType::class], version = 1)
 abstract class KanipaniDatabase :RoomDatabase() {
 
     abstract fun tBLReadingSetupDtlDao(): TBLReadingSetupDtlDao
     abstract fun tBLReadingSetupDao(): TBLReadingSetupDao
     abstract fun tblTapTypeMasterDao(): TblTapTypeMasterDao
+
+    abstract fun tblContactDao(): TblContactDao
+    abstract fun tblBoardMemberTypeDao(): TblBoardMemberTypeDao
 
 
     private class KanipaniDatabaseCallback(
@@ -33,10 +32,14 @@ abstract class KanipaniDatabase :RoomDatabase() {
                     val tBLReadingSetupDtlDao = database.tBLReadingSetupDtlDao()
                     val tBLReadingSetupDao = database.tBLReadingSetupDao()
                     val tblTapTypeMasterDao = database.tblTapTypeMasterDao()
+                    val tblContactDao= database.tblContactDao()
+                    val tblBoardMemberTypeDao= database.tblBoardMemberTypeDao()
 
                     tBLReadingSetupDtlDao.deleteAll()
                     tBLReadingSetupDao.deleteAll()
                     tblTapTypeMasterDao.deleteAll()
+                    tblContactDao.deleteAll()
+                    tblBoardMemberTypeDao.deleteAll()
 
                 }
             }
