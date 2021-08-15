@@ -54,15 +54,14 @@ class HomeViewModel(
     }
 
 
-//    lateinit var membersListFromLocalDb: List<TblContact>
-
-
-    //            private val _membersFromLocal = LiveData<List<TblContact>>()
-    lateinit var membersFromLocal: LiveData<List<TblContact>>
+    var membersFromLocal: LiveData<List<TblContact>>? = null
     fun getMembers(memberTypeId: Int) = viewModelScope.launch {
         membersFromLocal = dbRepository.getContactList(memberTypeId).asLiveData()
-//        membersListFromLocalDb = dbRepository.getContactList(memberTypeId)
+    }
 
+    //    var oldMembersFromLocal: LiveData<List<TblContact>>? = null
+    fun getOldMembers(memberTypeId: Int) = viewModelScope.launch {
+        membersFromLocal = dbRepository.getOldContactList(memberTypeId).asLiveData()
     }
 
     val membersTypeFromLocalDb: LiveData<List<TblBoardMemberType>> =

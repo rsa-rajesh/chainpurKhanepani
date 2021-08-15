@@ -22,9 +22,11 @@ interface TblContactDao {
     @Query("DELETE FROM tblContact")
     suspend fun deleteAll()
 
-    @Query("SELECT * FROM tblContact WHERE MemberType IN (:memberTypeId)")
+    @Query("SELECT * FROM tblContact WHERE MemberType IN (:memberTypeId) AND IsActive IN ('1')" )
     fun getFilteredContacts(memberTypeId: Int): Flow<List<TblContact>>
-//    suspend fun getFilteredContacts(memberTypeId: Int): List<TblContact>
+
+    @Query("SELECT * FROM tblContact WHERE MemberType IN (:memberTypeId) AND IsActive IN ('0')")
+    fun getFilteredOldContacts(memberTypeId: Int): Flow<List<TblContact>>
 }
 
 @Dao

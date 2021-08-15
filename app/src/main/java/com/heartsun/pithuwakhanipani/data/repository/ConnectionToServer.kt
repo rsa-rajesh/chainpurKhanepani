@@ -1,5 +1,6 @@
 package com.heartsun.pithuwakhanipani.data.repository
 
+import android.R.attr
 import com.heartsun.pithuwakhanipani.data.Prefs
 import com.heartsun.pithuwakhanipani.domain.MembersListResponse
 import com.heartsun.pithuwakhanipani.domain.WaterRateListResponse
@@ -8,6 +9,20 @@ import com.heartsun.pithuwakhanipani.utils.connectionUtils.SqlServerFunctions
 import java.sql.Connection
 import java.sql.ResultSet
 import java.sql.Statement
+import android.R.attr.data
+import android.content.Context
+
+import java.io.ByteArrayInputStream
+import android.graphics.BitmapFactory
+
+import android.graphics.Bitmap
+import android.net.Uri
+import java.io.FileOutputStream
+
+import java.io.File
+
+import android.os.Environment
+
 
 class ConnectionToServer(prefs: Prefs) {
     var prefs: Prefs = prefs
@@ -78,7 +93,7 @@ class ConnectionToServer(prefs: Prefs) {
         )
     }
 
-    fun getMembers(): MembersListResponse {
+    fun getMembers(context: Context): MembersListResponse {
         var stmt: Statement? = null
         var resultset: ResultSet? = null
         var resultset2: ResultSet? = null
@@ -90,26 +105,71 @@ class ConnectionToServer(prefs: Prefs) {
         val conn: Connection = ss.ConnectToSQLServer(prefs)
         stmt = conn.createStatement()
 
-
         var memberTypeList: MutableList<TblBoardMemberType> = arrayListOf()
         var membersList: MutableList<TblContact> = arrayListOf()
-
-
 
         resultset = stmt.executeQuery(query2)
         while (resultset.next()) {
 
-            val tblContact: TblContact = TblContact(
-                ContID = resultset.getInt("ContID"),
-                ContactName = resultset.getString("ContactName"),
-                ContactNumber = resultset.getString("ContactNumber"),
-                IsActive = resultset.getInt("IsActive"),
-                Post = resultset.getString("Post"),
-                MemberType = resultset.getInt("MemberType"),
-                Tenure = resultset.getString("Tenure")
+            if (resultset.getBytes("Photo")!=null) {
+                val data: ByteArray = resultset.getBytes("Photo")
+                val imageStream = ByteArrayInputStream(data)
+                val theImage = BitmapFactory.decodeStream(imageStream)
+                val image = File(
+                    context.getExternalFilesDir(null),
+                    "memberImage" + resultset.getInt("ContID").toString() + ".png"
+                )
+                val fos = FileOutputStream(image)
+                fos.use { theImage.compress(Bitmap.CompressFormat.PNG, 100, it) }
+                val tblContact: TblContact = TblContact(
+                    ContID = resultset.getInt("ContID"),
+                    ContactName = resultset.getString("ContactName"),
+                    ContactNumber = resultset.getString("ContactNumber"),
+                    IsActive = resultset.getInt("IsActive"),
+                    Post = resultset.getString("Post"),
+                    MemberType = resultset.getInt("MemberType"),
+                    Tenure = resultset.getString("Tenure"),
+                    Address = resultset.getString("Address"),
+                    Image = Uri.parse(image.path).toString()
+                )
+                membersList.add(tblContact)
 
-            )
-            membersList.add(tblContact)
+            } else {
+                val tblContact: TblContact = TblContact(
+                    ContID = resultset.getInt("ContID"),
+                    ContactName = resultset.getString("ContactName"),
+                    ContactNumber = resultset.getString("ContactNumber"),
+                    IsActive = resultset.getInt("IsActive"),
+                    Post = resultset.getString("Post"),
+                    MemberType = resultset.getInt("MemberType"),
+                    Tenure = resultset.getString("Tenure"),
+                    Address = resultset.getString("Address"),
+                    Image = null
+
+                )
+                membersList.add(tblContact)
+
+            }
+
+//
+//            val data: ByteArray = resultset.getBytes("Photo")
+//            val imageStream = ByteArrayInputStream(data)
+//            val theImage = BitmapFactory.decodeStream(imageStream)
+//            val image = File(context.getExternalFilesDir(null), "memberImage" + resultset.getInt("ContID").toString() + ".png")
+//            val fos = FileOutputStream(image)
+//            fos.use { theImage.compress(Bitmap.CompressFormat.PNG, 100, it) }
+
+//            val tblContact: TblContact = TblContact(
+//                ContID = resultset.getInt("ContID"),
+//                ContactName = resultset.getString("ContactName"),
+//                ContactNumber = resultset.getString("ContactNumber"),
+//                IsActive = resultset.getInt("IsActive"),
+//                Post = resultset.getString("Post"),
+//                MemberType = resultset.getInt("MemberType"),
+//                Tenure = resultset.getString("Tenure"),
+//                Address = resultset.getString("Address"),
+//                Image =
+//            )
         }
 
 
@@ -118,7 +178,7 @@ class ConnectionToServer(prefs: Prefs) {
             val tblBoardMemberType: TblBoardMemberType = TblBoardMemberType(
                 MemTypeID = resultset2.getInt("MemTypeID"),
                 MemberType = resultset2.getString("MemberType"),
-
+                isOldMember = resultset2.getInt("isOldMember"),
             )
             memberTypeList.add(tblBoardMemberType)
 

@@ -23,14 +23,19 @@ class SameeteeListActivity : BaseActivity() {
     private lateinit var memberListAdapter: MemberListAdapter
 
     private val memberTypeId by lazy { intent.getIntExtra(memberId, -1) }
-
+    private val memberType by lazy { intent.getStringExtra(memberTypee) }
+    private val isOldMember by lazy { intent.getIntExtra(isOldMembers,0) }
 
     companion object {
         private const val memberId = "memberTypeId"
+        private const val memberTypee = "memberType"
+        private const val isOldMembers = "isOldMember"
 
-        fun newIntent(context: Context, memberTypeID :Int): Intent {
+        fun newIntent(context: Context, memberTypeID: Int, memberType: String, isOldMember: Int): Intent {
             return Intent(context, SameeteeListActivity::class.java).apply {
+                putExtra(isOldMembers, isOldMember)
                 putExtra(memberId, memberTypeID)
+                putExtra(memberTypee, memberType)
             }
         }
     }
@@ -44,20 +49,33 @@ class SameeteeListActivity : BaseActivity() {
     }
 
     private fun initViews() {
+
+        if (isOldMember==0){
+            homeViewModel.getMembers(memberTypeId)
+        }else{
+            binding.tvSelectYear.isVisible=true
+            homeViewModel.getOldMembers(memberTypeId)
+        }
+
+        binding.toolbar.tvToolbarTitle.text = memberType
+        binding.toolbar.ivBack.setOnClickListener {
+            onBackPressed()
+        }
+
         listObserver()
-        homeViewModel.getMembers(memberTypeId)
     }
 
     private fun listObserver() {
-        homeViewModel.membersFromLocal.observe(this, { it ->
+        homeViewModel.membersFromLocal?.observe(this, { it ->
             it ?: return@observe
             if (it.isNullOrEmpty()) {
             } else {
-                binding.clEmptyList.isVisible=false
-                memberListAdapter = MemberListAdapter()
+                binding.btMakePDF.isVisible=true
+                binding.clEmptyList.isVisible = false
+                memberListAdapter = MemberListAdapter(this)
                 memberListAdapter.items = it
                 binding.rvMembers.layoutManager = LinearLayoutManager(this)
-                binding.rvMembers.adapter= memberListAdapter
+                binding.rvMembers.adapter = memberListAdapter
                 hideProgress()
             }
         })

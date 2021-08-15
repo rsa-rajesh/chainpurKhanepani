@@ -2,17 +2,13 @@ package com.heartsun.pithuwakhanipani.ui.sameetee
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidcommon.base.BaseActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heartsun.pithuwakhanipani.databinding.ActivitySameeteeSelectionBinding
-import com.heartsun.pithuwakhanipani.databinding.ActivityWaterRateBinding
 import com.heartsun.pithuwakhanipani.ui.HomeViewModel
-import com.heartsun.pithuwakhanipani.ui.about.AboutAppActivity
-import com.heartsun.pithuwakhanipani.ui.waterRate.WaterRateActivity
-import com.heartsun.pithuwakhanipani.ui.waterRate.WaterRateAdapter
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -37,6 +33,7 @@ class SameeteeSelectionActivity : BaseActivity() {
         initViews()
     }
 
+    @DelicateCoroutinesApi
     private fun initViews() {
         with(binding) {
             toolbar.tvToolbarTitle.text = "समिति"
@@ -44,13 +41,11 @@ class SameeteeSelectionActivity : BaseActivity() {
                 onBackPressed()
                 this@SameeteeSelectionActivity.finish()
             }
-
             getMemberTypesFromDb()
-
-
         }
     }
 
+    @DelicateCoroutinesApi
     private fun getMemberTypesFromDb() {
         homeViewModel.membersTypeFromLocalDb.observe(this, { it ->
             it ?: return@observe
@@ -63,7 +58,7 @@ class SameeteeSelectionActivity : BaseActivity() {
                 binding.clEmptyList.isVisible=false
                 memberTypeAdapter = MemberTypeAdapter(
                     onItemClick = {
-                        startActivity(SameeteeListActivity.newIntent(this,it.MemTypeID))
+                        startActivity(SameeteeListActivity.newIntent(this,it.MemTypeID,it.MemberType.orEmpty(),it.isOldMember))
                     }
                 )
                 memberTypeAdapter.items = it

@@ -14,7 +14,6 @@ interface AuthRepository {
 //    suspend fun login(request: LoginRequest): UiState<LoginResponse>
 //    suspend fun register(request: RegisterRequest): UiState<RegisterResponse>
 //    suspend fun validateOTP(request: ValidateOTPRequest): UiState<ValidateOTPResponse>
-
 }
 
 class AuthRepoImpl(
@@ -27,10 +26,7 @@ class AuthRepoImpl(
     override suspend fun getRates(status: String): WaterRateListResponse {
         return connection.getRates()
     }
-
     override suspend fun getMembers(): MembersListResponse {
-        return connection.getMembers()
+        return connection.getMembers(context)
     }
-
-
 }

@@ -3,10 +3,11 @@ package com.heartsun.pithuwakhanipani.domain.dbmodel
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.sql.Blob
 
 
-@Entity(tableName = "tBLReadingSetupDtl",primaryKeys = ["VNO","SrNo"])
-data class TBLReadingSetupDtl (
+@Entity(tableName = "tBLReadingSetupDtl", primaryKeys = ["VNO", "SrNo"])
+data class TBLReadingSetupDtl(
     @ColumnInfo(name = "VNO")
     val VNO: Int,
     @ColumnInfo(name = "SrNo")
@@ -22,7 +23,7 @@ data class TBLReadingSetupDtl (
 )
 
 @Entity(tableName = "tBLReadingSetup")
-data class TBLReadingSetup (
+data class TBLReadingSetup(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "VNO")
     val VNO: Int,
@@ -37,7 +38,7 @@ data class TBLReadingSetup (
 )
 
 @Entity(tableName = "tblTapTypeMaster")
-data class TblTapTypeMaster (
+data class TblTapTypeMaster(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "TapTypeID")
     val TapTypeID: Int,
@@ -47,7 +48,7 @@ data class TblTapTypeMaster (
 
 
 @Entity(tableName = "tblContact")
-data class TblContact (
+data class TblContact(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "ContID")
     val ContID: Int,
@@ -63,14 +64,21 @@ data class TblContact (
     val MemberType: Int,
     @ColumnInfo(name = "Tenure")
     val Tenure: String?,
+    @ColumnInfo(name = "Address")
+    val Address: String?,
+    @ColumnInfo(name = "Image")
+    val Image: String?,
 )
 
 
 @Entity(tableName = "tblBoardMemberType")
-data class TblBoardMemberType (
+data class TblBoardMemberType(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "MemTypeID")
     val MemTypeID: Int,
     @ColumnInfo(name = "MemberType")
     val MemberType: String?,
-)
+    @ColumnInfo(name = "isOldMember")
+    val isOldMember: Int,
+
+    )

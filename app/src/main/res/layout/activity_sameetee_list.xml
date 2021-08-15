@@ -69,6 +69,7 @@
 
 
     <TextView
+        android:id="@+id/tvSelectYear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16sdp"
@@ -88,6 +89,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btMakePDF"
+        android:visibility="gone"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

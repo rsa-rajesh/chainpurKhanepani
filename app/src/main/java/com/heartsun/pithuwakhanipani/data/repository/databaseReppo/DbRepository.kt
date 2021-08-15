@@ -73,7 +73,9 @@ class DbRepository(database: KanipaniDatabase) {
        return tblContact.getFilteredContacts(memberTypeId)
     }
 
-
+    suspend fun getOldContactList(memberTypeId: Int): Flow<List<TblContact>> {
+        return tblContact.getFilteredOldContacts(memberTypeId)
+    }
 
     suspend fun insert(tblContacts: TblContact) {
         tblContact.insert(table = tblContacts)
