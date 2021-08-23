@@ -80,5 +80,22 @@ data class TblBoardMemberType(
     val MemberType: String?,
     @ColumnInfo(name = "isOldMember")
     val isOldMember: Int,
-
     )
+
+
+@Entity(tableName = "tblNotice")
+data class TblNotice(
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "NoticeID")
+    val NoticeID: Int,
+    @ColumnInfo(name = "NoticeHeadline")
+    val NoticeHeadline: String?,
+    @ColumnInfo(name = "NoticeDesc")
+    val NoticeDesc: String?,
+    @ColumnInfo(name = "DateNep")
+    val DateNep: String?,
+    @ColumnInfo(name = "DateTimeEng")
+    val DateTimeEng: String?,
+    @ColumnInfo(name = "NoticeFile")
+    val NoticeFile: String?,
+)

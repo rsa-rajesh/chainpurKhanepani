@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.Flow
 class DbRepository(database: KanipaniDatabase) {
 
 
-
     //for tap types and rates -- starts
 
     private var tblReadingSetupDtlDao: TBLReadingSetupDtlDao = database.tBLReadingSetupDtlDao()
@@ -55,9 +54,6 @@ class DbRepository(database: KanipaniDatabase) {
     //for tap types and rates -- ends
 
 
-
-
-
     //for member types and members -- starts
 
     private var tblBoardMemberType: TblBoardMemberTypeDao = database.tblBoardMemberTypeDao()
@@ -68,9 +64,8 @@ class DbRepository(database: KanipaniDatabase) {
         tblContact.getAllData()
 
 
-
-     suspend fun getContactList(memberTypeId: Int): Flow<List<TblContact>> {
-       return tblContact.getFilteredContacts(memberTypeId)
+    suspend fun getContactList(memberTypeId: Int): Flow<List<TblContact>> {
+        return tblContact.getFilteredContacts(memberTypeId)
     }
 
     suspend fun getOldContactList(memberTypeId: Int): Flow<List<TblContact>> {
@@ -106,4 +101,19 @@ class DbRepository(database: KanipaniDatabase) {
         tblTapTypeMasterDao.deleteAll()
 
     }
+
+    //for notices list -- starts
+
+    private var tblNotice: TblNoticeDao = database.tblNoticeDao()
+
+    suspend fun insert(notice: TblNotice) {
+        tblNotice.insert(table = notice)
+
+    }
+    suspend fun deleteAll(tblNotices: TblNotice) {
+        tblNotice.deleteAll()
+    }
+
+    val tblNotices: Flow<List<TblNotice>> =
+        tblNotice.getAllData()
 }

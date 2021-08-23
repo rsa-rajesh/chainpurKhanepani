@@ -29,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/cvNotice"
+        app:cardElevation="0dp"
         android:layout_margin="@dimen/_12sdp"
         app:cardBackgroundColor="@color/tiles_background_color"
         app:cardCornerRadius="@dimen/_4sdp"

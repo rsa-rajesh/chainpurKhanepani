@@ -22,6 +22,7 @@ import java.io.FileOutputStream
 import java.io.File
 
 import android.os.Environment
+import com.heartsun.pithuwakhanipani.domain.NoticesListResponse
 
 
 class ConnectionToServer(prefs: Prefs) {
@@ -111,7 +112,7 @@ class ConnectionToServer(prefs: Prefs) {
         resultset = stmt.executeQuery(query2)
         while (resultset.next()) {
 
-            if (resultset.getBytes("Photo")!=null) {
+            if (resultset.getBytes("Photo") != null) {
                 val data: ByteArray = resultset.getBytes("Photo")
                 val imageStream = ByteArrayInputStream(data)
                 val theImage = BitmapFactory.decodeStream(imageStream)
@@ -190,6 +191,73 @@ class ConnectionToServer(prefs: Prefs) {
         return MembersListResponse(
             tblContact = membersList,
             tblBoardMemberType = memberTypeList,
+        )
+    }
+
+    fun getNotices(context: Context): NoticesListResponse? {
+
+        var stmt: Statement? = null
+        var resultset: ResultSet? = null
+
+        val query = "select * from tblNotice where IsActive=1"
+
+        val ss = SqlServerFunctions()
+        val conn: Connection = ss.ConnectToSQLServer(prefs)
+        stmt = conn.createStatement()
+
+
+        var noticesList: MutableList<TblNotice> = arrayListOf()
+
+
+
+
+        resultset = stmt.executeQuery(query)
+        while (resultset.next()) {
+
+
+            if (resultset.getBytes("NoticeFile") != null) {
+                val data: ByteArray = resultset.getBytes("NoticeFile")
+                val imageStream = ByteArrayInputStream(data)
+                val theImage = BitmapFactory.decodeStream(imageStream)
+                val image = File(
+                    context.getExternalFilesDir(null),
+                    "noticeImage" + resultset.getInt("NoticeID").toString() + ".png"
+                )
+                val fos = FileOutputStream(image)
+                fos.use { theImage.compress(Bitmap.CompressFormat.PNG, 100, it) }
+
+
+                val notices: TblNotice = TblNotice(
+                    NoticeID = resultset.getInt("NoticeID"),
+                    NoticeHeadline = resultset.getString("NoticeHeadline"),
+                    NoticeDesc = resultset.getString("NoticeDesc"),
+                    DateNep = resultset.getString("DateNep"),
+                    DateTimeEng = resultset.getString("DateTimeEng"),
+//                    NoticeFile = resultset.getString("NoticeFile")
+                            NoticeFile = Uri.parse(image.path).toString()
+
+                )
+                noticesList.add(notices)
+            } else {
+
+                val notices: TblNotice = TblNotice(
+                    NoticeID = resultset.getInt("NoticeID"),
+                    NoticeHeadline = resultset.getString("NoticeHeadline"),
+                    NoticeDesc = resultset.getString("NoticeDesc"),
+                    DateNep = resultset.getString("DateNep"),
+                    DateTimeEng = resultset.getString("DateTimeEng"),
+                    NoticeFile = null
+                )
+                noticesList.add(notices)
+
+            }
+        }
+
+
+        conn.close()
+
+        return NoticesListResponse(
+            tblNotice = noticesList
         )
     }
 }

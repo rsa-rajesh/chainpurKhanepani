@@ -33,6 +33,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
                 <ImageView
+                    android:id="@+id/ivImage"
                     android:src="@drawable/loading_anim"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>

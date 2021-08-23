@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.heartsun.pithuwakhanipani.data.repository.AuthRepository
 import com.heartsun.pithuwakhanipani.data.repository.databaseReppo.DbRepository
 import com.heartsun.pithuwakhanipani.domain.MembersListResponse
+import com.heartsun.pithuwakhanipani.domain.NoticesListResponse
 import com.heartsun.pithuwakhanipani.domain.WaterRateListResponse
 import com.heartsun.pithuwakhanipani.domain.dbmodel.*
 import kotlinx.coroutines.flow.first
@@ -74,4 +75,21 @@ class HomeViewModel(
     fun insert(members: TblContact) = viewModelScope.launch {
         dbRepository.insert(tblContacts = members)
     }
+
+
+    private val _notices = MutableLiveData<NoticesListResponse>()
+    val noticesFromServer: LiveData<NoticesListResponse> = _notices
+    fun getNoticesFromServer() {
+        viewModelScope.launch {
+            _notices.value = homeRepository.getNotices()
+        }
+    }
+
+    fun insert(notice: TblNotice)= viewModelScope.launch {
+        dbRepository.insert(notice)
+    }
+
+    val noticesFromLocalDb: LiveData<List<TblNotice>> =
+        dbRepository.tblNotices.asLiveData()
+
 }

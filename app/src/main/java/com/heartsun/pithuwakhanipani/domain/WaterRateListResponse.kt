@@ -13,7 +13,10 @@ data class WaterRateListResponse(
 )
 
 data class MembersListResponse(
-
     val tblContact: List<TblContact>,
     val tblBoardMemberType: List<TblBoardMemberType>,
     )
+
+data class NoticesListResponse(
+    val tblNotice: List<TblNotice>
+)

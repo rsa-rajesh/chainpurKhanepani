@@ -39,7 +39,13 @@ class NoticeDetailsActivity : BaseActivity() {
         private const val Details = "NoticeDetails"
 
 
-        fun newIntent(context: Context, date: String,image: String,title: String,details: String): Intent {
+        fun newIntent(
+            context: Context,
+            date: String,
+            image: String,
+            title: String,
+            details: String
+        ): Intent {
             return Intent(context, NoticeDetailsActivity::class.java).apply {
                 putExtra(Date, date)
                 putExtra(ImageUrl, image)
@@ -58,14 +64,21 @@ class NoticeDetailsActivity : BaseActivity() {
     }
 
     private fun initViews() {
-        with(binding){
-            tvPublishedDate.text= "मिति :- $noticeDate"
+        with(binding) {
+
+            toolbar.tvToolbarTitle.text = "सूचना पाटी"
+            toolbar.ivBack.setOnClickListener {
+                onBackPressed()
+                this@NoticeDetailsActivity.finish()
+            }
+
+            tvPublishedDate.text = "मिति :- $noticeDate"
             tvNoticeTitle.text = noticeTitle.orEmpty().parseAsHtml()
             tvNoticeDetails.text = noticeDetails.orEmpty().parseAsHtml()
-            if (noticeImage.isNullOrEmpty() || noticeImage?.equals("noImage",true) == true){
-                cvImage.isGone=true
-            }else{
-                cvImage.isVisible=true
+            if (noticeImage.isNullOrEmpty() || noticeImage?.equals("noImage", true) == true) {
+                cvImage.isGone = true
+            } else {
+                cvImage.isVisible = true
 
                 Glide.with(this@NoticeDetailsActivity)
                     .load(noticeImage)

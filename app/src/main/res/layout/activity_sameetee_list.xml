@@ -17,7 +17,7 @@
         android:layout_height="0dp"
         android:background="@color/background"
         android:elevation="@dimen/_8sdp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
@@ -68,46 +68,78 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <TextView
-        android:id="@+id/tvSelectYear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:background="@drawable/bg_view"
-        android:backgroundTint="@color/tiles_background_color"
-        android:drawableEnd="@drawable/ic_baseline_arrow_down"
-        android:drawableTint="@color/primary_color"
-        android:paddingHorizontal="@dimen/_8sdp"
-        android:text="Year: 2076"
-        android:textColor="@color/main_text_color"
-        android:textSize="@dimen/_14sdp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/btMakePDF"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:id="@+id/clHeading"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btMakePDF" />
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btMakePDF"
-        android:visibility="gone"
-        style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:text="PDF बनाउनुहोस्"
-        app:icon="@drawable/ic_pdf_file"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:strokeColor="@color/colorGrey" />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/llSelectYear"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginVertical="@dimen/_12sdp"
+            android:paddingHorizontal="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/_2sdp"
+            android:background="@drawable/bg_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvSelectYear"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/tiles_background_color"
+                android:text="Year: "
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/_14sdp"
+                android:visibility="visible"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Spinner
+                android:dropDownSelector="@drawable/bg_view"
+                android:dropDownWidth="@dimen/_90sdp"
+                android:id="@+id/spYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btMakePDF"
+            android:visibility="gone"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:text="PDF बनाउनुहोस्"
+            app:icon="@drawable/ic_pdf_file"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:strokeColor="@color/colorGrey" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/rvMembers"
         android:layout_marginHorizontal="@dimen/_12sdp"
         android:layout_marginBottom="@dimen/_12sdp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btMakePDF"
+        app:layout_constraintTop_toBottomOf="@id/clHeading"
         tools:itemCount="9"
         tools:listitem="@layout/item_member_list" />
 
