@@ -2,8 +2,6 @@ package com.heartsun.pithuwakhanipani.data.repository
 
 import android.R.attr
 import com.heartsun.pithuwakhanipani.data.Prefs
-import com.heartsun.pithuwakhanipani.domain.MembersListResponse
-import com.heartsun.pithuwakhanipani.domain.WaterRateListResponse
 import com.heartsun.pithuwakhanipani.domain.dbmodel.*
 import com.heartsun.pithuwakhanipani.utils.connectionUtils.SqlServerFunctions
 import java.sql.Connection
@@ -22,7 +20,7 @@ import java.io.FileOutputStream
 import java.io.File
 
 import android.os.Environment
-import com.heartsun.pithuwakhanipani.domain.NoticesListResponse
+import com.heartsun.pithuwakhanipani.domain.*
 
 
 class ConnectionToServer(prefs: Prefs) {
@@ -258,6 +256,102 @@ class ConnectionToServer(prefs: Prefs) {
 
         return NoticesListResponse(
             tblNotice = noticesList
+        )
+    }
+
+    fun getAboutOrg(context: Context): AboutOrgResponse? {
+
+        var stmt: Statement? = null
+        var resultset: ResultSet? = null
+
+        val query = "select * from TblAboutOrg where Cont_id=1"
+
+        val ss = SqlServerFunctions()
+        val conn: Connection = ss.ConnectToSQLServer(prefs)
+        stmt = conn.createStatement()
+
+      var aboutOrg: TblAboutOrg? = null
+
+        resultset = stmt.executeQuery(query)
+        while (resultset.next()) {
+            if (resultset.getBytes("Cont_image") != null) {
+                val data: ByteArray = resultset.getBytes("Cont_image")
+                val imageStream = ByteArrayInputStream(data)
+                val theImage = BitmapFactory.decodeStream(imageStream)
+                val image = File(
+                    context.getExternalFilesDir(null),
+                    "aboutOrgImage.png"
+                )
+                val fos = FileOutputStream(image)
+                fos.use { theImage.compress(Bitmap.CompressFormat.PNG, 100, it) }
+
+
+                val about: TblAboutOrg = TblAboutOrg(
+                    Cont_id = resultset.getInt("Cont_id"),
+                    Cont_details = resultset.getString("Cont_details"),
+                    Cont_image = Uri.parse(image.path).toString()
+                )
+                aboutOrg= about
+            } else {
+                val about: TblAboutOrg = TblAboutOrg(
+                    Cont_id = resultset.getInt("Cont_id"),
+                    Cont_details = resultset.getString("Cont_details"),
+                    Cont_image =null
+                )
+                aboutOrg= about
+
+
+            }
+        }
+        conn.close()
+
+        return aboutOrg?.let {
+            AboutOrgResponse(
+                tblAbout = it
+            )
+        }
+
+
+
+    }
+
+    fun getContactList(context: Context): ContactsListResponse? {
+
+        var stmt: Statement? = null
+        var resultset: ResultSet? = null
+
+        val query = "select * from TblDepartmentContact"
+
+        val ss = SqlServerFunctions()
+        val conn: Connection = ss.ConnectToSQLServer(prefs)
+        stmt = conn.createStatement()
+
+
+        var contactsList: MutableList<TblDepartmentContact> = arrayListOf()
+
+
+
+
+        resultset = stmt.executeQuery(query)
+        while (resultset.next()) {
+
+                val contacts: TblDepartmentContact = TblDepartmentContact(
+                    Dept_id = resultset.getInt("Dept_id"),
+                    Dept_name = resultset.getString("Dept_name").orEmpty(),
+                    Dept_contact = resultset.getString("Dept_contact").orEmpty(),
+                    Dept_mail = resultset.getString("Dept_mail").orEmpty(),
+
+                )
+            contactsList.add(contacts)
+
+            }
+
+
+
+        conn.close()
+
+        return ContactsListResponse(
+            tblDepartmentContact = contactsList
         )
     }
 }

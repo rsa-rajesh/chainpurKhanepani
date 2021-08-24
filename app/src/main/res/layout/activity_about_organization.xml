@@ -7,21 +7,24 @@
     tools:context=".ui.about.AboutOrganizationActivity">
 
     <ImageView
-        android:src="@drawable/logo"
-        android:rotationY="180"
-        android:alpha=".1"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/_22sdp"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_100sdp"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_marginTop="@dimen/_22sdp"
+        android:alpha=".1"
+        android:rotationY="180"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar_layout" />
+
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvNotice"
+        app:cardElevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/cvNotice"
         android:layout_margin="@dimen/_12sdp"
         app:cardBackgroundColor="@color/tiles_background_color"
         app:cardCornerRadius="@dimen/_4sdp"
@@ -31,29 +34,64 @@
         app:strokeWidth="1dp">
 
         <ScrollView
-            android:scrollbars="none"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/_12sdp">
-<TextView
-    android:id="@+id/tvAboutOrg"
-    android:gravity="start"
-    android:text=""
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+            android:layout_margin="@dimen/_12sdp"
+            android:scrollbars="none">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_marginBottom="@dimen/_12sdp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/cvImage"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/tvAboutOrg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_4sdp">
+
+                    <ImageView
+                        android:id="@+id/ivImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/sample_image3" />
+
+
+                </androidx.cardview.widget.CardView>
+
+
+
+                <TextView
+                    android:id="@+id/tvAboutOrg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text=""
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cvImage" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </ScrollView>
 
     </com.google.android.material.card.MaterialCardView>
+
     <ImageView
-        android:src="@drawable/ic_water_tap"
-        android:rotationY="180"
-        android:alpha=".15"
-        app:layout_constraintEnd_toEndOf="@id/cvNotice"
-        android:layout_marginTop="@dimen/_22sdp"
+        android:elevation="@dimen/_12sdp"
         android:layout_width="@dimen/_60sdp"
         android:layout_height="@dimen/_60sdp"
-        app:layout_constraintTop_toTopOf="@id/cvNotice"/>
+        android:layout_marginTop="@dimen/_22sdp"
+        android:alpha=".1"
+        android:rotationY="180"
+        android:src="@drawable/ic_water_tap"
+        app:layout_constraintEnd_toEndOf="@id/cvNotice"
+        app:layout_constraintTop_toTopOf="@id/cvNotice" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

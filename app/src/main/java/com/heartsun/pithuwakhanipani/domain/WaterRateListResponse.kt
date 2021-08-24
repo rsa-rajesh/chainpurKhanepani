@@ -20,3 +20,11 @@ data class MembersListResponse(
 data class NoticesListResponse(
     val tblNotice: List<TblNotice>
 )
+
+data class AboutOrgResponse(
+    val tblAbout: TblAboutOrg
+)
+
+data class ContactsListResponse(
+    val tblDepartmentContact:List<TblDepartmentContact>,
+)

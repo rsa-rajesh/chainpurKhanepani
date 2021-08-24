@@ -24,20 +24,21 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvImage"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="0dp"
                 android:layout_margin="@dimen/_4sdp"
                 app:cardCornerRadius="@dimen/_4sdp"
                 app:cardElevation="0dp"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
                 <ImageView
                     android:id="@+id/ivImage"
-                    android:src="@drawable/loading_anim"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/loading_anim" />
 
 
             </androidx.cardview.widget.CardView>
@@ -47,11 +48,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toTopOf="@id/tvReadMore"
-                app:layout_constraintStart_toEndOf="@id/cvImage"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/_8sdp"
+                app:layout_constraintStart_toEndOf="@id/cvImage"
                 app:layout_constraintTop_toTopOf="parent">
 
 
@@ -82,8 +83,8 @@
                     android:id="@+id/tvNoticeDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:lines="3"
-                    android:text="पिठुवा खानेपानी तथा स उ संस्थाको खानेपानी महशुल अब घरमा बसी
+                    android:lines= "3"
+                    android:text= "पिठुवा खानेपानी तथा स उ संस्थाको खानेपानी महशुल अब घरमा बसी
 बसी अनलाइन पेमेन्ट मार्फत भुक्तानी गर्न सक्नुहुनेछ।अब हामी १, IME
 PAY (अाइएमी पे) ..."
                     android:textColor="@color/sub_text_color"
@@ -91,8 +92,8 @@ PAY (अाइएमी पे) ..."
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-
             </LinearLayout>
+
             <TextView
                 android:id="@+id/tvReadMore"
                 android:layout_width="wrap_content"
@@ -104,6 +105,7 @@ PAY (अाइएमी पे) ..."
                 android:textSize="@dimen/_8sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
+
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_30sdp"

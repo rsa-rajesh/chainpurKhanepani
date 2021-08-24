@@ -3,15 +3,15 @@ package com.heartsun.pithuwakhanipani.data.repository
 import android.content.Context
 import com.heartsun.pithuwakhanipani.data.Prefs
 import com.heartsun.pithuwakhanipani.data.apis.AuthApi
-import com.heartsun.pithuwakhanipani.domain.MembersListResponse
-import com.heartsun.pithuwakhanipani.domain.NoticesListResponse
-import com.heartsun.pithuwakhanipani.domain.WaterRateListResponse
+import com.heartsun.pithuwakhanipani.domain.*
 import kotlinx.coroutines.CoroutineDispatcher
 
 interface AuthRepository {
     suspend fun getRates(status: String): WaterRateListResponse
     suspend fun getMembers(): MembersListResponse
     suspend fun getNotices(): NoticesListResponse?
+    suspend fun getAboutOrg(): AboutOrgResponse?
+    fun getContacts(): ContactsListResponse?
 //    suspend fun login(request: LoginRequest): UiState<LoginResponse>
 //    suspend fun register(request: RegisterRequest): UiState<RegisterResponse>
 //    suspend fun validateOTP(request: ValidateOTPRequest): UiState<ValidateOTPResponse>
@@ -34,5 +34,14 @@ class AuthRepoImpl(
 
     override suspend fun getNotices(): NoticesListResponse? {
         return connection.getNotices(context)
+    }
+
+    override suspend fun getAboutOrg(): AboutOrgResponse? {
+        return connection.getAboutOrg(context)
+    }
+
+    override fun getContacts(): ContactsListResponse? {
+        return connection.getContactList(context)
+
     }
 }

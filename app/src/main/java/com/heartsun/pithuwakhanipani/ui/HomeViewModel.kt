@@ -3,9 +3,7 @@ package com.heartsun.pithuwakhanipani.ui
 import androidx.lifecycle.*
 import com.heartsun.pithuwakhanipani.data.repository.AuthRepository
 import com.heartsun.pithuwakhanipani.data.repository.databaseReppo.DbRepository
-import com.heartsun.pithuwakhanipani.domain.MembersListResponse
-import com.heartsun.pithuwakhanipani.domain.NoticesListResponse
-import com.heartsun.pithuwakhanipani.domain.WaterRateListResponse
+import com.heartsun.pithuwakhanipani.domain.*
 import com.heartsun.pithuwakhanipani.domain.dbmodel.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
@@ -85,11 +83,44 @@ class HomeViewModel(
         }
     }
 
-    fun insert(notice: TblNotice)= viewModelScope.launch {
+    fun insert(notice: TblNotice) = viewModelScope.launch {
         dbRepository.insert(notice)
     }
 
     val noticesFromLocalDb: LiveData<List<TblNotice>> =
         dbRepository.tblNotices.asLiveData()
 
+
+    private val _aboutOrg = MutableLiveData<AboutOrgResponse>()
+    val aboutOrgFromServer: LiveData<AboutOrgResponse> = _aboutOrg
+    fun getAboutOrgFromServer() {
+        viewModelScope.launch {
+            _aboutOrg.value = homeRepository.getAboutOrg()
+        }
+    }
+
+    fun insert(about: TblAboutOrg) = viewModelScope.launch {
+        dbRepository.insert(about)
+    }
+
+    val aboutOrgFromLocalDb: LiveData<List<TblAboutOrg>> =
+        dbRepository.about.asLiveData()
+
+//contacts
+
+    val contactsListFromLocalDb: LiveData<List<TblDepartmentContact>> =
+        dbRepository.contact.asLiveData()
+
+    fun insert(contacts: TblDepartmentContact) = viewModelScope.launch {
+        dbRepository.insert(contacts = contacts)
+    }
+
+
+    private val _contacts = MutableLiveData<ContactsListResponse>()
+    val contactsFromServer: LiveData<ContactsListResponse> = _contacts
+    fun getContactsFromServer() {
+        viewModelScope.launch {
+            _contacts.value = homeRepository.getContacts()
+        }
+    }
 }

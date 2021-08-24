@@ -99,3 +99,27 @@ data class TblNotice(
     @ColumnInfo(name = "NoticeFile")
     val NoticeFile: String?,
 )
+
+@Entity(tableName = "tblAboutOrg")
+data class TblAboutOrg(
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "Cont_id")
+    val Cont_id: Int,
+    @ColumnInfo(name = "Cont_image")
+    val Cont_image: String?,
+    @ColumnInfo(name = "Cont_details")
+    val Cont_details: String?,
+)
+
+@Entity(tableName = "tblDepartmentContact")
+data class TblDepartmentContact(
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "Dept_id")
+    val Dept_id: Int,
+    @ColumnInfo(name = "Dept_name")
+    val Dept_name: String?,
+    @ColumnInfo(name = "Dept_contact")
+    val Dept_contact: String?,
+    @ColumnInfo(name = "Dept_mail")
+    val Dept_mail: String?,
+)

@@ -131,6 +131,8 @@ class WaterRateActivity : BaseActivity() {
                 }
             } else {
                 hideProgress()
+                items1.clear()
+                items2.clear()
                 for (item in it) {
                     if (item.VNO == 1) {
                         items1.add(item)

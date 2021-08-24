@@ -27,6 +27,7 @@ class SameeteeSelectionActivity : BaseActivity() {
         }
     }
 
+    @DelicateCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)

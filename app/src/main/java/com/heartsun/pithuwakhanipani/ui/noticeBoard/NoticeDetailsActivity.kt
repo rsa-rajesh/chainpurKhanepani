@@ -79,15 +79,12 @@ class NoticeDetailsActivity : BaseActivity() {
                 cvImage.isGone = true
             } else {
                 cvImage.isVisible = true
-
                 Glide.with(this@NoticeDetailsActivity)
                     .load(noticeImage)
                     .placeholder(RDrawable.loading_anim)
                     .error(RDrawable.ic_image_error)
                     .into(ivImage);
             }
-
-
         }
     }
 }

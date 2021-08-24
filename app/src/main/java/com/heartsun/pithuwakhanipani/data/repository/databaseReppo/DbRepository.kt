@@ -116,4 +116,39 @@ class DbRepository(database: KanipaniDatabase) {
 
     val tblNotices: Flow<List<TblNotice>> =
         tblNotice.getAllData()
+
+
+    //for about organization  -- starts
+
+    private var tblAboutOrg: TblAboutOrgDao = database.tblAboutOrgDao()
+
+    suspend fun insert(about: TblAboutOrg) {
+        tblAboutOrg.insert(table = about)
+
+    }
+    suspend fun deleteAll(about: TblAboutOrg) {
+        tblAboutOrg.deleteAll()
+    }
+
+    val about: Flow<List<TblAboutOrg>> =
+        tblAboutOrg.getAllData()
+
+
+
+
+    //for contact  -- starts
+
+    private var tblDepartmentContact: TblDepartmentContactDao = database.tblDepartmentContactDao()
+
+    suspend fun insert(contacts: TblDepartmentContact) {
+        tblDepartmentContact.insert(table = contacts)
+
+    }
+    suspend fun deleteAll(contact: TblDepartmentContact) {
+        tblDepartmentContact.deleteAll()
+    }
+
+    val contact: Flow<List<TblDepartmentContact>> =
+        tblDepartmentContact.getAllData()
+
 }

@@ -11,6 +11,7 @@ import com.ouattararomuald.slider.SliderAdapter
 import com.ouattararomuald.slider.loaders.glide.GlideImageLoaderFactory
 import android.text.Html
 import androidx.core.text.parseAsHtml
+import com.heartsun.pithuwakhanipani.data.Prefs
 import com.heartsun.pithuwakhanipani.ui.about.AboutAppActivity
 import com.heartsun.pithuwakhanipani.ui.about.AboutOrganizationActivity
 import com.heartsun.pithuwakhanipani.ui.contact.ContactActivity
@@ -18,9 +19,12 @@ import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.MeroKhaniPaniActivity
 import com.heartsun.pithuwakhanipani.ui.noticeBoard.NoticeBoardActivity
 import com.heartsun.pithuwakhanipani.ui.sameetee.SameeteeSelectionActivity
 import com.heartsun.pithuwakhanipani.ui.waterRate.WaterRateActivity
+import org.koin.android.ext.android.inject
 
 
 class HomeActivity : BaseActivity() {
+
+    private val prefs by inject<Prefs>()
 
     private val binding by lazy {
         ActivityHomeBinding.inflate(layoutInflater)
@@ -43,10 +47,8 @@ class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        prefs.isFirstTime=false
         initView()
-
-
     }
 
     private fun initView() {

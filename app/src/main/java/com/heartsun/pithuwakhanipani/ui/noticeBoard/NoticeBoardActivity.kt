@@ -10,6 +10,7 @@ import com.heartsun.pithuwakhanipani.databinding.ActivityNoticeBoardBinding
 import com.heartsun.pithuwakhanipani.ui.HomeViewModel
 import com.heartsun.pithuwakhanipani.ui.sameetee.MemberTypeAdapter
 import com.heartsun.pithuwakhanipani.ui.sameetee.SameeteeListActivity
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -20,6 +21,7 @@ class NoticeBoardActivity : BaseActivity() {
         ActivityNoticeBoardBinding.inflate(layoutInflater)
     }
     private val homeViewModel by viewModel<HomeViewModel>()
+
     private lateinit var noticeListAdapter: NoticeListAdapter
 
     companion object {
@@ -28,13 +30,14 @@ class NoticeBoardActivity : BaseActivity() {
         }
     }
 
-
+    @DelicateCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         initView()
     }
 
+    @DelicateCoroutinesApi
     private fun initView() {
         with(binding) {
             toolbar.ivBack.setOnClickListener {
@@ -43,13 +46,12 @@ class NoticeBoardActivity : BaseActivity() {
             }
             toolbar.tvToolbarTitle.text = "सूचना पाटी"
         }
+        noticesFromServerObserver()
         getNoticesFromDb()
-
     }
 
+    @DelicateCoroutinesApi
     private fun getNoticesFromDb() {
-
-        // TODO: 8/23/2021 change the observer no notices observer
         homeViewModel.noticesFromLocalDb.observe(this, { it ->
             it ?: return@observe
             if (it.isNullOrEmpty()) {
@@ -61,7 +63,15 @@ class NoticeBoardActivity : BaseActivity() {
                 binding.clEmptyList.isVisible = false
                 noticeListAdapter = NoticeListAdapter(
                     onItemClick = {
-                        startActivity(NoticeDetailsActivity.newIntent(context = this,title = it.NoticeHeadline.orEmpty(),details = it.NoticeDesc.orEmpty(),image = it.NoticeFile.orEmpty(),date = it.DateNep.orEmpty()))
+                        startActivity(
+                            NoticeDetailsActivity.newIntent(
+                                context = this,
+                                title = it.NoticeHeadline.orEmpty(),
+                                details = it.NoticeDesc.orEmpty(),
+                                image = it.NoticeFile.orEmpty(),
+                                date = it.DateNep.orEmpty()
+                            )
+                        )
                     }
                 )
                 noticeListAdapter.items = it

@@ -27,11 +27,11 @@ class SplashActivity : BaseActivity() {
 //            startActivity(NewShipmentsActivity.newIntent(this))
 //            // startActivity(HomeActivity.newIntent(this))
 //        } else {
-//            if (prefs.isFirstTime) {
+            if (prefs.isFirstTime) {
                 startActivity(OnBoardingActivity.newIntent(this))
-//            } else {
-//            startActivity(HomeActivity.newIntent(context = this))
-//            }
+            } else {
+            startActivity(HomeActivity.newIntent(context = this))
+            }
 //        }
 
 //        startActivity(HomeActivity.newIntent(context = this))
