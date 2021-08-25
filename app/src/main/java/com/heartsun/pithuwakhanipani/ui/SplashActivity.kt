@@ -1,6 +1,5 @@
 package com.heartsun.pithuwakhanipani.ui
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidcommon.base.BaseActivity
 import androidx.lifecycle.lifecycleScope

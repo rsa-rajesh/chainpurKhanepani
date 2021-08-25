@@ -98,6 +98,7 @@
 
                 <com.ouattararomuald.slider.ImageSlider
                     android:id="@+id/image_slider"
+                    android:background="@drawable/loading_anim"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_120sdp"
                     app:layout_constraintCircleRadius="@dimen/_8sdp" />

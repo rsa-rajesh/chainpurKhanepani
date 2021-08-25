@@ -9,16 +9,19 @@ import com.heartsun.pithuwakhanipani.databinding.ActivityHomeBinding
 import com.ouattararomuald.slider.ImageSlider
 import com.ouattararomuald.slider.SliderAdapter
 import com.ouattararomuald.slider.loaders.glide.GlideImageLoaderFactory
-import android.text.Html
 import androidx.core.text.parseAsHtml
+import com.bumptech.glide.request.RequestOptions
+import com.heartsun.pithuwakhanipani.R
 import com.heartsun.pithuwakhanipani.data.Prefs
 import com.heartsun.pithuwakhanipani.ui.about.AboutAppActivity
 import com.heartsun.pithuwakhanipani.ui.about.AboutOrganizationActivity
 import com.heartsun.pithuwakhanipani.ui.contact.ContactActivity
+import com.heartsun.pithuwakhanipani.ui.memberRegisterRequest.MemberRegisterActivity
 import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.MeroKhaniPaniActivity
 import com.heartsun.pithuwakhanipani.ui.noticeBoard.NoticeBoardActivity
 import com.heartsun.pithuwakhanipani.ui.sameetee.SameeteeSelectionActivity
 import com.heartsun.pithuwakhanipani.ui.waterRate.WaterRateActivity
+import com.ouattararomuald.slider.ImageLoader
 import org.koin.android.ext.android.inject
 
 
@@ -56,16 +59,16 @@ class HomeActivity : BaseActivity() {
             imageSliderNew = imageSlider
             imageSlider.adapter = SliderAdapter(
                 this@HomeActivity,
-                GlideImageLoaderFactory(),
+                getImageLoader(),
+//                GlideImageLoaderFactory(),
                 imageUrls = imageUrls
-//            descriptions = Data.generateDescriptions(imageUrls.size)
             )
             imageSlider.setIndicatorsBottomMargin(8)
 
             val powered: String = "powered by:- <font color=#223AF1>Heartsun Technology</font>"
             tvPoweredBy.text = powered.parseAsHtml()
 
-            val version = "1.1.1"
+            val version = getString(R.string.app_version)
             val versions: String = "version:  <font color=#223AF1>$version</font>"
             tvVersion.text = versions.parseAsHtml()
 
@@ -91,7 +94,8 @@ class HomeActivity : BaseActivity() {
                             startActivity(MeroKhaniPaniActivity.newIntent(this@HomeActivity))
                         }
                         cvNayaDhara -> {
-                            // TODO: 8/3/2021
+                            activateViews(false)
+                            startActivity(MemberRegisterActivity.newIntent(this@HomeActivity))
                         }
                         cvSamitee -> {
                             activateViews(false)
@@ -147,5 +151,10 @@ class HomeActivity : BaseActivity() {
         activateViews(true)
     }
 
-
+    private fun getImageLoader(): ImageLoader.Factory<out ImageLoader> {
+                val requestOptions = RequestOptions.errorOf(R.drawable.error_placeholder)
+                    .placeholder(R.drawable.loading_anim)
+            return    GlideImageLoaderFactory(requestOptions = requestOptions)
+            }
 }
+

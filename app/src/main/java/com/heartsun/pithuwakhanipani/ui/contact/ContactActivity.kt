@@ -2,32 +2,26 @@ package com.heartsun.pithuwakhanipani.ui.contact
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidcommon.base.BaseActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.heartsun.pithuwakhanipani.databinding.ActivityAboutOrganizationBinding
 import com.heartsun.pithuwakhanipani.databinding.ActivityContactBinding
 import com.heartsun.pithuwakhanipani.ui.HomeViewModel
-import com.heartsun.pithuwakhanipani.ui.noticeBoard.NoticeDetailsActivity
-import com.heartsun.pithuwakhanipani.ui.sameetee.MemberTypeAdapter
-import com.heartsun.pithuwakhanipani.ui.sameetee.SameeteeListActivity
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.util.Log
-
 import android.net.Uri
 import androidcommon.extension.loggerE
-
 
 class ContactActivity : BaseActivity() {
 
     private val binding by lazy {
         ActivityContactBinding.inflate(layoutInflater)
     }
+
     private lateinit var contactListAdapter: ContactListAdapter
 
     private val homeViewModel by viewModel<HomeViewModel>()
@@ -59,7 +53,7 @@ class ContactActivity : BaseActivity() {
 
     @DelicateCoroutinesApi
     private fun getContactsFromDb() {
-
+        showProgress()
         homeViewModel.contactsListFromLocalDb.observe(this, { it ->
             it ?: return@observe
             if (it.isNullOrEmpty()) {
@@ -83,6 +77,7 @@ class ContactActivity : BaseActivity() {
                         val intent = Intent(Intent.ACTION_SENDTO)
                         intent.data = Uri.parse("mailto:") // only email apps should handle this
                         intent.putExtra(Intent.EXTRA_EMAIL, it.Dept_mail.toString().orEmpty())
+                        Log.d("test mail", it.Dept_mail.toString())
                         intent.putExtra(Intent.EXTRA_SUBJECT, "")
                         if (intent.resolveActivity(packageManager) != null) {
                             startActivity(intent)

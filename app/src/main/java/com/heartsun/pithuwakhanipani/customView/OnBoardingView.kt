@@ -38,7 +38,7 @@ constructor(
 
     init {
         setUpSlider(binding.root)
-        Log.d("onboard" ,"aayoi")
+        Log.d("onboard", "aayoi")
         addingButtonsClickListeners()
         prefManager = Prefs(context.getSharedPreferences("PREF_NAME", Context.MODE_PRIVATE))
     }
@@ -50,10 +50,8 @@ constructor(
                 setParallaxTransformation(page, position)
             }
             viewPager2 = binding.slider1
-
             addSlideChangeListener()
-            Log.d("onboard" ,"aayoi 2")
-
+            Log.d("onboard", "aayoi 2")
             val wormDotsIndicator = view.findViewById<WormDotsIndicator>(R.id.page_indicator)
             wormDotsIndicator.setViewPager2(this)
         }
@@ -74,22 +72,22 @@ constructor(
                 }
                 when (position) {
                     1 -> {
+                        binding.startBtn.text = "Next"
                         binding.titleTv.text = context.getString(R.string.onboard_second_title)
                         binding.descTV.text = context.getString(R.string.onboard_second_details)
                     }
                     2 -> {
+                        binding.startBtn.text = "Start"
                         binding.titleTv.text = context.getString(R.string.onboard_third_title)
                         binding.descTV.text = context.getString(R.string.onboard_third_details)
                     }
                     else -> {
+                        binding.startBtn.text = "Next"
                         binding.titleTv.text = context.getString(R.string.onboard_first_title)
                         binding.descTV.text = context.getString(R.string.onboard_first_details)
                     }
                 }
-
-
                 positions = position;
-
             }
         })
     }
@@ -103,7 +101,6 @@ constructor(
                 navigateToNextSlide()
             }
         }
-
     }
 
     private fun setFirstTimeLaunchToFalse() {
@@ -117,7 +114,7 @@ constructor(
     private fun navigateToMainActivity() {
 
         val intent = Intent(context, HomeActivity::class.java).apply {
-            flags= Intent.FLAG_ACTIVITY_CLEAR_TASK
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
         context.startActivity(intent)

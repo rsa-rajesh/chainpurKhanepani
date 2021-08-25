@@ -50,6 +50,7 @@ class AboutOrganizationActivity : BaseActivity() {
 
     @DelicateCoroutinesApi
     private fun getAboutOrgFromDb() {
+        showProgress()
         homeViewModel.aboutOrgFromLocalDb.observe(this, { it ->
             it ?: return@observe
             if (it.isNullOrEmpty()) {

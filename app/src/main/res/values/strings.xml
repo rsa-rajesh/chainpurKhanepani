@@ -13,19 +13,20 @@
     <string name="onboarding_slide3_desc">User will be able to give you live, chat and meet
         with people nearby.</string>
 
-
     <string name="next">Next</string>
     <string name="skip">Skip</string>
-    <string name="onboard_first_title">Swift Delivery</string>
-    <string name="onboard_first_details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mi dignissim lacus dolor massa tortor et risus facilisis. Accumsan elit et amet convallis magna lacus.</string>
 
-    <string name="onboard_second_title">Chat directly with Seller</string>
-    <string name="onboard_second_details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mi dignissim lacus dolor massa tortor et risus facilisis. Accumsan elit et amet convallis magna lacus.</string>
+    <string name="onboard_first_title">सङ्गसँग सम्पर्क गर्नुहोस्</string>
+    <string name="onboard_first_details">सङ्गठनसँग सम्पर्क गर्नुहोस् र आफ्नो गुनासो र अनुरोध पेश गर्नुहोस् । अनलाइन वा कल मार्फत ।</string>
 
-    <string name="onboard_third_title">Quick action with QR</string>
-    <string name="onboard_third_details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mi dignissim lacus dolor massa tortor et risus facilisis. Accumsan elit et amet convallis magna lacus.</string>
+    <string name="onboard_second_title">रकम गणना गर्नुहोस्</string>
+    <string name="onboard_second_details">तपाईंको मीटर पढाइ प्राप्त गर्नुहोस् वा मीटर पढाइ अनुसार भुक्तानी गर्न जम्मा रकम गणना गर्नुहोस् ।</string>
+
+    <string name="onboard_third_title">संगठन र संगठन सदस्यको बारेमा</string>
+    <string name="onboard_third_details">हाम्रो एप मार्फत संगठन र संगठन सदस्यको बारेमा जानकारी लिनुहोस् र यदि नीति परिवर्तन भयो भने सूचना प्राप्त गर्नुहोस् ।</string>
+
     <string name="read_more">पूरा पढ्नुहोस् …</string>
-
+    <string name="app_version">1.1.1</string>
 
     <string-array name="month">
         <item>January</item>

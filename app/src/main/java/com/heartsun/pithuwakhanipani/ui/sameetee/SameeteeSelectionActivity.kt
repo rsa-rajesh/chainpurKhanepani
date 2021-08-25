@@ -48,6 +48,8 @@ class SameeteeSelectionActivity : BaseActivity() {
 
     @DelicateCoroutinesApi
     private fun getMemberTypesFromDb() {
+        showProgress()
+
         homeViewModel.membersTypeFromLocalDb.observe(this, { it ->
             it ?: return@observe
             if (it.isNullOrEmpty()) {
