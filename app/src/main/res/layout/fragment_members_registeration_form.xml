@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.memberRegisterRequest.MembersRegistrationFormFragment">
+
+    <ScrollView
+        android:layout_marginTop="@dimen/_2sdp"
+        android:padding="@dimen/_12sdp"
+        app:layout_constraintTop_toBottomOf="@id/btDownloadForm"
+        android:layout_width="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <!--        Member name-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiMemberName"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/memberName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Member Full Name"
+                    android:imeOptions="actionDone"
+                    android:selectAllOnFocus="true"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--        Address -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiAddress"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/address"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Member Address"
+                    android:imeOptions="actionDone"
+                    android:selectAllOnFocus="true"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--        Citizenship number-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiCitizenshipNumber"
+                android:layout_marginTop="@dimen/_6sdp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/citizenshipNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Citizenship Number"
+                    android:imeOptions="actionDone"
+                    android:selectAllOnFocus="true"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--        Contact number-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiContactNumber"
+                android:layout_marginTop="@dimen/_6sdp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/contactNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="phone"
+                    android:hint="Contact Number"
+                    android:imeOptions="actionDone"
+                    android:selectAllOnFocus="true"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--        father or husband name -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiFatherOrHusbandName"
+                android:layout_marginTop="@dimen/_6sdp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fatherOrHusbandName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="phone"
+                    android:hint="Father/Husband Name"
+                    android:imeOptions="actionDone"
+                    android:selectAllOnFocus="true"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--        grand father/ father in law name-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiGrandFatherOrFatherInLawName"
+                android:layout_marginTop="@dimen/_6sdp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/grandFatherOrFatherInLawName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="phone"
+                    android:hint="Grand Father/Father In Law Name"
+                    android:imeOptions="actionDone"
+                    android:selectAllOnFocus="true"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--        male count in family-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiMaleCount"
+                android:layout_marginTop="@dimen/_6sdp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/maleCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="phone"
+                    android:hint="Male Count"
+                    android:imeOptions="actionDone"
+                    android:selectAllOnFocus="true"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- female count in family-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiFemaleCount"
+                android:layout_marginTop="@dimen/_6sdp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/femaleCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="phone"
+                    android:hint="Female Count"
+                    android:imeOptions="actionDone"
+                    android:selectAllOnFocus="true"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_32sdp"
+                android:backgroundTint="@color/primary_color"
+                android:paddingHorizontal="@dimen/_22sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:text="Select Documents"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</FrameLayout>

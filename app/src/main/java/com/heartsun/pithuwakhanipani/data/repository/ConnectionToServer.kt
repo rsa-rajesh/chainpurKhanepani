@@ -346,12 +346,37 @@ class ConnectionToServer(prefs: Prefs) {
 
             }
 
-
-
         conn.close()
 
         return ContactsListResponse(
             tblDepartmentContact = contactsList
+        )
+    }
+
+    fun getRequiredFiles(context: Context): DocumentTypesResponse? {
+        var stmt: Statement? = null
+        var resultset: ResultSet? = null
+
+        val query = "select * from tblDocumentType"
+
+        val ss = SqlServerFunctions()
+        val conn: Connection = ss.ConnectToSQLServer(prefs)
+        stmt = conn.createStatement()
+
+        var contactsList: MutableList<RegistrationRequest.RequiredDocuments> = arrayListOf()
+
+        resultset = stmt.executeQuery(query)
+        while (resultset.next()) {
+            val contacts: RegistrationRequest.RequiredDocuments = RegistrationRequest.RequiredDocuments(
+                DocumentName = resultset.getString("DocTypeName"),
+                DocImage =null,
+                )
+            contactsList.add(contacts)
+        }
+        conn.close()
+
+        return  DocumentTypesResponse(
+            documentTypes = contactsList
         )
     }
 }

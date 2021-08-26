@@ -11,10 +11,8 @@ interface AuthRepository {
     suspend fun getMembers(): MembersListResponse
     suspend fun getNotices(): NoticesListResponse?
     suspend fun getAboutOrg(): AboutOrgResponse?
-    fun getContacts(): ContactsListResponse?
-//    suspend fun login(request: LoginRequest): UiState<LoginResponse>
-//    suspend fun register(request: RegisterRequest): UiState<RegisterResponse>
-//    suspend fun validateOTP(request: ValidateOTPRequest): UiState<ValidateOTPResponse>
+    suspend fun getContacts(): ContactsListResponse?
+    suspend  fun getFilesRequirement(): DocumentTypesResponse?
 }
 
 class AuthRepoImpl(
@@ -40,8 +38,11 @@ class AuthRepoImpl(
         return connection.getAboutOrg(context)
     }
 
-    override fun getContacts(): ContactsListResponse? {
+    override suspend fun getContacts(): ContactsListResponse? {
         return connection.getContactList(context)
+    }
 
+    override suspend fun getFilesRequirement(): DocumentTypesResponse? {
+        return connection.getRequiredFiles(context)
     }
 }

@@ -29,459 +29,58 @@
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="@color/colorGrey" />
 
-    <ScrollView
-        android:layout_marginTop="@dimen/_2sdp"
-        android:padding="@dimen/_12sdp"
-        app:layout_constraintTop_toBottomOf="@id/btDownloadForm"
+    <fragment
+        android:id="@+id/nav_host_fragment_container"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        android:layout_marginTop="@dimen/_2sdp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:navGraph="@navigation/member_registration_navigation"
+        app:layout_constraintTop_toBottomOf="@id/btDownloadForm"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_height="0dp">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <!--        Member name-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiMemberName"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/memberName"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Member Full Name"
-                    android:imeOptions="actionDone"
-                    android:selectAllOnFocus="true"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--        Address -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiAddress"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_6sdp"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/address"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Member Address"
-                    android:imeOptions="actionDone"
-                    android:selectAllOnFocus="true"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--        Citizenship number-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiCitizenshipNumber"
-                android:layout_marginTop="@dimen/_6sdp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/citizenshipNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Citizenship Number"
-                    android:imeOptions="actionDone"
-                    android:selectAllOnFocus="true"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--        Contact number-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiContactNumber"
-                android:layout_marginTop="@dimen/_6sdp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/contactNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="phone"
-                    android:hint="Contact Number"
-                    android:imeOptions="actionDone"
-                    android:selectAllOnFocus="true"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--        father or husband name -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiFatherOrHusbandName"
-                android:layout_marginTop="@dimen/_6sdp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fatherOrHusbandName"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="phone"
-                    android:hint="Father/Husband Name"
-                    android:imeOptions="actionDone"
-                    android:selectAllOnFocus="true"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--        grand father/ father in law name-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiGrandFatherOrFatherInLawName"
-                android:layout_marginTop="@dimen/_6sdp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/grandFatherOrFatherInLawName"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="phone"
-                    android:hint="Grand Father/Father In Law Name"
-                    android:imeOptions="actionDone"
-                    android:selectAllOnFocus="true"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--        male count in family-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiMaleCount"
-                android:layout_marginTop="@dimen/_6sdp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/maleCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="phone"
-                    android:hint="Male Count"
-                    android:imeOptions="actionDone"
-                    android:selectAllOnFocus="true"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- female count in family-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiFemaleCount"
-                android:layout_marginTop="@dimen/_6sdp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/femaleCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="phone"
-                    android:hint="Female Count"
-                    android:imeOptions="actionDone"
-                    android:selectAllOnFocus="true"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--            Citizenship document-->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_12sdp">
-
-                <TextView
-                    android:id="@+id/title1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:text="citizenship_document"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tiCitizenshipDocument"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_12sdp"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btAddCitizenshipDocument"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/title1">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/citizenshipDocument"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/montserrat_regular"
-                        android:hint="upload_document"
-                        android:imeOptions="actionDone"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:selectAllOnFocus="true" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btAddCitizenshipDocument"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:backgroundTint="@color/primary_color"
-                    app:icon="@drawable/ic_baseline_add"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconTint="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1.1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tiCitizenshipDocument" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <!--        Bluebook number-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiBluebookNumber"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_6sdp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/bluebookNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="bluebook_number"
-                    android:maxLines="1"
-                    android:imeOptions="actionDone"
-                    android:selectAllOnFocus="true"
-                     />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Citizenship document -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_12sdp">
-
-                <TextView
-                    android:id="@+id/title2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:text="citizenship_document"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tiBluebookDocument"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_12sdp"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btAddBluebookDocument"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/title2">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/bluebookDocument"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/montserrat_regular"
-                        android:hint="upload_document"
-                        android:imeOptions="actionDone"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:selectAllOnFocus="true" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btAddBluebookDocument"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:backgroundTint="@color/primary_color"
-                    app:icon="@drawable/ic_baseline_add"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconTint="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1.1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tiBluebookDocument" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <!--       License  number-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiLicenseNumber"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_6sdp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/licenseNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:hint="license_number"
-                    android:maxLines="1"
-                    android:imeOptions="actionDone"
-                    android:selectAllOnFocus="true"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--            License document-->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_12sdp">
-
-                <TextView
-                    android:id="@+id/title3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:text="license_document"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tiLicenseDocument"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_12sdp"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btAddLicenseDocument"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/title3">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/licenseDocument"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/montserrat_regular"
-                        android:hint="upload_document"
-                        android:imeOptions="actionDone"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:selectAllOnFocus="true" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btAddLicenseDocument"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:backgroundTint="@color/primary_color"
-                    app:icon="@drawable/ic_baseline_add"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconTint="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1.1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tiLicenseDocument" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_22sdp">
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:text="i_agree_to_the" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_4sdp"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:text="terms_and_condition"
-                    android:textColor="@color/primary_color"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btSubmit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_32sdp"
-                android:backgroundTint="@color/primary_color"
-                android:paddingHorizontal="@dimen/_22sdp"
-                android:paddingVertical="@dimen/_8sdp"
-                android:text="Submit"
-                android:textColor="@color/white"
-                android:textAllCaps="false"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
-
-
-        </LinearLayout>
-
-
-    </ScrollView>
-
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/clError"
+    android:background="@color/lite_gray"
+    app:layout_constraintTop_toBottomOf="@id/toolbar"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:layout_width="match_parent"
+    android:layout_height="0dp">
 
+
+    <TextView
+        android:id="@+id/tvErrorMsg"
+        android:layout_marginHorizontal="@dimen/_22sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/_100sdp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:text="Sorry Couldn't proceed to online Registration at this moment. \n you can download form for physical registration by clicking button below"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btDownloadForm2"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:text="फारम डाउनलोड गर्नुहोस्"
+        app:icon="@drawable/ic_pdf_file"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvErrorMsg"
+        app:strokeColor="@color/colorGrey" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
