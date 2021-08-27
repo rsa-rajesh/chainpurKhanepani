@@ -9,9 +9,11 @@ import androidx.navigation.Navigation
 import com.heartsun.pithuwakhanipani.R
 import com.heartsun.pithuwakhanipani.databinding.FragmentMembersRegisterationFormBinding
 import com.heartsun.pithuwakhanipani.domain.RegistrationRequest
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MembersRegistrationFormFragment : BaseFragment<FragmentMembersRegisterationFormBinding>() {
 
+    private val registerViewModel by viewModel<RegisterViewModel>()
 
     override fun getViewBinding(
         inflater: LayoutInflater,
@@ -24,9 +26,10 @@ class MembersRegistrationFormFragment : BaseFragment<FragmentMembersRegisteratio
     }
 
     private fun initViews() {
+        registerViewModel.getFileRequirementFromServer()
+
         binding.apply {
             btNext.setOnClickListener { view ->
-
                 var details: RegistrationRequest = RegistrationRequest(
                     Address = address.text.toString(),
                     MemName = memberName.text.toString(),
@@ -36,18 +39,83 @@ class MembersRegistrationFormFragment : BaseFragment<FragmentMembersRegisteratio
                     GFILName = grandFatherOrFatherInLawName.text.toString(),
                     MaleCount = maleCount.text.toString(),
                     FemaleCount = femaleCount.text.toString(),
-                    Gender = "male",
+                    Gender = getGender(rgGender.checkedRadioButtonId),
                     files = null
                 )
-                validateData(details)
+                validateData(details,view)
+                   }
+        }
+    }
 
+    private fun getGender(checkedRadioButtonId: Int): String? {
+        return if (checkedRadioButtonId == binding.male.id) {
+            "mail"
+        } else {
+            "female"
+        }
+    }
+
+    private fun validateData(request: RegistrationRequest, view: View) {
+        binding.apply {
+            if (request.MemName.isNullOrEmpty()) {
+                clearError()
+                tiMemberName.requestFocus()
+                tiMemberName.error = "Name is required!"
+            } else if (request.Address.isNullOrEmpty()) {
+                clearError()
+                tiAddress.error = "Email is required!"
+                tiAddress.requestFocus()
+            } else if (request.CitNo.isNullOrEmpty()) {
+                clearError()
+                tiCitizenshipNumber.error = "Mobile number is required!"
+                tiCitizenshipNumber.requestFocus()
+            }else if (request.ContactNo.isNullOrEmpty()) {
+                clearError()
+                tiContactNumber.error = "Mobile number is required!"
+                tiContactNumber.requestFocus()
+            }else if (request.FHName.isNullOrEmpty()) {
+                clearError()
+                tiFatherOrHusbandName.error = "Mobile number is required!"
+                tiFatherOrHusbandName.requestFocus()
+            }else if (request.GFILName.isNullOrEmpty()) {
+                clearError()
+                tiGrandFatherOrFatherInLawName.error = "Mobile number is required!"
+                tiGrandFatherOrFatherInLawName.requestFocus()
+            } else if (request.MaleCount.isNullOrEmpty()) {
+                clearError()
+                tiMaleCount.error = "Mobile number is required!"
+                tiMaleCount.requestFocus()
+            } else if (request.FemaleCount.isNullOrEmpty()) {
+                clearError()
+                tiFemaleCount.error = "Mobile number is required!"
+                tiFemaleCount.requestFocus()
+            } else {
+                clearError()
+                if (request.Gender.isNullOrEmpty()) {
+                    if (rgGender.checkedRadioButtonId == male.id) {
+                        request.Gender = "Male"
+                    } else {
+                        request.Gender = "female"
+                    }
+                }
                 Navigation.findNavController(view)
                     .navigate(R.id.action_membersRegistrationFormFragment_to_membersRegistrationFilesFragment);
             }
         }
     }
 
-    private fun validateData(details: RegistrationRequest) {
 
+
+    private fun clearError() {
+        with(binding) {
+            tiCitizenshipNumber.error = null
+            tiFemaleCount.error = null
+            tiMaleCount.error = null
+            tiGrandFatherOrFatherInLawName.error = null
+            tiFatherOrHusbandName.error = null
+            tiContactNumber.error = null
+            tiAddress.error = null
+            tiMemberName.error = null
+        }
     }
 }

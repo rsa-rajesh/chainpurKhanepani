@@ -14,7 +14,7 @@ import java.nio.file.Files
 class RegisterViewModel(
     private val dbRepository: DbRepository,
     private val homeRepository: AuthRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _filesRequirements = MutableLiveData<DocumentTypesResponse>()
     val fileTypesFromServer: LiveData<DocumentTypesResponse> = _filesRequirements

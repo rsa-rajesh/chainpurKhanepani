@@ -33,6 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Member Full Name"
+                    android:maxLength="50"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"
                     />
@@ -53,10 +54,47 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Member Address"
+                    android:maxLength="100"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"
                     />
             </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_8sdp">
+
+                <RadioGroup
+                    android:id="@+id/rgGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:checkedButton="@id/male"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/male"
+                        android:layout_width="wrap_content"
+                        android:minWidth="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Male" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Female" />
+                </RadioGroup>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!--        Citizenship number-->
             <com.google.android.material.textfield.TextInputLayout
@@ -72,6 +110,7 @@
                     android:id="@+id/citizenshipNumber"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:maxLength="12"
                     android:hint="Citizenship Number"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"
@@ -93,6 +132,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="phone"
+                    android:maxLength="10"
                     android:hint="Contact Number"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"
@@ -113,8 +153,8 @@
                     android:id="@+id/fatherOrHusbandName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="phone"
                     android:hint="Father/Husband Name"
+                    android:maxLength="50"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"
                     />
@@ -132,8 +172,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/grandFatherOrFatherInLawName"
                     android:layout_width="match_parent"
+                    android:maxLength="50"
                     android:layout_height="match_parent"
-                    android:inputType="phone"
                     android:hint="Grand Father/Father In Law Name"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"
@@ -154,7 +194,8 @@
                     android:id="@+id/maleCount"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="phone"
+                    android:inputType="number"
+                    android:maxLength="2"
                     android:hint="Male Count"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"
@@ -175,7 +216,8 @@
                     android:id="@+id/femaleCount"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="phone"
+                    android:inputType="number"
+                    android:maxLength="2"
                     android:hint="Female Count"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"

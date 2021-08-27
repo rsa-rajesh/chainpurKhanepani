@@ -20,7 +20,21 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+
             <ImageView
+                android:visibility="gone"
+                android:id="@+id/ivRemove"
+                android:padding="@dimen/_8sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/ic_close_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/ivFilePreview"
+                android:visibility="invisible"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:rotationY="180"
@@ -30,7 +44,55 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/clAddFile"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:id="@+id/AddFile"
+                    android:elevation="@dimen/_202sdp"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/ivAdd"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_width="wrap_content"
+                        android:src="@drawable/ic_baseline_add"
+                        android:layout_height="wrap_content"
+                        app:tint="@color/sub_text_color" />
+                    <TextView
+                        android:id="@+id/tvFileName"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="this is test file"
+                        android:textColor="@color/sub_text_color"
+                        app:layout_constraintTop_toBottomOf="@id/ivAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <TextView
+                android:id="@+id/tvFileType"
                 android:padding="@dimen/_4sdp"
                 android:background="@color/lite_blue"
                 android:text="this is example text"

@@ -354,6 +354,7 @@ class ConnectionToServer(prefs: Prefs) {
     }
 
     fun getRequiredFiles(context: Context): DocumentTypesResponse? {
+
         var stmt: Statement? = null
         var resultset: ResultSet? = null
 
