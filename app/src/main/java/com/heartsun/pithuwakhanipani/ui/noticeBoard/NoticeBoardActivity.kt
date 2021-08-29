@@ -47,7 +47,6 @@ class NoticeBoardActivity : BaseActivity() {
             toolbar.tvToolbarTitle.text = "सूचना पाटी"
         }
         showProgress()
-
         noticesFromServerObserver()
         getNoticesFromDb()
     }

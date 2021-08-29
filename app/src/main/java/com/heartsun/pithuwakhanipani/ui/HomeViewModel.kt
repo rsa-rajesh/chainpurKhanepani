@@ -123,4 +123,7 @@ class HomeViewModel(
             _contacts.value = homeRepository.getContacts()
         }
     }
+
+
+
 }

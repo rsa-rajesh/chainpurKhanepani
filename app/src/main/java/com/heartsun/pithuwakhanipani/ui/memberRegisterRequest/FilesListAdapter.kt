@@ -5,10 +5,12 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidcommon.RDrawable
 import androidcommon.base.ImmutableRecyclerAdapter
 import androidcommon.base.VBViewHolder
 import androidcommon.extension.load
 import androidx.core.text.parseAsHtml
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import com.heartsun.pithuwakhanipani.databinding.ItemMemberTypeListBinding
 import com.heartsun.pithuwakhanipani.databinding.ItemNoticeListBinding
@@ -21,8 +23,8 @@ import com.heartsun.pithuwakhanipani.domain.dbmodel.TblNotice
 import kotlin.properties.Delegates
 
 class FilesListAdapter(
-    private val onAddFileClicked: (item: RegistrationRequest.RequiredDocuments) -> Unit = {},
-    private val onRemoveFileClicked: (item: RegistrationRequest.RequiredDocuments) -> Unit = {}
+    private val onAddFileClicked: (item: Int) -> Unit = {},
+    private val onRemoveFileClicked: (item: Int) -> Unit = {}
 
 ) :
     ImmutableRecyclerAdapter<RegistrationRequest.RequiredDocuments, ItemRegisterFilesListBinding>() {
@@ -45,12 +47,22 @@ class FilesListAdapter(
         with(holder.binding) {
             tvFileName.text = item.DocumentName.toString().orEmpty()
             tvFileType.text = item.DocumentName.toString().orEmpty()
+            if (item.DocImage==null){
+                clAddFile.isVisible=true
+                ivRemove.isVisible=false
+
+            }else{
+                clAddFile.isVisible=false
+                ivRemove.isVisible=true
+                ivFilePreview.load(item.DocImage.toString())
+            }
+
 
             clAddFile.setOnClickListener{
-                onAddFileClicked(item)
+                onAddFileClicked(position)
             }
             ivRemove.setOnClickListener{
-                onAddFileClicked(item)
+                onRemoveFileClicked(position)
             }
         }
 

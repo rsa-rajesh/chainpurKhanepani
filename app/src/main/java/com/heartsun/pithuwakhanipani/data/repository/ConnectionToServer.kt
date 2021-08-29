@@ -1,13 +1,11 @@
 package com.heartsun.pithuwakhanipani.data.repository
 
-import android.R.attr
 import com.heartsun.pithuwakhanipani.data.Prefs
 import com.heartsun.pithuwakhanipani.domain.dbmodel.*
 import com.heartsun.pithuwakhanipani.utils.connectionUtils.SqlServerFunctions
 import java.sql.Connection
 import java.sql.ResultSet
 import java.sql.Statement
-import android.R.attr.data
 import android.content.Context
 
 import java.io.ByteArrayInputStream
@@ -19,7 +17,6 @@ import java.io.FileOutputStream
 
 import java.io.File
 
-import android.os.Environment
 import com.heartsun.pithuwakhanipani.domain.*
 
 
@@ -379,6 +376,35 @@ class ConnectionToServer(prefs: Prefs) {
         return  DocumentTypesResponse(
             documentTypes = contactsList
         )
+    }
+
+    fun requestForReg(data: RegistrationRequest?): Boolean? {
+        var stmt: Statement? = null
+
+        val query1 = "INSERT INTO [DropcareTrial].[dbo].[tblOnlineTapRequest] (ReqID,MemName,Address,Gender,CitNo,ContactNo,FHName,GFILName,MaleCount,FemaleCount) " +
+                "VALUES (4,'${data?.MemName.toString().orEmpty()}', '${data?.Address.toString().orEmpty()}', '${data?.Gender.toString().orEmpty()}', '${data?.CitNo.toString().orEmpty()}', '${data?.ContactNo.toString().orEmpty()}'," +
+                "'${data?.FHName.toString().orEmpty()}', '${data?.GFILName.toString().orEmpty()}', ${data?.MaleCount}, ${data?.FemaleCount} );"
+
+
+        val ss = SqlServerFunctions()
+        val conn: Connection = ss.ConnectToSQLServer(prefs)
+        stmt = conn.createStatement()
+
+
+        for (files in data?.files.orEmpty()){
+
+
+            val query = "INSERT INTO [DropcareTrial].[dbo].[tblOnlineTapReqDocImg] (DocumentName, DocImage)" +
+                    "            SELECT '${files.DocumentName}'," +
+                    "       (select * FROM OPENROWSET(BULK '${files.DocImage}', SINGLE_BLOB) AS img) GO"
+            stmt.executeQuery(query)
+        }
+        stmt.executeQuery(query1)
+
+
+        conn.close()
+
+        return true
     }
 }
 

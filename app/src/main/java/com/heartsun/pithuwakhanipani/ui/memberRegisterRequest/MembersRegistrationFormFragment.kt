@@ -26,7 +26,7 @@ class MembersRegistrationFormFragment : BaseFragment<FragmentMembersRegisteratio
     }
 
     private fun initViews() {
-        registerViewModel.getFileRequirementFromServer()
+//        registerViewModel.getFileRequirementFromServer()
 
         binding.apply {
             btNext.setOnClickListener { view ->
@@ -42,8 +42,8 @@ class MembersRegistrationFormFragment : BaseFragment<FragmentMembersRegisteratio
                     Gender = getGender(rgGender.checkedRadioButtonId),
                     files = null
                 )
-                validateData(details,view)
-                   }
+                validateData(details, view)
+            }
         }
     }
 
@@ -69,15 +69,15 @@ class MembersRegistrationFormFragment : BaseFragment<FragmentMembersRegisteratio
                 clearError()
                 tiCitizenshipNumber.error = "Mobile number is required!"
                 tiCitizenshipNumber.requestFocus()
-            }else if (request.ContactNo.isNullOrEmpty()) {
+            } else if (request.ContactNo.isNullOrEmpty()) {
                 clearError()
                 tiContactNumber.error = "Mobile number is required!"
                 tiContactNumber.requestFocus()
-            }else if (request.FHName.isNullOrEmpty()) {
+            } else if (request.FHName.isNullOrEmpty()) {
                 clearError()
                 tiFatherOrHusbandName.error = "Mobile number is required!"
                 tiFatherOrHusbandName.requestFocus()
-            }else if (request.GFILName.isNullOrEmpty()) {
+            } else if (request.GFILName.isNullOrEmpty()) {
                 clearError()
                 tiGrandFatherOrFatherInLawName.error = "Mobile number is required!"
                 tiGrandFatherOrFatherInLawName.requestFocus()
@@ -90,6 +90,17 @@ class MembersRegistrationFormFragment : BaseFragment<FragmentMembersRegisteratio
                 tiFemaleCount.error = "Mobile number is required!"
                 tiFemaleCount.requestFocus()
             } else {
+
+                MemberRegisterActivity.registerRequest?.MemName = request.MemName
+                MemberRegisterActivity.registerRequest?.Address = request.Address
+                MemberRegisterActivity.registerRequest?.FemaleCount = request.FemaleCount
+                MemberRegisterActivity.registerRequest?.MaleCount = request.MaleCount
+                MemberRegisterActivity.registerRequest?.GFILName = request.GFILName
+                MemberRegisterActivity.registerRequest?.FHName = request.FHName
+                MemberRegisterActivity.registerRequest?.ContactNo = request.ContactNo
+                MemberRegisterActivity.registerRequest?.CitNo = request.CitNo
+                MemberRegisterActivity.registerRequest?.Gender = request.Gender
+
                 clearError()
                 if (request.Gender.isNullOrEmpty()) {
                     if (rgGender.checkedRadioButtonId == male.id) {
@@ -103,7 +114,6 @@ class MembersRegistrationFormFragment : BaseFragment<FragmentMembersRegisteratio
             }
         }
     }
-
 
 
     private fun clearError() {

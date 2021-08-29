@@ -43,7 +43,7 @@ data class RegistrationRequest(
         var DocumentName: String?,
 
         @SerializedName("docImage")
-        var DocImage: Uri?
+        var DocImage: String?
     )
 }
 
