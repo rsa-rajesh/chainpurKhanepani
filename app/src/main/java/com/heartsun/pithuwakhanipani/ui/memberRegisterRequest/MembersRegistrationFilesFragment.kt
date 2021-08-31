@@ -13,7 +13,9 @@ import androidcommon.extension.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.load.ImageHeaderParser
@@ -76,12 +78,9 @@ class MembersRegistrationFilesFragment : BaseFragment<FragmentMembersRegisterati
                 boolean = false
             }
         }
-
         if (boolean){
-
-
-            registerViewModel.sendRegistrationRequestToServer(details)
-
+            (activity as MemberRegisterActivity?)!!.requestRegistrationToServer()
+//            context?.let { registerViewModel.sendRegistrationRequestToServer(details, it) }
         }else{
             toastS("कृपया सबै आवश्यक फाइलहरू छनोट गर्नुहोस् ।")
         }
@@ -172,6 +171,7 @@ class MembersRegistrationFilesFragment : BaseFragment<FragmentMembersRegisterati
                     hideProgress()
                     if (indexOfImage != -1) {
                         details?.files?.get(indexOfImage)?.DocImage = displayOnUi.toString()
+                        MemberRegisterActivity.registerRequest?.files?.get(indexOfImage)?.DocImage = displayOnUi.toString()
                         filesListAdapter.items = details?.files.orEmpty()
                         filesListAdapter.notifyItemChanged(indexOfImage)
 
@@ -187,6 +187,7 @@ class MembersRegistrationFilesFragment : BaseFragment<FragmentMembersRegisterati
                 }
             }
         }
+
 }
 
 

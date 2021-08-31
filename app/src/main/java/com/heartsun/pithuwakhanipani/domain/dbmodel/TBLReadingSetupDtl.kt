@@ -123,3 +123,13 @@ data class TblDepartmentContact(
     @ColumnInfo(name = "Dept_mail")
     val Dept_mail: String?,
 )
+
+@Entity(tableName = "tblDocumentType")
+data class TblDocumentType(
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "DTID")
+    val DTID: Int,
+    @ColumnInfo(name = "DocTypeName")
+    val DocTypeName: String?,
+
+)

@@ -1,7 +1,5 @@
 package com.heartsun.pithuwakhanipani.data.repository.databaseReppo
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.heartsun.pithuwakhanipani.data.dao.*
 import com.heartsun.pithuwakhanipani.data.database.KanipaniDatabase
 import com.heartsun.pithuwakhanipani.domain.dbmodel.*
@@ -150,5 +148,21 @@ class DbRepository(database: KanipaniDatabase) {
 
     val contact: Flow<List<TblDepartmentContact>> =
         tblDepartmentContact.getAllData()
+
+
+    //for document type  -- starts
+
+    internal var tblDocumentType: TblDocumentTypeDao = database.tblDocumentTypeDao()
+
+    suspend fun insert(contacts: TblDocumentType) {
+        tblDocumentType.insert(table = contacts)
+
+    }
+    suspend fun deleteAll(contact: TblDocumentType) {
+        tblDocumentType.deleteAll()
+    }
+
+    val files: Flow<List<TblDocumentType>> =
+        tblDocumentType.getAllData()
 
 }

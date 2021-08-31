@@ -9,7 +9,11 @@
         android:id="@+id/membersRegistrationFilesFragment"
         android:name="com.heartsun.pithuwakhanipani.ui.memberRegisterRequest.MembersRegistrationFilesFragment"
         android:label="fragment_members_registeration_files"
-        tools:layout="@layout/fragment_members_registeration_files" />
+        tools:layout="@layout/fragment_members_registeration_files" >
+        <action
+            android:id="@+id/action_membersRegistrationFilesFragment_to_membersRegistrationFormFragment"
+            app:destination="@id/membersRegistrationFormFragment" />
+    </fragment>
     <fragment
         android:id="@+id/membersRegistrationFormFragment"
         android:name="com.heartsun.pithuwakhanipani.ui.memberRegisterRequest.MembersRegistrationFormFragment"

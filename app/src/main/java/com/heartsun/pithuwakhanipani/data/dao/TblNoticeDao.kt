@@ -4,14 +4,11 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.heartsun.pithuwakhanipani.domain.dbmodel.TBLReadingSetup
-import com.heartsun.pithuwakhanipani.domain.dbmodel.TblAboutOrg
-import com.heartsun.pithuwakhanipani.domain.dbmodel.TblDepartmentContact
-import com.heartsun.pithuwakhanipani.domain.dbmodel.TblNotice
+import com.heartsun.pithuwakhanipani.domain.dbmodel.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface  TblNoticeDao {
+interface TblNoticeDao {
     @Query("SELECT * FROM tblNotice")
     fun getAllData(): Flow<List<TblNotice>>
 
@@ -23,7 +20,7 @@ interface  TblNoticeDao {
 }
 
 @Dao
-interface  TblAboutOrgDao {
+interface TblAboutOrgDao {
     @Query("SELECT * FROM tblAboutOrg")
     fun getAllData(): Flow<List<TblAboutOrg>>
 
@@ -35,7 +32,7 @@ interface  TblAboutOrgDao {
 }
 
 @Dao
-interface  TblDepartmentContactDao {
+interface TblDepartmentContactDao {
     @Query("SELECT * FROM tblDepartmentContact")
     fun getAllData(): Flow<List<TblDepartmentContact>>
 
@@ -43,5 +40,17 @@ interface  TblDepartmentContactDao {
     suspend fun insert(table: TblDepartmentContact)
 
     @Query("DELETE FROM tblDepartmentContact")
+    suspend fun deleteAll()
+}
+
+@Dao
+interface TblDocumentTypeDao {
+    @Query("SELECT * FROM tblDocumentType")
+    fun getAllData(): Flow<List<TblDocumentType>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(table: TblDocumentType)
+
+    @Query("DELETE FROM tblDocumentType")
     suspend fun deleteAll()
 }

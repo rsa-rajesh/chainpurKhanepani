@@ -12,12 +12,16 @@ import java.io.ByteArrayInputStream
 import android.graphics.BitmapFactory
 
 import android.graphics.Bitmap
+import android.graphics.Path
 import android.net.Uri
+import android.util.Log
+import androidcommon.utils.FilePath
 import java.io.FileOutputStream
 
 import java.io.File
 
 import com.heartsun.pithuwakhanipani.domain.*
+import java.io.ByteArrayOutputStream
 
 
 class ConnectionToServer(prefs: Prefs) {
@@ -147,25 +151,6 @@ class ConnectionToServer(prefs: Prefs) {
 
             }
 
-//
-//            val data: ByteArray = resultset.getBytes("Photo")
-//            val imageStream = ByteArrayInputStream(data)
-//            val theImage = BitmapFactory.decodeStream(imageStream)
-//            val image = File(context.getExternalFilesDir(null), "memberImage" + resultset.getInt("ContID").toString() + ".png")
-//            val fos = FileOutputStream(image)
-//            fos.use { theImage.compress(Bitmap.CompressFormat.PNG, 100, it) }
-
-//            val tblContact: TblContact = TblContact(
-//                ContID = resultset.getInt("ContID"),
-//                ContactName = resultset.getString("ContactName"),
-//                ContactNumber = resultset.getString("ContactNumber"),
-//                IsActive = resultset.getInt("IsActive"),
-//                Post = resultset.getString("Post"),
-//                MemberType = resultset.getInt("MemberType"),
-//                Tenure = resultset.getString("Tenure"),
-//                Address = resultset.getString("Address"),
-//                Image =
-//            )
         }
 
 
@@ -228,8 +213,7 @@ class ConnectionToServer(prefs: Prefs) {
                     NoticeDesc = resultset.getString("NoticeDesc"),
                     DateNep = resultset.getString("DateNep"),
                     DateTimeEng = resultset.getString("DateTimeEng"),
-//                    NoticeFile = resultset.getString("NoticeFile")
-                            NoticeFile = Uri.parse(image.path).toString()
+                    NoticeFile = Uri.parse(image.path).toString()
 
                 )
                 noticesList.add(notices)
@@ -267,7 +251,7 @@ class ConnectionToServer(prefs: Prefs) {
         val conn: Connection = ss.ConnectToSQLServer(prefs)
         stmt = conn.createStatement()
 
-      var aboutOrg: TblAboutOrg? = null
+        var aboutOrg: TblAboutOrg? = null
 
         resultset = stmt.executeQuery(query)
         while (resultset.next()) {
@@ -288,14 +272,14 @@ class ConnectionToServer(prefs: Prefs) {
                     Cont_details = resultset.getString("Cont_details"),
                     Cont_image = Uri.parse(image.path).toString()
                 )
-                aboutOrg= about
+                aboutOrg = about
             } else {
                 val about: TblAboutOrg = TblAboutOrg(
                     Cont_id = resultset.getInt("Cont_id"),
                     Cont_details = resultset.getString("Cont_details"),
-                    Cont_image =null
+                    Cont_image = null
                 )
-                aboutOrg= about
+                aboutOrg = about
 
 
             }
@@ -307,7 +291,6 @@ class ConnectionToServer(prefs: Prefs) {
                 tblAbout = it
             )
         }
-
 
 
     }
@@ -332,16 +315,16 @@ class ConnectionToServer(prefs: Prefs) {
         resultset = stmt.executeQuery(query)
         while (resultset.next()) {
 
-                val contacts: TblDepartmentContact = TblDepartmentContact(
-                    Dept_id = resultset.getInt("Dept_id"),
-                    Dept_name = resultset.getString("Dept_name").orEmpty(),
-                    Dept_contact = resultset.getString("Dept_contact").orEmpty(),
-                    Dept_mail = resultset.getString("Dept_mail").orEmpty(),
+            val contacts: TblDepartmentContact = TblDepartmentContact(
+                Dept_id = resultset.getInt("Dept_id"),
+                Dept_name = resultset.getString("Dept_name").orEmpty(),
+                Dept_contact = resultset.getString("Dept_contact").orEmpty(),
+                Dept_mail = resultset.getString("Dept_mail").orEmpty(),
 
                 )
             contactsList.add(contacts)
 
-            }
+        }
 
         conn.close()
 
@@ -365,46 +348,81 @@ class ConnectionToServer(prefs: Prefs) {
 
         resultset = stmt.executeQuery(query)
         while (resultset.next()) {
-            val contacts: RegistrationRequest.RequiredDocuments = RegistrationRequest.RequiredDocuments(
-                DocumentName = resultset.getString("DocTypeName"),
-                DocImage =null,
+            val contacts: RegistrationRequest.RequiredDocuments =
+                RegistrationRequest.RequiredDocuments(
+                    DocumentName = resultset.getString("DocTypeName"),
+                    DocImage = null,
                 )
             contactsList.add(contacts)
         }
         conn.close()
 
-        return  DocumentTypesResponse(
+        return DocumentTypesResponse(
             documentTypes = contactsList
         )
     }
 
-    fun requestForReg(data: RegistrationRequest?): Boolean? {
+    fun requestForReg(data: RegistrationRequest?, context: Context): String? {
         var stmt: Statement? = null
-
-        val query1 = "INSERT INTO [DropcareTrial].[dbo].[tblOnlineTapRequest] (ReqID,MemName,Address,Gender,CitNo,ContactNo,FHName,GFILName,MaleCount,FemaleCount) " +
-                "VALUES (4,'${data?.MemName.toString().orEmpty()}', '${data?.Address.toString().orEmpty()}', '${data?.Gender.toString().orEmpty()}', '${data?.CitNo.toString().orEmpty()}', '${data?.ContactNo.toString().orEmpty()}'," +
-                "'${data?.FHName.toString().orEmpty()}', '${data?.GFILName.toString().orEmpty()}', ${data?.MaleCount}, ${data?.FemaleCount} );"
-
-
+        var maxId: Int = 0
         val ss = SqlServerFunctions()
         val conn: Connection = ss.ConnectToSQLServer(prefs)
         stmt = conn.createStatement()
+        try {
+
+            var rs: ResultSet =
+                stmt.executeQuery("Select isnull(Max(ReqID),0) as ReqID from tblOnlineTapRequest")
+            while (rs.next()) {
+                maxId = Integer.parseInt(rs.getString("ReqID")) + 1
+            }
+        } catch (e: Exception) {
+            Log.e("DBTest", "Unable Connect to Server", e)
+        }
+
+        val query1 =
+            "INSERT INTO [DropcareTrial].[dbo].[tblOnlineTapRequest] (ReqID,MemName,Address,Gender,CitNo,ContactNo,FHName,GFILName,MaleCount,FemaleCount) " +
+                    "VALUES ($maxId,'${data?.MemName.toString()}', '${
+                        data?.Address.toString()
+                    }', '${data?.Gender.toString()}', '${
+                        data?.CitNo.toString()
+                    }', '${data?.ContactNo.toString()}'," +
+                    "'${data?.FHName.toString()}', '${
+                        data?.GFILName.toString()
+                    }', ${data?.MaleCount}, ${data?.FemaleCount} );"
 
 
-        for (files in data?.files.orEmpty()){
+        for (files in data?.files.orEmpty()) {
+            var path: String
+            try {
+                path = FilePath.getRealPath(context, Uri.parse(files.DocImage)).orEmpty()
+            } catch (ex: Exception) {
+                val myUri = Uri.parse(files.DocImage)
+                path = myUri.encodedPath.toString()
+                FilePath.getRealPathFromURI(context, Uri.parse(files.DocImage)).orEmpty()
+            }
 
+            val pic = BitmapFactory.decodeFile(path)
+            val docImg: ByteArray = getBytes(pic)
 
-            val query = "INSERT INTO [DropcareTrial].[dbo].[tblOnlineTapReqDocImg] (DocumentName, DocImage)" +
-                    "            SELECT '${files.DocumentName}'," +
-                    "       (select * FROM OPENROWSET(BULK '${files.DocImage}', SINGLE_BLOB) AS img) GO"
-            stmt.executeQuery(query)
+            val picsql =
+                "Insert into tblOnlineTapReqDocImg([ReqID],[DocumentName],[DocImage]) Values(?,?,?)"
+            val pics = conn.prepareStatement(picsql)
+            pics.setInt(1, maxId)
+            pics.setString(2, files.DocumentName.toString())
+            pics.setBytes(3, docImg)
+            pics.execute()
         }
         stmt.executeQuery(query1)
 
-
         conn.close()
 
-        return true
+        return "Success"
+    }
+
+    private fun getBytes(bitmap: Bitmap): ByteArray {
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream)
+        return stream.toByteArray()
     }
 }
 

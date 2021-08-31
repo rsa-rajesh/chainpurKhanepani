@@ -1,13 +1,14 @@
 package com.heartsun.pithuwakhanipani.ui.memberRegisterRequest
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.content.Context
+import androidx.lifecycle.*
 import com.heartsun.pithuwakhanipani.data.repository.AuthRepository
 import com.heartsun.pithuwakhanipani.data.repository.databaseReppo.DbRepository
 import com.heartsun.pithuwakhanipani.domain.DocumentTypesResponse
 import com.heartsun.pithuwakhanipani.domain.RegistrationRequest
+import com.heartsun.pithuwakhanipani.domain.dbmodel.TblBoardMemberType
+import com.heartsun.pithuwakhanipani.domain.dbmodel.TblDepartmentContact
+import com.heartsun.pithuwakhanipani.domain.dbmodel.TblDocumentType
 import kotlinx.coroutines.launch
 
 class RegisterViewModel(
@@ -23,11 +24,19 @@ class RegisterViewModel(
         }
     }
 
-    private val _sendRegistrationRequest = MutableLiveData<Boolean>()
-    val registrationResponse: LiveData<Boolean> = _sendRegistrationRequest
-    fun sendRegistrationRequestToServer(details: RegistrationRequest?) {
+    private val _sendRegistrationRequest = MutableLiveData<String>()
+    val registrationResponse: LiveData<String> = _sendRegistrationRequest
+    fun sendRegistrationRequestToServer(details: RegistrationRequest?,context:Context) {
         viewModelScope.launch {
-            _sendRegistrationRequest.value = homeRepository.sendRegistrationRequest(details)
+            _sendRegistrationRequest.value = homeRepository.sendRegistrationRequest(details,context)
         }
+    }
+
+
+    val fileTypeFromLocalDb: LiveData<List<TblDocumentType>> =
+        dbRepository.files.asLiveData()
+
+    fun insert(fileTypes: TblDocumentType) = viewModelScope.launch {
+        dbRepository.insert(contacts = fileTypes)
     }
 }
