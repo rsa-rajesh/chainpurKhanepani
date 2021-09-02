@@ -50,17 +50,8 @@ class MemberRegisterActivity : BaseActivity() {
             }
             toolbar.tvToolbarTitle.text = "Member Registration"
         }
-
         getFilesRequirementFromDb()
-
-
-//        lifecycleScope.launch {
-//            showProgress()
-//            delay(1000)
-//            registerViewModel.getFileRequirementFromServer()
-//        }
         requestObserver()
-
     }
 
     private fun getFilesRequirementFromDb() {
@@ -117,7 +108,6 @@ class MemberRegisterActivity : BaseActivity() {
                 Navigation.findNavController(binding.btDownloadForm)
                     .navigate(R.id.action_membersRegistrationFilesFragment_to_membersRegistrationFormFragment);
             }
-//            hideProgress()
         })
     }
 

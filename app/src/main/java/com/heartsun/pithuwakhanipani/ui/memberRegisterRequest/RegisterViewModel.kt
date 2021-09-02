@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.lifecycle.*
 import com.heartsun.pithuwakhanipani.data.repository.AuthRepository
 import com.heartsun.pithuwakhanipani.data.repository.databaseReppo.DbRepository
+import com.heartsun.pithuwakhanipani.domain.BillDetailsResponse
+import com.heartsun.pithuwakhanipani.domain.ContactsListResponse
 import com.heartsun.pithuwakhanipani.domain.DocumentTypesResponse
 import com.heartsun.pithuwakhanipani.domain.RegistrationRequest
 import com.heartsun.pithuwakhanipani.domain.dbmodel.TblBoardMemberType
@@ -39,4 +41,15 @@ class RegisterViewModel(
     fun insert(fileTypes: TblDocumentType) = viewModelScope.launch {
         dbRepository.insert(contacts = fileTypes)
     }
+
+
+    private val _billDetails = MutableLiveData<BillDetailsResponse>()
+    val billDetailsFromServer: LiveData<BillDetailsResponse> = _billDetails
+    fun getBillingDetails(memberId:Int) {
+        viewModelScope.launch {
+            _billDetails.value = homeRepository.getBillDetails(memberId)
+        }
+    }
+
+
 }

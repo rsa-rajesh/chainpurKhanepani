@@ -81,7 +81,8 @@ class HomeActivity : BaseActivity() {
                 cvSastakoBarama,
                 cvSuchanaPati,
                 tvPoweredBy,
-                tvVersion
+                tvVersion,
+                cvBillDetails
             ).forEach {
                 it.setOnClickListener { view ->
                     when (view) {
@@ -107,6 +108,10 @@ class HomeActivity : BaseActivity() {
                         cvSastakoBarama -> {
                             activateViews(false)
                             startActivity(AboutOrganizationActivity.newIntent(this@HomeActivity))
+                        }
+                        cvSuchanaPati -> {
+                            activateViews(false)
+                            startActivity(NoticeBoardActivity.newIntent(this@HomeActivity))
                         }
                         cvSuchanaPati -> {
                             activateViews(false)

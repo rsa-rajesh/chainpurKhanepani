@@ -14,6 +14,7 @@ interface AuthRepository {
     suspend fun getContacts(): ContactsListResponse?
     suspend  fun getFilesRequirement(): DocumentTypesResponse?
     suspend fun sendRegistrationRequest(details: RegistrationRequest?, context: Context): String?
+    suspend fun getBillDetails(memberId: Int): BillDetailsResponse?
 }
 
 class AuthRepoImpl(
@@ -49,5 +50,9 @@ class AuthRepoImpl(
 
     override suspend fun sendRegistrationRequest(details: RegistrationRequest?, context: Context): String? {
         return connection.requestForReg(details,context)
+    }
+
+    override suspend fun getBillDetails(memberId:Int): BillDetailsResponse? {
+        return connection.getBillDetails(context,memberId)
     }
 }

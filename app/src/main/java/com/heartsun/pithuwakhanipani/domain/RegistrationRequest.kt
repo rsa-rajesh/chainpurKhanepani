@@ -49,5 +49,37 @@ data class RegistrationRequest(
 
 data class DocumentTypesResponse(
     val documentTypes: List<RegistrationRequest.RequiredDocuments>,
-) {
-}
+)
+
+data class BillDetails(
+    @SerializedName("MemberID")
+    var MemberID: Int?,
+    @SerializedName("MemName")
+    var MemName: String?,
+    @SerializedName("TapNo")
+    var TapNo: Int?,
+    @SerializedName("Address")
+    var Address: String?,
+    @SerializedName("TapType")
+    var TapType: String?,
+    @SerializedName("RID")
+    var RID: Int?,
+    @SerializedName("TotReading")
+    var TotReading: Int?,
+    @SerializedName("Amt")
+    var Amt: Float?,
+    @SerializedName("Inv_Date")
+    var Inv_Date: String?,
+    @SerializedName("Sam_Date")
+    var Sam_Date: String?,
+    @SerializedName("Dis")
+    var Dis: Float?,
+    @SerializedName("Fine")
+    var Fine: Float?,
+    @SerializedName("NetAmt")
+    var NetAmt: Float?
+)
+
+data class BillDetailsResponse(
+    val billDetails: List<BillDetails>
+)

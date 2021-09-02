@@ -309,9 +309,6 @@ class ConnectionToServer(prefs: Prefs) {
 
         var contactsList: MutableList<TblDepartmentContact> = arrayListOf()
 
-
-
-
         resultset = stmt.executeQuery(query)
         while (resultset.next()) {
 
@@ -423,6 +420,74 @@ class ConnectionToServer(prefs: Prefs) {
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream)
         return stream.toByteArray()
+    }
+
+    fun getBillDetails(context: Context, memberId: Int): BillDetailsResponse? {
+
+        var stmt: Statement? = null
+        var resultset: ResultSet? = null
+
+        val query = "SELECT [MemberID],[MemName],[TapNo],[Address],[TapType],[RID]" +
+                ",[TotReading],[Amt],[Inv_Date],[Sam_Date],[Dis],[Fine]" +
+                ",[NetAmt] FROM [tblTempBillDetail] Where Amt>0 and MemberID=" + memberId
+            .toString()
+
+        val ss = SqlServerFunctions()
+        val conn: Connection = ss.ConnectToSQLServer(prefs)
+        stmt = conn.createStatement()
+
+
+        var billDetailsList: MutableList<BillDetails> = arrayListOf()
+
+        resultset = stmt.executeQuery(query)
+
+
+        val totalBillDetails: BillDetails = BillDetails(
+          999999,null,0,null,null,null,0,0f,null,null,0f,0f,0f
+        )
+
+        while (resultset.next()) {
+
+            totalBillDetails.TotReading= totalBillDetails.TotReading?.plus(resultset.getInt("TotReading"))
+            totalBillDetails.Amt= totalBillDetails.Amt?.plus(resultset.getInt("Amt"))
+            totalBillDetails.Dis= totalBillDetails.Dis?.plus(resultset.getInt("Dis"))
+            totalBillDetails.Fine= totalBillDetails.Fine?.plus(resultset.getInt("Fine"))
+            totalBillDetails.NetAmt= totalBillDetails.NetAmt?.plus(resultset.getInt("NetAmt"))
+            totalBillDetails.MemberID = resultset.getInt("MemberID")
+            totalBillDetails.MemName = resultset.getString("MemName")
+            totalBillDetails.TapNo = resultset.getInt("TapNo")
+            totalBillDetails.Address = resultset.getString("Address").orEmpty()
+            totalBillDetails.TapType = resultset.getString("TapType").orEmpty()
+            totalBillDetails.RID = resultset.getInt("RID")
+            totalBillDetails.Inv_Date = resultset.getString("Inv_Date").orEmpty()
+            totalBillDetails.Sam_Date = resultset.getString("Sam_Date").orEmpty()
+
+            val billDetails: BillDetails = BillDetails(
+                MemberID = resultset.getInt("MemberID"),
+                MemName = resultset.getString("MemName").orEmpty(),
+                TapNo = resultset.getInt("TapNo"),
+                Address = resultset.getString("Address").orEmpty(),
+                TapType = resultset.getString("TapType").orEmpty(),
+                RID = resultset.getInt("RID"),
+                TotReading = resultset.getInt("TotReading"),
+                Amt = resultset.getFloat("Amt"),
+                Inv_Date = resultset.getString("Inv_Date").orEmpty(),
+                Sam_Date = resultset.getString("Sam_Date").orEmpty(),
+                Dis = resultset.getFloat("Dis"),
+                Fine = resultset.getFloat("Fine"),
+                NetAmt = resultset.getFloat("NetAmt")
+            )
+
+            billDetailsList.add(billDetails)
+        }
+
+        conn.close()
+
+        billDetailsList.add(totalBillDetails)
+
+        return BillDetailsResponse(
+            billDetails = billDetailsList
+        )
     }
 }
 
