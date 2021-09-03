@@ -15,6 +15,7 @@ import com.heartsun.pithuwakhanipani.R
 import com.heartsun.pithuwakhanipani.data.Prefs
 import com.heartsun.pithuwakhanipani.ui.about.AboutAppActivity
 import com.heartsun.pithuwakhanipani.ui.about.AboutOrganizationActivity
+import com.heartsun.pithuwakhanipani.ui.billDetails.BillDetailsActivity
 import com.heartsun.pithuwakhanipani.ui.contact.ContactActivity
 import com.heartsun.pithuwakhanipani.ui.memberRegisterRequest.MemberRegisterActivity
 import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.MeroKhaniPaniActivity
@@ -113,9 +114,9 @@ class HomeActivity : BaseActivity() {
                             activateViews(false)
                             startActivity(NoticeBoardActivity.newIntent(this@HomeActivity))
                         }
-                        cvSuchanaPati -> {
+                        cvBillDetails -> {
                             activateViews(false)
-                            startActivity(NoticeBoardActivity.newIntent(this@HomeActivity))
+                            startActivity(BillDetailsActivity.newIntent(this@HomeActivity))
                         }
                         tvVersion -> {
                             activateViews(false)

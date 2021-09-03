@@ -15,10 +15,17 @@ class Prefs(private val sharedPreferences: SharedPreferences) {
         const val EMAIL = "prefs.email"
         const val IMAGE_DB = "prefs.image_db"
         const val RECORD_DB = "prefs.record_db"
-
+        const val LAST_SEARCHED_MEMBER_ID = "prefs.last_searched_member_id"
 
     }
 
+
+
+    var memberIds: String?
+        get() = sharedPreferences.getString(LAST_SEARCHED_MEMBER_ID, "")
+        set(value) {
+            sharedPreferences.edit { putString(LAST_SEARCHED_MEMBER_ID, value) }
+        }
 
     var imageDb: String?
         get() = sharedPreferences.getString(IMAGE_DB, "")
@@ -91,9 +98,6 @@ class Prefs(private val sharedPreferences: SharedPreferences) {
         set(value) {
             sharedPreferences.edit { putString(EMAIL, value) }
         }
-
-
-
 
     fun logout() {
         sharedPreferences.edit(true) {

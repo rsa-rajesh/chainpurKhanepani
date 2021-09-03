@@ -154,13 +154,25 @@
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
+                                    android:id="@+id/tvMemberName"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="धारा स्ख्या :- 2"
+                                    android:text="नाम :-"
                                     android:textColor="@color/sub_text_color"
                                     android:textSize="@dimen/_12sdp"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/tv1" />
+
+                                <TextView
+                                    android:id="@+id/tvId"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="धारा न. :- "
+                                    android:textColor="@color/sub_text_color"
+                                    android:textSize="@dimen/_12sdp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/tvMemberName" />
+
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -483,7 +483,10 @@ class ConnectionToServer(prefs: Prefs) {
 
         conn.close()
 
-        billDetailsList.add(totalBillDetails)
+
+        if(billDetailsList.isNotEmpty()){
+            billDetailsList.add(totalBillDetails)
+        }
 
         return BillDetailsResponse(
             billDetails = billDetailsList

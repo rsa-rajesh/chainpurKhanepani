@@ -1,9 +1,6 @@
 package com.heartsun.pithuwakhanipani.domain
 
-
-import android.net.Uri
 import com.google.gson.annotations.SerializedName
-import com.heartsun.pithuwakhanipani.domain.dbmodel.TblDepartmentContact
 
 data class RegistrationRequest(
 
@@ -33,7 +30,6 @@ data class RegistrationRequest(
 
     @SerializedName("femaleCount")
     var FemaleCount: String?,
-
 
     @SerializedName("files")
     var files: List<RequiredDocuments>?

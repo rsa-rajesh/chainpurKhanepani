@@ -119,10 +119,11 @@ dependencies {
     implementation "androidx.security:security-crypto:1.1.0-alpha03"
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
     implementation 'com.google.android.material:material:1.4.0'
     // Update navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.0-alpha07'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.0-alpha07'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.0-alpha08'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.0-alpha08'
 
     // network tools
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
@@ -178,7 +179,7 @@ dependencies {
     implementation 'androidx.paging:paging-runtime-ktx:3.1.0-alpha03'
 
     // Slidr for back to slide
-//    implementation 'com.r0adkll:slidableactivity:2.1.0'
+//     implementation 'com.r0adkll:slidableactivity:2.1.0'
 
 //image slider
     implementation 'com.ouattararomuald:slider-glide:3.0.1' // If you use Glide
