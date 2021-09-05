@@ -68,6 +68,8 @@ data class BillDetails(
     var Inv_Date: String?,
     @SerializedName("Sam_Date")
     var Sam_Date: String?,
+    @SerializedName("PaidStatus")
+    var PaidStatus: Int?,
     @SerializedName("Dis")
     var Dis: Float?,
     @SerializedName("Fine")

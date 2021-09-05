@@ -15,6 +15,8 @@ interface AuthRepository {
     suspend  fun getFilesRequirement(): DocumentTypesResponse?
     suspend fun sendRegistrationRequest(details: RegistrationRequest?, context: Context): String?
     suspend fun getBillDetails(memberId: Int): BillDetailsResponse?
+    suspend fun getUserDetails(phoneNo: String, pin: String): UserDetailsResponse?
+    suspend fun requestPin(phoneNo: String, memberId: String): String?
 }
 
 class AuthRepoImpl(
@@ -54,5 +56,13 @@ class AuthRepoImpl(
 
     override suspend fun getBillDetails(memberId:Int): BillDetailsResponse? {
         return connection.getBillDetails(context,memberId)
+    }
+
+    override suspend fun getUserDetails(phoneNo: String, pin: String): UserDetailsResponse? {
+        return connection.addTapResponce(context,phoneNo,pin)
+    }
+
+    override suspend fun requestPin(phoneNo: String, memberId: String): String? {
+        return connection.requestPin(phoneNo,memberId)
     }
 }

@@ -105,4 +105,18 @@ class Prefs(private val sharedPreferences: SharedPreferences) {
         }
         isFirstTime = false
     }
+
+
+//    var profileDetail: UserDetailsResponse?
+//        get() {
+//            val jsonString = sharedPreferences.getString(UserDetails, null)
+//            return Gson().fromJson(
+//                jsonString ?: return null,
+//                object : TypeToken<UserDetailsResponse>() {}.type
+//            )
+//        }
+//        set(value) {
+//            sharedPreferences.edit() { putString(UserDetails, Gson().toJson(value)) }
+//        }
+
 }

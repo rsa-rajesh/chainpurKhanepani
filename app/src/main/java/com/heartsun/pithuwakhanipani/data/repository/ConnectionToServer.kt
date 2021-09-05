@@ -7,21 +7,25 @@ import java.sql.Connection
 import java.sql.ResultSet
 import java.sql.Statement
 import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 
-import java.io.ByteArrayInputStream
 import android.graphics.BitmapFactory
 
 import android.graphics.Bitmap
-import android.graphics.Path
 import android.net.Uri
 import android.util.Log
 import androidcommon.utils.FilePath
-import java.io.FileOutputStream
-
-import java.io.File
+import androidx.appcompat.app.AlertDialog
 
 import com.heartsun.pithuwakhanipani.domain.*
-import java.io.ByteArrayOutputStream
+import timber.log.Timber
+import java.io.*
+import java.net.HttpURLConnection
+import java.net.MalformedURLException
+import java.net.URL
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ConnectionToServer(prefs: Prefs) {
@@ -428,8 +432,8 @@ class ConnectionToServer(prefs: Prefs) {
         var resultset: ResultSet? = null
 
         val query = "SELECT [MemberID],[MemName],[TapNo],[Address],[TapType],[RID]" +
-                ",[TotReading],[Amt],[Inv_Date],[Sam_Date],[Dis],[Fine]" +
-                ",[NetAmt] FROM [tblTempBillDetail] Where Amt>0 and MemberID=" + memberId
+                ",[TotReading],[Amt],[Inv_Date],[Sam_Date],[PaidStatus],[Dis],[Fine]" +
+                ",[NetAmt] FROM [tblTempBillDetail] Where Amt>0 and  and PaidStatus=0 MemberID=" + memberId
             .toString()
 
         val ss = SqlServerFunctions()
@@ -443,16 +447,16 @@ class ConnectionToServer(prefs: Prefs) {
 
 
         val totalBillDetails: BillDetails = BillDetails(
-          999999,null,0,null,null,null,0,0f,null,null,0f,0f,0f
+            999999, null, 0, null, null, null, 0, 0f, null, null, 0, 0f, 0f, 0f
         )
 
         while (resultset.next()) {
 
-            totalBillDetails.TotReading= totalBillDetails.TotReading?.plus(resultset.getInt("TotReading"))
-            totalBillDetails.Amt= totalBillDetails.Amt?.plus(resultset.getInt("Amt"))
-            totalBillDetails.Dis= totalBillDetails.Dis?.plus(resultset.getInt("Dis"))
-            totalBillDetails.Fine= totalBillDetails.Fine?.plus(resultset.getInt("Fine"))
-            totalBillDetails.NetAmt= totalBillDetails.NetAmt?.plus(resultset.getInt("NetAmt"))
+            totalBillDetails.TotReading = totalBillDetails.TotReading?.plus(resultset.getInt("TotReading"))
+            totalBillDetails.Amt = totalBillDetails.Amt?.plus(resultset.getInt("Amt"))
+            totalBillDetails.Dis = totalBillDetails.Dis?.plus(resultset.getInt("Dis"))
+            totalBillDetails.Fine = totalBillDetails.Fine?.plus(resultset.getInt("Fine"))
+            totalBillDetails.NetAmt = totalBillDetails.NetAmt?.plus(resultset.getInt("NetAmt"))
             totalBillDetails.MemberID = resultset.getInt("MemberID")
             totalBillDetails.MemName = resultset.getString("MemName")
             totalBillDetails.TapNo = resultset.getInt("TapNo")
@@ -461,6 +465,7 @@ class ConnectionToServer(prefs: Prefs) {
             totalBillDetails.RID = resultset.getInt("RID")
             totalBillDetails.Inv_Date = resultset.getString("Inv_Date").orEmpty()
             totalBillDetails.Sam_Date = resultset.getString("Sam_Date").orEmpty()
+            totalBillDetails.PaidStatus = resultset.getInt("PaidStatus")
 
             val billDetails: BillDetails = BillDetails(
                 MemberID = resultset.getInt("MemberID"),
@@ -475,7 +480,8 @@ class ConnectionToServer(prefs: Prefs) {
                 Sam_Date = resultset.getString("Sam_Date").orEmpty(),
                 Dis = resultset.getFloat("Dis"),
                 Fine = resultset.getFloat("Fine"),
-                NetAmt = resultset.getFloat("NetAmt")
+                NetAmt = resultset.getFloat("NetAmt"),
+                PaidStatus = resultset.getInt("PaidStatus")
             )
 
             billDetailsList.add(billDetails)
@@ -484,13 +490,249 @@ class ConnectionToServer(prefs: Prefs) {
         conn.close()
 
 
-        if(billDetailsList.isNotEmpty()){
+        if (billDetailsList.isNotEmpty()) {
             billDetailsList.add(totalBillDetails)
         }
 
         return BillDetailsResponse(
             billDetails = billDetailsList
         )
+    }
+
+    fun addTapResponce(context: Context, phoneNo: String, pin: String): UserDetailsResponse? {
+
+        var stmt: Statement? = null
+
+
+        val UID: String = phoneNo
+        val PWD: String = pin
+
+        val tapCount = 0
+        var ma_mc_allowed_count = 0
+
+        val qry =
+            "Select * from tblMember where ContactNo='$UID' and PinCode=$PWD"
+        val CMqry =
+            "Select * from tblMember where isnull(IsCM,0)=1 and isnull(IsMAAllowed,0)=1 and ContactNo='$UID' and PinCode=$PWD"
+//        val MemID: String
+
+        val ss = SqlServerFunctions()
+        val conn: Connection = ss.ConnectToSQLServer(prefs)
+        stmt = conn.createStatement()
+       var resultset: ResultSet? = stmt.executeQuery(qry)
+        var resultset2: ResultSet? = stmt.executeQuery(CMqry)
+
+        while (resultset2!!.next()) {
+            ma_mc_allowed_count += 1
+        }
+
+        var tblMember: MutableList<TblMember> = arrayListOf()
+
+
+        while (resultset!!.next()) {
+            var a:Boolean=false
+            if (ma_mc_allowed_count>0){
+                a= true
+            }
+
+            val member:TblMember = TblMember(
+                MemberID =resultset.getInt("MemberID"),
+                ContactNo = resultset.getString("ContactNo"),
+                MemName = resultset.getString("MemName"),
+                IsCMAndMAAllowed = a,
+                PinCode = resultset.getString("PinCode")
+            )
+            tblMember.add(member)
+        }
+
+
+        conn.close()
+
+        return UserDetailsResponse(
+            tblMember = tblMember
+        )
+
+
+//        = ss.GetFieldData("MemberID", qry)
+//        val RC: Int = ss.QueryResultCount(qry)
+//
+//
+//        val CMC: Int = ss.QueryResultCount(CMqry)
+//        if (RC > 0) {
+//            val pref: SharedPreferences =
+//                getApplicationContext().getSharedPreferences("LoginInfo", Context.MODE_PRIVATE)
+//            val editor = pref.edit()
+//            editor.putString("Username", UID)
+//            editor.putString("Password", PWD)
+//            editor.putString("MemID", MemID)
+//            if (CMC == 1) {
+//                editor.putString("IsCMAndMAAllowed", "1")
+//            } else {
+//                editor.putString("IsCMAndMAAllowed", "0")
+//            }
+//            if (chkSLI.isChecked()) {
+//                editor.putString("Flag", "true")
+//            } else {
+//                editor.putString("Flag", "false")
+//            }
+//            editor.apply()
+//            val intent = Intent(this@MainActivity, DashboardActivity::class.java)
+//            startActivity(intent)
+//        }
+
+
+    }
+
+    fun requestPin(phoneNo: String, memberId: String): String? {
+        val ss: SqlServerFunctions
+        var RC = 0
+        var SFRC = 0
+        var code = 0
+        var stmt: Statement? = null
+        var resultset: ResultSet? = null
+
+        var SecCode = ""
+        ss = SqlServerFunctions()
+        val smsfeatquery =
+            "Select * from tblHospitalSetting Where SettingName='OTPSMSEnabled' and SettingValue='True'"
+
+
+        val conn: Connection = ss.ConnectToSQLServer(prefs)
+        stmt = conn.createStatement()
+
+
+        resultset = stmt.executeQuery(smsfeatquery)
+        while (resultset.next()) {
+            SFRC += 1
+        }
+
+//        val SFRC: Int = ss.QueryResultCount(smsfeatquery)
+        if (SFRC == 0) {
+            conn.close()
+
+            return "SMS features is not activated yet"
+
+//            val alert0 = AlertDialog.Builder(this@NewUserSignup)
+//            alert0.setTitle("SMS Error")
+//            alert0.setMessage("SMS features is not activated yet")
+//            alert0.setPositiveButton("OK", null)
+//            alert0.show()
+//            System.exit(0)
+        }
+
+        val qry = "select * from tblMember where MemberID=" + memberId +
+                " and ContactNo='" + phoneNo + "'"
+
+        resultset = stmt.executeQuery(qry)
+        while (resultset.next()) {
+            RC += 1
+        }
+
+
+//        RC = ss.ConnectToSQLServer()
+
+
+
+        val TokenStr: String = GetFieldData(
+            "SettingValue",
+            "Select * from tblHospitalSetting Where SettingName='SMSTokenValue'",stmt
+        )
+        //String SMSFeature =ss.GetFieldData("SettingValue","Select * from tblHospitalSetting Where SettingName='SMSFeatures'");
+        //String SMSFeature =ss.GetFieldData("SettingValue","Select * from tblHospitalSetting Where SettingName='SMSFeatures'");
+        val ShortStr: String = GetFieldData(
+            "SettingValue",
+            "Select * from tblHospitalSetting Where SettingName='SMSShortName'",stmt
+        )
+
+        if (RC > 0) {
+            try {
+                val d = Calendar.getInstance().time
+                val df1 = SimpleDateFormat("smd") //second minute date
+                SecCode = df1.format(d)
+                val url = URL("https://api.sparrowsms.com/v2/sms/")
+                val conn = url.openConnection() as HttpURLConnection
+                conn.doOutput = true
+                conn.requestMethod = "POST"
+                conn.setRequestProperty("Content-Type", "application/json")
+                val input =
+                    "{\"token\":\"" + TokenStr + "\",\"from\":\"" + ShortStr + "\",\"to\":\"" + phoneNo +
+                            "\",\"text\":\"Your Access Code for Dropcare is: " + SecCode + "\"}"
+                val os = conn.outputStream
+                os.write(input.toByteArray())
+                os.flush()
+                code = conn.responseCode
+                /*if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+                            throw new RuntimeException("Failed : HTTP error code : "
+                                    + conn.getResponseCode());
+                        }*/
+
+
+                /*BufferedReader br = new BufferedReader(new InputStreamReader(
+                                (conn.getInputStream())));
+                        String output=br.readLine();
+                        AlertDialog.Builder alert = new AlertDialog.Builder(NewUserSignup.this);
+                        alert.setTitle("Confirmation");
+                        //alert.setMessage("Please check your mobile for access code");
+                        alert.setMessage(code);
+                        alert.setPositiveButton("OK",null);
+                        alert.show();*/conn.disconnect()
+            } catch (e: MalformedURLException) {
+                e.printStackTrace()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            if (code == 200) {
+                try {
+                    val MN: String = phoneNo
+                    val MMID: Int = memberId.toInt()
+                    val SC = SecCode.toInt()
+                    UpdateSecurityCode(MN, MMID, SC,stmt)
+                    conn.commit()
+                } catch (ex: Exception) {
+                    Timber.i("SQL Exception Occured")
+                }
+//                val alert2 = AlertDialog.Builder(this@NewUserSignup)
+//                alert2.setTitle("Confirmation")
+                conn.close()
+
+                return "Access Code is sent to your mobile"
+//                alert2.setPositiveButton("OK", null)
+//                alert2.show()
+            } else {
+//                val alert1 = AlertDialog.Builder(this@NewUserSignup)
+//                alert1.setTitle("Confirmation")
+                conn.close()
+
+                return "SMS Connection Server Error"
+//                alert1.setPositiveButton("OK", null)
+//                alert1.show()
+            }
+        } else {
+//            val alert3 = AlertDialog.Builder(this@NewUserSignup)
+//            alert3.setTitle("Confirmation")
+            conn.close()
+
+            return "Either Mobile or MemberID is not registered"
+//            alert3.setPositiveButton("OK", null)
+//            alert3.show()
+        }
+
+    }
+
+    private fun GetFieldData(FieldName: String, qry: String, stmt: Statement?): String {
+        val rs = stmt!!.executeQuery(qry)
+        var RetVal:String="0"
+        while (rs.next()) {
+            RetVal = rs.getString(FieldName)
+        }
+        return RetVal
+    }
+
+
+    fun UpdateSecurityCode(mn: String, mmid: Int, sc: Int,stmt: Statement) {
+            val qry =
+                "Update tblMember Set PinCode=$sc where MemberID=$mmid and ContactNo='$mn'"
+            stmt.executeUpdate(qry)
     }
 }
 

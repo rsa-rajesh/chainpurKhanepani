@@ -80,7 +80,7 @@ data class TblBoardMemberType(
     val MemberType: String?,
     @ColumnInfo(name = "isOldMember")
     val isOldMember: Int,
-    )
+)
 
 
 @Entity(tableName = "tblNotice")
@@ -132,4 +132,20 @@ data class TblDocumentType(
     @ColumnInfo(name = "DocTypeName")
     val DocTypeName: String?,
 
-)
+    )
+
+
+@Entity(tableName = "tblMember")
+data class TblMember(
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "MemberID")
+    val MemberID: Int,
+    @ColumnInfo(name = "ContactNo")
+    val ContactNo: String?,
+    @ColumnInfo(name = "MemName")
+    val MemName: String?,
+    @ColumnInfo(name = "PinCode")
+    val PinCode: String?,
+    @ColumnInfo(name = "IsCMAndMAAllowed")
+    val IsCMAndMAAllowed: Boolean?,
+    )

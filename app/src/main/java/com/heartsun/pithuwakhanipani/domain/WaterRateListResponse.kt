@@ -28,3 +28,7 @@ data class AboutOrgResponse(
 data class ContactsListResponse(
     val tblDepartmentContact:List<TblDepartmentContact>,
 )
+
+data class UserDetailsResponse(
+    val tblMember:List<TblMember>,
+)

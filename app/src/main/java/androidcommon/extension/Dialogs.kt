@@ -8,6 +8,8 @@ import androidx.annotation.DrawableRes
 import com.heartsun.pithuwakhanipani.R
 import com.heartsun.pithuwakhanipani.databinding.DialogErrorBinding
 import com.heartsun.pithuwakhanipani.databinding.DialogPosNegOptionBinding
+import com.heartsun.pithuwakhanipani.databinding.DilogAddNewBinding
+import com.heartsun.pithuwakhanipani.databinding.DilogRequestPinBinding
 
 fun Context.getBaseDialog(): Dialog {
     return Dialog(this, R.style.WideDialog).apply {
@@ -87,4 +89,93 @@ fun Context.showCustomDialog(
     }
 }
 
+fun Context.showAddTapDialog(
 
+    onAddClick: (phoneNo:String,pin:String) -> Unit ,
+    onRequestClick: () -> Unit ,
+    icon: Int = R.drawable.ic_notification
+) {
+    val dialog = getBaseDialog()
+    val dialogView = DilogAddNewBinding.inflate(LayoutInflater.from(this), null, false)
+    dialog.apply {
+        setContentView(dialogView.root)
+        setCancelable(false)
+        show()
+        with(dialogView) {
+
+            btAddNew.setOnClickListener {
+                when {
+                    phoneNumber.text.isNullOrBlank() -> {
+                        tiPhoneNumber.error="Phone number is required"
+                    }
+                    pin.text.isNullOrBlank() -> {
+                        tiPin.error="Validation Pin is required"
+                        tiPhoneNumber.error=null
+                    }
+                    else -> {
+                        tiPin.error=null
+                        tiPhoneNumber.error=null
+                        onAddClick(phoneNumber.text.toString(),pin.text.toString())
+                        dismiss()
+                    }
+                }
+            }
+            btRequestPin.setOnClickListener {
+                onRequestClick()
+                dismiss()
+            }
+            btClose.setOnClickListener {
+                dismiss()
+            }
+        }
+    }
+}
+
+fun Context.showRequestPinDialog(
+    onAddClick: () -> Unit={},
+    onRequestClick: (phoneNo:String,memberId:String) -> Unit={ s: String, s1: String -> }
+) {
+    val dialog = getBaseDialog()
+    val dialogView = DilogRequestPinBinding.inflate(LayoutInflater.from(this), null, false)
+    dialog.apply {
+        setContentView(dialogView.root)
+        setCancelable(false)
+        show()
+        with(dialogView) {
+
+
+            btAddNew.setOnClickListener {
+                onAddClick()
+                dismiss()
+            }
+            btRequestPin.setOnClickListener {
+
+                when {
+                    phoneNumber.text.isNullOrBlank() -> {
+                        tiPhoneNumber.error="Phone number is required"
+                    }
+                    memberId.text.isNullOrBlank() -> {
+                        tiMemberId.error="Member id is required"
+                        tiPhoneNumber.error=null
+                    }
+
+                    else -> {
+                        tiMemberId.error=null
+                        tiPhoneNumber.error=null
+
+                        onRequestClick(phoneNumber.text.toString(),memberId.text.toString())
+                        dismiss()
+
+                    }
+                }
+
+
+
+            }
+
+            btClose.setOnClickListener {
+                dismiss()
+            }
+        }
+    }
+}

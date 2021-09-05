@@ -92,7 +92,7 @@ class BillDetailsActivity : BaseActivity() {
                 showProgress()
 
                 if (!etUnit.text.isNullOrBlank()) {
-getReport()
+                    getReport()
                 } else {
                     hideProgress()
                     toastS("कृपया तपाईँको दर्ता नम्बर प्रविष्ट गर्नुहोस् ।")
@@ -161,7 +161,7 @@ getReport()
         })
     }
 
-    private fun getReport(){
+    private fun getReport() {
         thread {
             Thread.sleep(100)
             registerViewModel.getBillingDetails(binding.etUnit.text.toString().toInt())
