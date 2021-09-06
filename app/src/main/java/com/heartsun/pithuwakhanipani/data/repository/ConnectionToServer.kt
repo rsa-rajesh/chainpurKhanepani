@@ -433,7 +433,7 @@ class ConnectionToServer(prefs: Prefs) {
 
         val query = "SELECT [MemberID],[MemName],[TapNo],[Address],[TapType],[RID]" +
                 ",[TotReading],[Amt],[Inv_Date],[Sam_Date],[PaidStatus],[Dis],[Fine]" +
-                ",[NetAmt] FROM [tblTempBillDetail] Where Amt>0 and  and PaidStatus=0 MemberID=" + memberId
+                ",[NetAmt] FROM [tblTempBillDetail] Where Amt>0 and MemberID=" + memberId
             .toString()
 
         val ss = SqlServerFunctions()
@@ -447,7 +447,7 @@ class ConnectionToServer(prefs: Prefs) {
 
 
         val totalBillDetails: BillDetails = BillDetails(
-            999999, null, 0, null, null, null, 0, 0f, null, null, 0, 0f, 0f, 0f
+            999999, null, 0, null, null, null, 0, 0f, null, null, 1, 0f, 0f, 0f
         )
 
         while (resultset.next()) {
@@ -465,7 +465,6 @@ class ConnectionToServer(prefs: Prefs) {
             totalBillDetails.RID = resultset.getInt("RID")
             totalBillDetails.Inv_Date = resultset.getString("Inv_Date").orEmpty()
             totalBillDetails.Sam_Date = resultset.getString("Sam_Date").orEmpty()
-            totalBillDetails.PaidStatus = resultset.getInt("PaidStatus")
 
             val billDetails: BillDetails = BillDetails(
                 MemberID = resultset.getInt("MemberID"),
@@ -508,38 +507,38 @@ class ConnectionToServer(prefs: Prefs) {
         val PWD: String = pin
 
         val tapCount = 0
-        var ma_mc_allowed_count = 0
+//        var ma_mc_allowed_count = 0
 
         val qry =
             "Select * from tblMember where ContactNo='$UID' and PinCode=$PWD"
-        val CMqry =
-            "Select * from tblMember where isnull(IsCM,0)=1 and isnull(IsMAAllowed,0)=1 and ContactNo='$UID' and PinCode=$PWD"
+//        val CMqry =
+//            "Select * from tblMember where isnull(IsCM,0)=1 and isnull(IsMAAllowed,0)=1 and ContactNo='$UID' and PinCode=$PWD"
 //        val MemID: String
 
         val ss = SqlServerFunctions()
         val conn: Connection = ss.ConnectToSQLServer(prefs)
         stmt = conn.createStatement()
        var resultset: ResultSet? = stmt.executeQuery(qry)
-        var resultset2: ResultSet? = stmt.executeQuery(CMqry)
+//        var resultset2: ResultSet? = stmt.executeQuery(CMqry)
 
-        while (resultset2!!.next()) {
-            ma_mc_allowed_count += 1
-        }
+//        while (resultset2!!.next()) {
+//            ma_mc_allowed_count += 1
+//        }
 
         var tblMember: MutableList<TblMember> = arrayListOf()
 
 
         while (resultset!!.next()) {
-            var a:Boolean=false
-            if (ma_mc_allowed_count>0){
-                a= true
-            }
+//            var a:Boolean=false
+//            if (ma_mc_allowed_count>0){
+//                a= true
+//            }
 
             val member:TblMember = TblMember(
                 MemberID =resultset.getInt("MemberID"),
                 ContactNo = resultset.getString("ContactNo"),
                 MemName = resultset.getString("MemName"),
-                IsCMAndMAAllowed = a,
+//                IsCMAndMAAllowed = a,
                 PinCode = resultset.getString("PinCode")
             )
             tblMember.add(member)
@@ -584,7 +583,6 @@ class ConnectionToServer(prefs: Prefs) {
     }
 
     fun requestPin(phoneNo: String, memberId: String): String? {
-        val ss: SqlServerFunctions
         var RC = 0
         var SFRC = 0
         var code = 0
@@ -592,7 +590,7 @@ class ConnectionToServer(prefs: Prefs) {
         var resultset: ResultSet? = null
 
         var SecCode = ""
-        ss = SqlServerFunctions()
+        val ss: SqlServerFunctions = SqlServerFunctions()
         val smsfeatquery =
             "Select * from tblHospitalSetting Where SettingName='OTPSMSEnabled' and SettingValue='True'"
 

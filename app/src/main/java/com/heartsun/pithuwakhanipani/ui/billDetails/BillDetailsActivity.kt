@@ -15,6 +15,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidcommon.RLayout
 import com.google.android.material.chip.Chip
+import com.heartsun.pithuwakhanipani.domain.BillDetails
 import org.koin.android.ext.android.get
 import kotlin.concurrent.thread
 
@@ -44,6 +45,7 @@ class BillDetailsActivity : BaseActivity() {
 
     private fun initView() {
         with(binding) {
+
             rateFromServerObserver()
 
             var idsString: String? = prefs.memberIds
@@ -115,6 +117,38 @@ class BillDetailsActivity : BaseActivity() {
                 binding.tvBillDetails.isVisible = false
                 toastS("सदस्यता नम्बर फेला परेन")
             } else {
+
+                val totalBillDetails: BillDetails = BillDetails(
+                    999999, null, 0, null, null, null, 0, 0f, null, null, 0, 0f, 0f, 0f
+                )
+                var bills: MutableList<BillDetails> = arrayListOf()
+                for (billDetails in it.billDetails) {
+                    if (billDetails.PaidStatus != 1) {
+                        bills.add(billDetails)
+                        totalBillDetails.TotReading =
+                            totalBillDetails.TotReading?.plus(billDetails.TotReading!!.toInt())
+                        totalBillDetails.Amt =
+                            totalBillDetails.Amt?.plus(billDetails.Amt!!.toFloat())
+                        totalBillDetails.Dis = totalBillDetails.Dis?.plus(billDetails.Dis!!)
+                        totalBillDetails.Fine = totalBillDetails.Fine?.plus(billDetails.Fine!!)
+                        totalBillDetails.NetAmt =
+                            totalBillDetails.NetAmt?.plus(billDetails.NetAmt!!)
+                        totalBillDetails.MemberID = billDetails.MemberID
+                        totalBillDetails.MemName = billDetails.MemName
+                        totalBillDetails.TapNo = billDetails.TapNo
+                        totalBillDetails.Address = billDetails.Address
+                        totalBillDetails.TapType = billDetails.TapType
+                        totalBillDetails.RID = billDetails.RID
+                        totalBillDetails.Inv_Date = billDetails.Inv_Date
+                        totalBillDetails.Sam_Date = billDetails.Sam_Date
+                        totalBillDetails.PaidStatus = billDetails.PaidStatus
+                    }
+
+                }
+
+                bills.add(totalBillDetails)
+
+
                 var idsString: String? = prefs.memberIds
 
                 if (!idsString.isNullOrBlank()) {
@@ -149,12 +183,14 @@ class BillDetailsActivity : BaseActivity() {
                 binding.tvName.text = "ग्राहकको नाम :-" + it.billDetails[0].MemName
                 binding.tvAddress.text = "ठेगाना :-" + it.billDetails[0].Address
                 binding.tvDharaNo.text = "धारा न. :-" + it.billDetails[0].TapNo
-                binding.tvDharaType.text = "धारा न. :-" + it.billDetails[0].TapType
+                binding.tvDharaType.text = "धाराको प्रकार :-" + it.billDetails[0].TapType
 
                 binding.cvCommunityRate.isVisible = true
                 binding.tvBillDetails.isVisible = true
                 billDetailsAdapter = BillDetailsAdapter()
-                billDetailsAdapter.items = it.billDetails
+//                billDetailsAdapter.items = it.billDetails
+                billDetailsAdapter.items = bills
+
                 binding.rvCommunityRate.layoutManager = LinearLayoutManager(this)
                 binding.rvCommunityRate.adapter = billDetailsAdapter
             }

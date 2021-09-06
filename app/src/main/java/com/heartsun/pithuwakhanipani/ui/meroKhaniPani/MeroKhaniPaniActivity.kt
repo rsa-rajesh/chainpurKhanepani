@@ -2,15 +2,25 @@ package com.heartsun.pithuwakhanipani.ui.meroKhaniPani
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidcommon.base.BaseActivity
-import androidcommon.extension.showAddTapDialog
-import androidcommon.extension.showRequestPinDialog
-import androidcommon.extension.toastS
+import androidcommon.extension.*
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.heartsun.pithuwakhanipani.data.Prefs
 import com.heartsun.pithuwakhanipani.databinding.ActivityHomeBinding
 import com.heartsun.pithuwakhanipani.databinding.ActivityMeroKhaniPaniBinding
 import com.heartsun.pithuwakhanipani.ui.HomeActivity
 import com.heartsun.pithuwakhanipani.ui.HomeViewModel
+import com.heartsun.pithuwakhanipani.ui.contact.ContactListAdapter
+import com.heartsun.pithuwakhanipani.ui.memberRegisterRequest.MemberRegisterActivity
+import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.personalMenu.PersonalMenu
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MeroKhaniPaniActivity : BaseActivity() {
@@ -18,6 +28,10 @@ class MeroKhaniPaniActivity : BaseActivity() {
     private val binding by lazy {
         ActivityMeroKhaniPaniBinding.inflate(layoutInflater)
     }
+
+    private val prefs by inject<Prefs>()
+
+    private lateinit var tapListAdapter: TapListAdapter
 
     private val myTapViewModel by viewModel<MyTapViewModel>()
 
@@ -33,7 +47,10 @@ class MeroKhaniPaniActivity : BaseActivity() {
         initViews()
     }
 
+    @DelicateCoroutinesApi
     private fun initViews() {
+
+        getTapsFromDb()
         with(binding) {
             toolbar.tvToolbarTitle.text = "मेरो खानेपानी"
             toolbar.ivBack.setOnClickListener {
@@ -42,12 +59,45 @@ class MeroKhaniPaniActivity : BaseActivity() {
             }
             listOf(btAdd, btAddNew).forEach { it ->
                 it.setOnClickListener {
+                    addTapFromServerObserver()
                     openAddDialog()
                 }
             }
         }
 
     }
+
+
+    @DelicateCoroutinesApi
+    private fun getTapsFromDb() {
+        showProgress()
+        myTapViewModel.tapsListFromLocalDb.observe(this, { it ->
+            it ?: return@observe
+            if (it.isNullOrEmpty()) {
+                binding.clEmptyList.isVisible = true
+                prefs.noOfTaps = "0"
+
+            } else {
+                prefs.noOfTaps = it.size.toString()
+                binding.clEmptyList.isVisible = false
+                tapListAdapter = TapListAdapter(
+                    onItemClick = {
+                        startActivity(PersonalMenu.newIntent(this,address = it.ContactNo.toString(),memberId = it.MemberID.toString(),registrationDate = it.PinCode.toString(),name = it.MemName.toString()))
+                    }, onDeleteClick = {
+                        showCustomDialog(message = "तपाईँ साँच्चिकै सूचीबाट यो धारा हटाउन चाहनुहुन्छ ?",negLabel = "रद्द गर्नुहोस्",posLabel = "हटाउनुहोस्",onPosClick = {
+                            myTapViewModel.delete(members = it)
+                        })
+
+                    }
+                )
+                tapListAdapter.items = it
+                binding.rvList.layoutManager = LinearLayoutManager(this)
+                binding.rvList.adapter = tapListAdapter
+                hideProgress()
+            }
+        })
+    }
+
 
     private fun openRequestDialog() {
         showRequestPinDialog(onAddClick = {
@@ -72,8 +122,16 @@ class MeroKhaniPaniActivity : BaseActivity() {
 
     private fun requestNewPin(phoneNo: String, memberId: String) {
         toastS("phone:-$phoneNo pin:-$memberId")
-
         myTapViewModel.requestPin(phoneNo, memberId)
+    }
+
+    private fun addTapFromServerObserver() {
+        myTapViewModel.addTap.observe(this, {
+            it ?: return@observe
+            for (member in it.tblMember) {
+                myTapViewModel.insert(members = member)
+            }
+        })
     }
 
 }

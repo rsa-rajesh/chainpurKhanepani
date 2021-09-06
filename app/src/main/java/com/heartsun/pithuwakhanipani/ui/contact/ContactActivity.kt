@@ -98,7 +98,6 @@ class ContactActivity : BaseActivity() {
             for (memberType in it.tblDepartmentContact) {
                 homeViewModel.insert(contacts = memberType)
             }
-
         })
     }
 }

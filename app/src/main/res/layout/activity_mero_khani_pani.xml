@@ -14,6 +14,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clEmptyList"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/background"
@@ -86,6 +87,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
+        android:id="@+id/rvList"
         android:layout_height="0dp"
         android:layout_margin="@dimen/_12sdp"
         app:layout_constraintBottom_toTopOf="@id/btAddNew"

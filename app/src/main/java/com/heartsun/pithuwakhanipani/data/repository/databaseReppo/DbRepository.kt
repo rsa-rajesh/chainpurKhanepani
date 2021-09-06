@@ -108,6 +108,7 @@ class DbRepository(database: KanipaniDatabase) {
         tblNotice.insert(table = notice)
 
     }
+
     suspend fun deleteAll(tblNotices: TblNotice) {
         tblNotice.deleteAll()
     }
@@ -124,14 +125,13 @@ class DbRepository(database: KanipaniDatabase) {
         tblAboutOrg.insert(table = about)
 
     }
+
     suspend fun deleteAll(about: TblAboutOrg) {
         tblAboutOrg.deleteAll()
     }
 
     val about: Flow<List<TblAboutOrg>> =
         tblAboutOrg.getAllData()
-
-
 
 
     //for contact  -- starts
@@ -142,6 +142,7 @@ class DbRepository(database: KanipaniDatabase) {
         tblDepartmentContact.insert(table = contacts)
 
     }
+
     suspend fun deleteAll(contact: TblDepartmentContact) {
         tblDepartmentContact.deleteAll()
     }
@@ -152,12 +153,13 @@ class DbRepository(database: KanipaniDatabase) {
 
     //for document type  -- starts
 
-    internal var tblDocumentType: TblDocumentTypeDao = database.tblDocumentTypeDao()
+    private var tblDocumentType: TblDocumentTypeDao = database.tblDocumentTypeDao()
 
     suspend fun insert(contacts: TblDocumentType) {
         tblDocumentType.insert(table = contacts)
 
     }
+
     suspend fun deleteAll(contact: TblDocumentType) {
         tblDocumentType.deleteAll()
     }
@@ -165,4 +167,24 @@ class DbRepository(database: KanipaniDatabase) {
     val files: Flow<List<TblDocumentType>> =
         tblDocumentType.getAllData()
 
+
+//    add Tap --start
+
+    private var tblMemberDao: TblMemberDao = database.tblMemberDao()
+
+
+    suspend fun insert(members: TblMember) {
+        tblMemberDao.insert(table = members)
+    }
+
+    suspend fun deleteAll(members: TblMember) {
+        tblMemberDao.deleteAll()
+    }
+
+    suspend fun delete(members: Int) {
+        tblMemberDao.delete(members)
+    }
+
+    val getAllTaps: Flow<List<TblMember>> =
+        tblMemberDao.getAllData()
 }

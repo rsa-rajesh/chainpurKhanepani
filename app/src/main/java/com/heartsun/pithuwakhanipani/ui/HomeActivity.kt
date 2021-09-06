@@ -51,7 +51,7 @@ class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        prefs.isFirstTime=false
+        prefs.isFirstTime = false
         initView()
     }
 
@@ -64,6 +64,8 @@ class HomeActivity : BaseActivity() {
 //                GlideImageLoaderFactory(),
                 imageUrls = imageUrls
             )
+
+            tvNoOfTaps.text ="धारा स्ख्या:- "+prefs.noOfTaps.orEmpty()
             imageSlider.setIndicatorsBottomMargin(8)
 
             val powered: String = "powered by:- <font color=#223AF1>Heartsun Technology</font>"
@@ -105,7 +107,8 @@ class HomeActivity : BaseActivity() {
                         }
                         cvSamparka -> {
                             activateViews(false)
-                            startActivity(ContactActivity.newIntent(this@HomeActivity))                        }
+                            startActivity(ContactActivity.newIntent(this@HomeActivity))
+                        }
                         cvSastakoBarama -> {
                             activateViews(false)
                             startActivity(AboutOrganizationActivity.newIntent(this@HomeActivity))
@@ -153,14 +156,14 @@ class HomeActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-
+        binding.tvNoOfTaps.text ="धारा स्ख्या:- "+prefs.noOfTaps.orEmpty()
         activateViews(true)
     }
 
     private fun getImageLoader(): ImageLoader.Factory<out ImageLoader> {
-                val requestOptions = RequestOptions.errorOf(R.drawable.error_placeholder)
-                    .placeholder(R.drawable.loading_anim)
-            return    GlideImageLoaderFactory(requestOptions = requestOptions)
-            }
+        val requestOptions = RequestOptions.errorOf(R.drawable.error_placeholder)
+            .placeholder(R.drawable.loading_anim)
+        return GlideImageLoaderFactory(requestOptions = requestOptions)
+    }
 }
 

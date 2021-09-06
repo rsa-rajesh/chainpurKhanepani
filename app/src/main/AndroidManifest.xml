@@ -17,6 +17,12 @@
         android:theme="@style/Theme.Khanipani.NoActionBar"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".ui.meroKhaniPani.ledger.LedgerActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.meroKhaniPani.personalMenu.PersonalMenu"
+            android:exported="true" />
+        <activity
             android:name=".ui.billDetails.BillDetailsActivity"
             android:exported="true" />
         <activity

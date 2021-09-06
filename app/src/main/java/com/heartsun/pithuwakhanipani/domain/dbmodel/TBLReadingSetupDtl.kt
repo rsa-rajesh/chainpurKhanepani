@@ -146,6 +146,6 @@ data class TblMember(
     val MemName: String?,
     @ColumnInfo(name = "PinCode")
     val PinCode: String?,
-    @ColumnInfo(name = "IsCMAndMAAllowed")
-    val IsCMAndMAAllowed: Boolean?,
+//    @ColumnInfo(name = "IsCMAndMAAllowed")
+//    val IsCMAndMAAllowed: Boolean?,
     )

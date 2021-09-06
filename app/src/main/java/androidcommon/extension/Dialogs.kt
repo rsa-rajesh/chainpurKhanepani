@@ -59,7 +59,7 @@ fun Context.showCustomDialog(
     posLabel: String = "Ok",
     onPosClick: () -> Unit = {},
     onNegClick: () -> Unit = {},
-    icon: Int = R.drawable.ic_notification
+    icon: Int = R.drawable.logo
 ) {
     val dialog = getBaseDialog()
     val dialogView = DialogPosNegOptionBinding.inflate(LayoutInflater.from(this), null, false)

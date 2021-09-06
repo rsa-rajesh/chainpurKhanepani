@@ -16,7 +16,7 @@ class MyTapViewModel(
     val addTap: LiveData<UserDetailsResponse> = _addTap
     fun addTap(phoneNo: String, pin: String) {
         viewModelScope.launch {
-            _addTap.value = homeRepository.getUserDetails(phoneNo,pin)
+            _addTap.value = homeRepository.getUserDetails(phoneNo, pin)
         }
     }
 
@@ -24,17 +24,22 @@ class MyTapViewModel(
     val pinRequest: LiveData<String> = _pinRequest
     fun requestPin(phoneNo: String, memberId: String) {
         viewModelScope.launch {
-            _pinRequest.value = homeRepository.requestPin(phoneNo,memberId)
+            _pinRequest.value = homeRepository.requestPin(phoneNo, memberId)
         }
     }
 
+    fun insert(members: TblMember) = viewModelScope.launch {
+        dbRepository.insert(members)
+    }
 
-//    private val _contacts = MutableLiveData<ContactsListResponse>()
-//    val contactsFromServer: LiveData<ContactsListResponse> = _contacts
-//    fun getContactsFromServer() {
-//        viewModelScope.launch {
-//            _contacts.value = homeRepository.getContacts()
-//        }
-//    }
+    fun delete(members: TblMember) = viewModelScope.launch {
+        dbRepository.delete(members.MemberID)
+    }
 
+
+    val tapsListFromLocalDb: LiveData<List<TblMember>> = dbRepository.getAllTaps.asLiveData()
+
+
+//    val noticesFromLocalDb: LiveData<List<TblNotice>> =
+//        dbRepository.tblNotices.asLiveData()
 }

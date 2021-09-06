@@ -16,6 +16,7 @@ class Prefs(private val sharedPreferences: SharedPreferences) {
         const val IMAGE_DB = "prefs.image_db"
         const val RECORD_DB = "prefs.record_db"
         const val LAST_SEARCHED_MEMBER_ID = "prefs.last_searched_member_id"
+        const val NO_OF_TAPS = "prefs.number_of_taps"
 
     }
 
@@ -105,6 +106,16 @@ class Prefs(private val sharedPreferences: SharedPreferences) {
         }
         isFirstTime = false
     }
+
+    var noOfTaps: String?
+        get() {
+            val noOfTaps = sharedPreferences.getString(NO_OF_TAPS, null)
+            return noOfTaps ?: return null
+        }
+        set(value) {
+            sharedPreferences.edit { putString(NO_OF_TAPS, value) }
+        }
+
 
 
 //    var profileDetail: UserDetailsResponse?
