@@ -45,8 +45,6 @@
                 android:textSize="@dimen/_18sdp"
                 android:textStyle="bold" />
 
-
-
             <!--        Phone number -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tiPhoneNumber"
@@ -93,8 +91,6 @@
                     android:selectAllOnFocus="true"
                     />
             </com.google.android.material.textfield.TextInputLayout>
-
-
 
             <!--        new pin -->
             <com.google.android.material.textfield.TextInputLayout
@@ -145,8 +141,6 @@
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
-
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btChange"
                 android:layout_marginEnd="@dimen/_12sdp"
@@ -167,13 +161,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 />
-
-
-
-
-
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
