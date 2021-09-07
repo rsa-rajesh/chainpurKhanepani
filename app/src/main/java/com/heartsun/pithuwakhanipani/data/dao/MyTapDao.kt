@@ -24,4 +24,7 @@ interface TblMemberDao {
 
     @Query("DELETE FROM tblMember WHERE MemberID IN (:membersId)")
     suspend fun delete(membersId: Int)
+
+    @Query("UPDATE tblMember SET PinCode=:changedPin WHERE MemberID = :memberID")
+    suspend fun updatePin(memberID: Int, changedPin: Int)
 }

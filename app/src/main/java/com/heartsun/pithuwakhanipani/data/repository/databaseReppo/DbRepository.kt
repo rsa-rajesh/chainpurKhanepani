@@ -185,6 +185,10 @@ class DbRepository(database: KanipaniDatabase) {
         tblMemberDao.delete(members)
     }
 
+    suspend fun updatePin(memberID: Int, changedPin: Int) {
+        tblMemberDao.updatePin(memberID,changedPin)
+    }
+
     val getAllTaps: Flow<List<TblMember>> =
         tblMemberDao.getAllData()
 }

@@ -36,6 +36,19 @@ class MyTapViewModel(
         dbRepository.delete(members.MemberID)
     }
 
+    private val _changePin = MutableLiveData<String>()
+    val changePin: LiveData<String> = _changePin
+    fun changePin(newPin: String, memberId: String?, phoneNo: String?) {
+        viewModelScope.launch {
+            _changePin.value = homeRepository.changePinCode(phoneNo, memberId,newPin)
+        }
+    }
+
+    fun update(memberID: Int, changedPin: Int)= viewModelScope.launch {
+        dbRepository.updatePin(memberID,changedPin)
+
+    }
+
 
     val tapsListFromLocalDb: LiveData<List<TblMember>> = dbRepository.getAllTaps.asLiveData()
 

@@ -45,7 +45,7 @@ class LedgerActivity : BaseActivity() {
             context: Context, memberID: String,
         ): Intent {
             return Intent(context, LedgerActivity::class.java).apply {
-                putExtra(LedgerActivity.memberId, memberID)
+                putExtra(memberId, memberID)
             }
         }
     }
@@ -90,20 +90,17 @@ class LedgerActivity : BaseActivity() {
                 for (billDetails in it.billDetails) {
                     if (billDetails.PaidStatus != 1) {
                         bills.add(billDetails)
-
                     }
-
                 }
 
                 binding.tvName.text = "ग्राहकको नाम :-" + it.billDetails[0].MemName
                 binding.tvAddress.text = "ठेगाना :-" + it.billDetails[0].Address
-                binding.tvDharaNo.text = "धारा न. :-" + it.billDetails[0].TapNo
+                binding.tvDharaNo.text = "दर्ता न. :-" + it.billDetails[0].MemberID
                 binding.tvDharaType.text = "धाराको प्रकार :-" + it.billDetails[0].TapType
 
                 binding.cvCommunityRate.isVisible = true
                 billDetailsAdapter = BillDetailsAdapter()
                 billDetailsAdapter.items = it.billDetails
-//                billDetailsAdapter.items = bills
 
                 binding.rvCommunityRate.layoutManager = LinearLayoutManager(this)
                 binding.rvCommunityRate.adapter = billDetailsAdapter

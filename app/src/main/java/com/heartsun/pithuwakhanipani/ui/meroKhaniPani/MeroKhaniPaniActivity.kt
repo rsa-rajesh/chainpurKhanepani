@@ -76,18 +76,18 @@ class MeroKhaniPaniActivity : BaseActivity() {
             if (it.isNullOrEmpty()) {
                 binding.clEmptyList.isVisible = true
                 prefs.noOfTaps = "0"
+                hideProgress()
 
             } else {
                 prefs.noOfTaps = it.size.toString()
                 binding.clEmptyList.isVisible = false
                 tapListAdapter = TapListAdapter(
                     onItemClick = {
-                        startActivity(PersonalMenu.newIntent(this,address = it.ContactNo.toString(),memberId = it.MemberID.toString(),registrationDate = it.PinCode.toString(),name = it.MemName.toString()))
+                        startActivity(PersonalMenu.newIntent(this,address = it.Address.toString(),memberId = it.MemberID.toString(),registrationDate = it.RegDateTime.toString().split(" ")[0],name = it.MemName.toString(),phoneNo = it.ContactNo.toString(),it.PinCode.toString().toInt()))
                     }, onDeleteClick = {
                         showCustomDialog(message = "तपाईँ साँच्चिकै सूचीबाट यो धारा हटाउन चाहनुहुन्छ ?",negLabel = "रद्द गर्नुहोस्",posLabel = "हटाउनुहोस्",onPosClick = {
                             myTapViewModel.delete(members = it)
                         })
-
                     }
                 )
                 tapListAdapter.items = it

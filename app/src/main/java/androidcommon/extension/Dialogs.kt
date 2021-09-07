@@ -6,10 +6,7 @@ import android.view.LayoutInflater
 import android.view.Window
 import androidx.annotation.DrawableRes
 import com.heartsun.pithuwakhanipani.R
-import com.heartsun.pithuwakhanipani.databinding.DialogErrorBinding
-import com.heartsun.pithuwakhanipani.databinding.DialogPosNegOptionBinding
-import com.heartsun.pithuwakhanipani.databinding.DilogAddNewBinding
-import com.heartsun.pithuwakhanipani.databinding.DilogRequestPinBinding
+import com.heartsun.pithuwakhanipani.databinding.*
 
 fun Context.getBaseDialog(): Dialog {
     return Dialog(this, R.style.WideDialog).apply {
@@ -91,8 +88,8 @@ fun Context.showCustomDialog(
 
 fun Context.showAddTapDialog(
 
-    onAddClick: (phoneNo:String,pin:String) -> Unit ,
-    onRequestClick: () -> Unit ,
+    onAddClick: (phoneNo: String, pin: String) -> Unit,
+    onRequestClick: () -> Unit,
     icon: Int = R.drawable.ic_notification
 ) {
     val dialog = getBaseDialog()
@@ -106,16 +103,16 @@ fun Context.showAddTapDialog(
             btAddNew.setOnClickListener {
                 when {
                     phoneNumber.text.isNullOrBlank() -> {
-                        tiPhoneNumber.error="Phone number is required"
+                        tiPhoneNumber.error = "Phone number is required"
                     }
                     pin.text.isNullOrBlank() -> {
-                        tiPin.error="Validation Pin is required"
-                        tiPhoneNumber.error=null
+                        tiPin.error = "Validation Pin is required"
+                        tiPhoneNumber.error = null
                     }
                     else -> {
-                        tiPin.error=null
-                        tiPhoneNumber.error=null
-                        onAddClick(phoneNumber.text.toString(),pin.text.toString())
+                        tiPin.error = null
+                        tiPhoneNumber.error = null
+                        onAddClick(phoneNumber.text.toString(), pin.text.toString())
                         dismiss()
                     }
                 }
@@ -132,8 +129,8 @@ fun Context.showAddTapDialog(
 }
 
 fun Context.showRequestPinDialog(
-    onAddClick: () -> Unit={},
-    onRequestClick: (phoneNo:String,memberId:String) -> Unit={ s: String, s1: String -> }
+    onAddClick: () -> Unit = {},
+    onRequestClick: (phoneNo: String, memberId: String) -> Unit = { s: String, s1: String -> }
 ) {
     val dialog = getBaseDialog()
     val dialogView = DilogRequestPinBinding.inflate(LayoutInflater.from(this), null, false)
@@ -152,23 +149,22 @@ fun Context.showRequestPinDialog(
 
                 when {
                     phoneNumber.text.isNullOrBlank() -> {
-                        tiPhoneNumber.error="Phone number is required"
+                        tiPhoneNumber.error = "Phone number is required"
                     }
                     memberId.text.isNullOrBlank() -> {
-                        tiMemberId.error="Member id is required"
-                        tiPhoneNumber.error=null
+                        tiMemberId.error = "Member id is required"
+                        tiPhoneNumber.error = null
                     }
 
                     else -> {
-                        tiMemberId.error=null
-                        tiPhoneNumber.error=null
+                        tiMemberId.error = null
+                        tiPhoneNumber.error = null
 
-                        onRequestClick(phoneNumber.text.toString(),memberId.text.toString())
+                        onRequestClick(phoneNumber.text.toString(), memberId.text.toString())
                         dismiss()
 
                     }
                 }
-
 
 
             }
@@ -179,3 +175,68 @@ fun Context.showRequestPinDialog(
         }
     }
 }
+
+fun Context.showChangePinDialog(
+    onChangeClick: (newPin: String) -> Unit = {},
+    oldPinCode: Int = 0
+) {
+    val dialog = getBaseDialog()
+    val dialogView = DilogChangePinBinding.inflate(LayoutInflater.from(this), null, false)
+    dialog.apply {
+        setContentView(dialogView.root)
+        setCancelable(false)
+        show()
+        with(dialogView) {
+
+
+            btChange.setOnClickListener {
+
+                when {
+                    oldPin.text.isNullOrBlank() -> {
+                        tiOldPin.error = "Old Pin is required"
+                    }
+
+                    oldPin.text.toString().toInt() != oldPinCode -> {
+                        tiOldPin.error = "Old pin don't match"
+                    }
+
+                    newPin.text.isNullOrBlank() -> {
+                        tiNewPin.error = "New Pin id is required"
+                        tiOldPin.error = null
+                    }
+                    confirmPin.text.isNullOrBlank() -> {
+                        tiConfirmPin.error = "Confirm Pin id is required"
+                        tiNewPin.error = null
+                        tiOldPin.error = null
+
+                    }
+
+                    !confirmPin.text.toString().equals(newPin.text.toString(), false) -> {
+                        tiConfirmPin.error = "Confirm Pin and new pin don't match"
+                        tiNewPin.error = null
+                        tiOldPin.error = null
+
+                    }
+
+                    else -> {
+                        tiConfirmPin.error = null
+                        tiNewPin.error = null
+                        tiOldPin.error = null
+
+                        onChangeClick(newPin.text.toString())
+                        dismiss()
+
+                    }
+                }
+
+
+            }
+
+            btClose.setOnClickListener {
+                dismiss()
+            }
+        }
+    }
+}
+
+

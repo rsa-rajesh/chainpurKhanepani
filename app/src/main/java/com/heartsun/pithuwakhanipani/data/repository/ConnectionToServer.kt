@@ -452,7 +452,8 @@ class ConnectionToServer(prefs: Prefs) {
 
         while (resultset.next()) {
 
-            totalBillDetails.TotReading = totalBillDetails.TotReading?.plus(resultset.getInt("TotReading"))
+            totalBillDetails.TotReading =
+                totalBillDetails.TotReading?.plus(resultset.getInt("TotReading"))
             totalBillDetails.Amt = totalBillDetails.Amt?.plus(resultset.getInt("Amt"))
             totalBillDetails.Dis = totalBillDetails.Dis?.plus(resultset.getInt("Dis"))
             totalBillDetails.Fine = totalBillDetails.Fine?.plus(resultset.getInt("Fine"))
@@ -507,79 +508,32 @@ class ConnectionToServer(prefs: Prefs) {
         val PWD: String = pin
 
         val tapCount = 0
-//        var ma_mc_allowed_count = 0
 
         val qry =
             "Select * from tblMember where ContactNo='$UID' and PinCode=$PWD"
-//        val CMqry =
-//            "Select * from tblMember where isnull(IsCM,0)=1 and isnull(IsMAAllowed,0)=1 and ContactNo='$UID' and PinCode=$PWD"
-//        val MemID: String
 
         val ss = SqlServerFunctions()
         val conn: Connection = ss.ConnectToSQLServer(prefs)
         stmt = conn.createStatement()
-       var resultset: ResultSet? = stmt.executeQuery(qry)
-//        var resultset2: ResultSet? = stmt.executeQuery(CMqry)
-
-//        while (resultset2!!.next()) {
-//            ma_mc_allowed_count += 1
-//        }
+        var resultset: ResultSet? = stmt.executeQuery(qry)
 
         var tblMember: MutableList<TblMember> = arrayListOf()
 
-
         while (resultset!!.next()) {
-//            var a:Boolean=false
-//            if (ma_mc_allowed_count>0){
-//                a= true
-//            }
-
-            val member:TblMember = TblMember(
-                MemberID =resultset.getInt("MemberID"),
+            val member: TblMember = TblMember(
+                MemberID = resultset.getInt("MemberID"),
                 ContactNo = resultset.getString("ContactNo"),
                 MemName = resultset.getString("MemName"),
-//                IsCMAndMAAllowed = a,
-                PinCode = resultset.getString("PinCode")
+                PinCode = resultset.getString("PinCode"),
+                Address = resultset.getString("Address"),
+                RegDateTime = resultset.getString("RegDateTime")
             )
             tblMember.add(member)
         }
-
-
         conn.close()
-
         return UserDetailsResponse(
             tblMember = tblMember
         )
-
-
-//        = ss.GetFieldData("MemberID", qry)
-//        val RC: Int = ss.QueryResultCount(qry)
-//
-//
-//        val CMC: Int = ss.QueryResultCount(CMqry)
-//        if (RC > 0) {
-//            val pref: SharedPreferences =
-//                getApplicationContext().getSharedPreferences("LoginInfo", Context.MODE_PRIVATE)
-//            val editor = pref.edit()
-//            editor.putString("Username", UID)
-//            editor.putString("Password", PWD)
-//            editor.putString("MemID", MemID)
-//            if (CMC == 1) {
-//                editor.putString("IsCMAndMAAllowed", "1")
-//            } else {
-//                editor.putString("IsCMAndMAAllowed", "0")
-//            }
-//            if (chkSLI.isChecked()) {
-//                editor.putString("Flag", "true")
-//            } else {
-//                editor.putString("Flag", "false")
-//            }
-//            editor.apply()
-//            val intent = Intent(this@MainActivity, DashboardActivity::class.java)
-//            startActivity(intent)
-//        }
-
-
     }
 
     fun requestPin(phoneNo: String, memberId: String): String? {
@@ -630,16 +584,15 @@ class ConnectionToServer(prefs: Prefs) {
 //        RC = ss.ConnectToSQLServer()
 
 
-
         val TokenStr: String = GetFieldData(
             "SettingValue",
-            "Select * from tblHospitalSetting Where SettingName='SMSTokenValue'",stmt
+            "Select * from tblHospitalSetting Where SettingName='SMSTokenValue'", stmt
         )
         //String SMSFeature =ss.GetFieldData("SettingValue","Select * from tblHospitalSetting Where SettingName='SMSFeatures'");
         //String SMSFeature =ss.GetFieldData("SettingValue","Select * from tblHospitalSetting Where SettingName='SMSFeatures'");
         val ShortStr: String = GetFieldData(
             "SettingValue",
-            "Select * from tblHospitalSetting Where SettingName='SMSShortName'",stmt
+            "Select * from tblHospitalSetting Where SettingName='SMSShortName'", stmt
         )
 
         if (RC > 0) {
@@ -684,7 +637,7 @@ class ConnectionToServer(prefs: Prefs) {
                     val MN: String = phoneNo
                     val MMID: Int = memberId.toInt()
                     val SC = SecCode.toInt()
-                    UpdateSecurityCode(MN, MMID, SC,stmt)
+                    UpdateSecurityCode(MN, MMID, SC, stmt)
                     conn.commit()
                 } catch (ex: Exception) {
                     Timber.i("SQL Exception Occured")
@@ -719,7 +672,7 @@ class ConnectionToServer(prefs: Prefs) {
 
     private fun GetFieldData(FieldName: String, qry: String, stmt: Statement?): String {
         val rs = stmt!!.executeQuery(qry)
-        var RetVal:String="0"
+        var RetVal: String = "0"
         while (rs.next()) {
             RetVal = rs.getString(FieldName)
         }
@@ -727,10 +680,27 @@ class ConnectionToServer(prefs: Prefs) {
     }
 
 
-    fun UpdateSecurityCode(mn: String, mmid: Int, sc: Int,stmt: Statement) {
-            val qry =
-                "Update tblMember Set PinCode=$sc where MemberID=$mmid and ContactNo='$mn'"
-            stmt.executeUpdate(qry)
+    fun UpdateSecurityCode(mn: String, mmid: Int, sc: Int, stmt: Statement) {
+        val qry =
+            "Update tblMember Set PinCode=$sc where MemberID=$mmid and ContactNo='$mn'"
+        stmt.executeUpdate(qry)
+    }
+
+    fun changePin(phoneNo: String?, memberId: String?, newPin: String): String? {
+        var stmt: Statement? = null
+        val ss = SqlServerFunctions()
+        val conn: Connection = ss.ConnectToSQLServer(prefs)
+        stmt = conn.createStatement()
+        return try {
+            UpdateSecurityCode(phoneNo.toString(),memberId.toString().toInt(),newPin.toInt(),stmt)
+            conn.close()
+            "Success"
+        } catch (a: Exception) {
+            conn.close()
+            "Error"
+        }
+
+
     }
 }
 

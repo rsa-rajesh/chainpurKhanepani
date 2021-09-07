@@ -146,6 +146,10 @@ data class TblMember(
     val MemName: String?,
     @ColumnInfo(name = "PinCode")
     val PinCode: String?,
+    @ColumnInfo(name = "Address")
+    val Address: String?,
+    @ColumnInfo(name = "RegDateTime")
+    val RegDateTime: String?
 //    @ColumnInfo(name = "IsCMAndMAAllowed")
 //    val IsCMAndMAAllowed: Boolean?,
-    )
+)

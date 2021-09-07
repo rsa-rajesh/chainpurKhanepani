@@ -17,6 +17,7 @@ interface AuthRepository {
     suspend fun getBillDetails(memberId: Int): BillDetailsResponse?
     suspend fun getUserDetails(phoneNo: String, pin: String): UserDetailsResponse?
     suspend fun requestPin(phoneNo: String, memberId: String): String?
+    suspend fun changePinCode(phoneNo: String?, memberId: String?, newPin: String): String?
 }
 
 class AuthRepoImpl(
@@ -64,5 +65,13 @@ class AuthRepoImpl(
 
     override suspend fun requestPin(phoneNo: String, memberId: String): String? {
         return connection.requestPin(phoneNo,memberId)
+    }
+
+    override suspend fun changePinCode(
+        phoneNo: String?,
+        memberId: String?,
+        newPin: String
+    ): String? {
+        return connection.changePin(phoneNo,memberId,newPin)
     }
 }
