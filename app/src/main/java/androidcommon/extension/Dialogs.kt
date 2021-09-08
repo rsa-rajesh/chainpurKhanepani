@@ -1,9 +1,14 @@
 package androidcommon.extension
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.Window
+import androidcommon.RColor
+import androidx.annotation.ColorLong
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import com.heartsun.pithuwakhanipani.R
 import com.heartsun.pithuwakhanipani.databinding.*
@@ -23,6 +28,7 @@ fun Context.showErrorDialog(
     label: String = "Ok",
     title: String = "Water Supply",
     @DrawableRes icon: Int = R.drawable.ic_server_error,
+    color: Int = Color.RED,
     isCancellable: Boolean = true,
     onBtnClick: () -> Unit = {},
 ) {
@@ -38,9 +44,11 @@ fun Context.showErrorDialog(
         show()
         with(dialogView) {
             tvTitle.text = title
+            tvTitle.setTextColor(color)
             btnRetry.text = label
             tvMessage.text = message
             ivErrorImage.setImageResource(icon)
+
             btnRetry.setOnClickListener {
                 dialog.dismiss()
                 onBtnClick()

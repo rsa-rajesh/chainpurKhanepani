@@ -11,6 +11,7 @@ import androidcommon.extension.toastS
 import com.heartsun.pithuwakhanipani.databinding.ActivityPersionalMenuBinding
 import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.MeroKhaniPaniActivity
 import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.MyTapViewModel
+import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.complaint.ComplaintActivity
 import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.ledger.LedgerActivity
 import com.heartsun.pithuwakhanipani.ui.noticeBoard.NoticeDetailsActivity
 import com.heartsun.pithuwakhanipani.ui.waterRate.WaterRateActivity
@@ -107,8 +108,12 @@ class PersonalMenu : BaseActivity() {
                 it.setOnClickListener { view ->
                     when (view) {
                         cvComplain -> {
-                            toastS("coming soon...")
-                        }
+                            startActivity(
+                                ComplaintActivity.newIntent(
+                                    this@PersonalMenu,
+                                    memberId.toString(), phoneNo.toString(),
+                                )
+                            )                        }
                         cvLedger -> {
                             startActivity(
                                 LedgerActivity.newIntent(

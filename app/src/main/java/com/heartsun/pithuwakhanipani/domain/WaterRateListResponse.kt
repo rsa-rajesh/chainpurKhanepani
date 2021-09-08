@@ -1,7 +1,6 @@
 package com.heartsun.pithuwakhanipani.domain
 
 
-import com.google.gson.annotations.SerializedName
 import com.heartsun.pithuwakhanipani.domain.dbmodel.*
 
 data class WaterRateListResponse(
@@ -30,5 +29,7 @@ data class ContactsListResponse(
 )
 
 data class UserDetailsResponse(
-    val tblMember:List<TblMember>,
+    val tblMember: List<TblMember>?,
+    val status:String,
+    val message:String
 )

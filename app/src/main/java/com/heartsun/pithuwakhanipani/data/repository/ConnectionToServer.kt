@@ -7,8 +7,6 @@ import java.sql.Connection
 import java.sql.ResultSet
 import java.sql.Statement
 import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
 
 import android.graphics.BitmapFactory
 
@@ -16,7 +14,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import androidcommon.utils.FilePath
-import androidx.appcompat.app.AlertDialog
 
 import com.heartsun.pithuwakhanipani.domain.*
 import timber.log.Timber
@@ -413,7 +410,7 @@ class ConnectionToServer(prefs: Prefs) {
             pics.setBytes(3, docImg)
             pics.execute()
         }
-        stmt.executeQuery(query1)
+        stmt.execute(query1)
 
         conn.close()
 
@@ -507,34 +504,59 @@ class ConnectionToServer(prefs: Prefs) {
         val UID: String = phoneNo
         val PWD: String = pin
 
-        val tapCount = 0
+        var tapCount = 0
 
         val qry =
             "Select * from tblMember where ContactNo='$UID' and PinCode=$PWD"
-
-        val ss = SqlServerFunctions()
-        val conn: Connection = ss.ConnectToSQLServer(prefs)
-        stmt = conn.createStatement()
-        var resultset: ResultSet? = stmt.executeQuery(qry)
-
         var tblMember: MutableList<TblMember> = arrayListOf()
 
-        while (resultset!!.next()) {
-            val member: TblMember = TblMember(
-                MemberID = resultset.getInt("MemberID"),
-                ContactNo = resultset.getString("ContactNo"),
-                MemName = resultset.getString("MemName"),
-                PinCode = resultset.getString("PinCode"),
-                Address = resultset.getString("Address"),
-                RegDateTime = resultset.getString("RegDateTime")
+        try {
+            val ss = SqlServerFunctions()
+            val conn: Connection = ss.ConnectToSQLServer(prefs)
+            stmt = conn.createStatement()
+            var resultset: ResultSet? = stmt.executeQuery(qry)
+
+            while (resultset!!.next()) {
+                tapCount += 1
+                val member: TblMember = TblMember(
+                    MemberID = resultset.getInt("MemberID"),
+                    ContactNo = resultset.getString("ContactNo"),
+                    MemName = resultset.getString("MemName"),
+                    PinCode = resultset.getString("PinCode"),
+                    Address = resultset.getString("Address"),
+                    RegDateTime = resultset.getString("RegDateTime")
+                )
+                tblMember.add(member)
+            }
+            conn.close()
+        }catch (e:Exception){
+            return UserDetailsResponse(
+                tblMember = null,
+                message = "Couldn't connect to server please try again later",
+                status = "error"
             )
-            tblMember.add(member)
         }
-        conn.close()
+
+
+
+        if (tapCount==0){
+            return UserDetailsResponse(
+                tblMember = null,
+                message = "Contact or PIN code doesn't match",
+                status = "error"
+            )
+        }
+
         return UserDetailsResponse(
-            tblMember = tblMember
+            tblMember = tblMember,
+            message = "success",
+            status = "success"
         )
     }
+
+
+
+
 
     fun requestPin(phoneNo: String, memberId: String): String? {
         var RC = 0
@@ -547,29 +569,17 @@ class ConnectionToServer(prefs: Prefs) {
         val ss: SqlServerFunctions = SqlServerFunctions()
         val smsfeatquery =
             "Select * from tblHospitalSetting Where SettingName='OTPSMSEnabled' and SettingValue='True'"
-
-
         val conn: Connection = ss.ConnectToSQLServer(prefs)
         stmt = conn.createStatement()
-
 
         resultset = stmt.executeQuery(smsfeatquery)
         while (resultset.next()) {
             SFRC += 1
         }
 
-//        val SFRC: Int = ss.QueryResultCount(smsfeatquery)
         if (SFRC == 0) {
             conn.close()
-
             return "SMS features is not activated yet"
-
-//            val alert0 = AlertDialog.Builder(this@NewUserSignup)
-//            alert0.setTitle("SMS Error")
-//            alert0.setMessage("SMS features is not activated yet")
-//            alert0.setPositiveButton("OK", null)
-//            alert0.show()
-//            System.exit(0)
         }
 
         val qry = "select * from tblMember where MemberID=" + memberId +
@@ -580,16 +590,10 @@ class ConnectionToServer(prefs: Prefs) {
             RC += 1
         }
 
-
-//        RC = ss.ConnectToSQLServer()
-
-
         val TokenStr: String = GetFieldData(
             "SettingValue",
             "Select * from tblHospitalSetting Where SettingName='SMSTokenValue'", stmt
         )
-        //String SMSFeature =ss.GetFieldData("SettingValue","Select * from tblHospitalSetting Where SettingName='SMSFeatures'");
-        //String SMSFeature =ss.GetFieldData("SettingValue","Select * from tblHospitalSetting Where SettingName='SMSFeatures'");
         val ShortStr: String = GetFieldData(
             "SettingValue",
             "Select * from tblHospitalSetting Where SettingName='SMSShortName'", stmt
@@ -612,21 +616,7 @@ class ConnectionToServer(prefs: Prefs) {
                 os.write(input.toByteArray())
                 os.flush()
                 code = conn.responseCode
-                /*if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-                            throw new RuntimeException("Failed : HTTP error code : "
-                                    + conn.getResponseCode());
-                        }*/
-
-
-                /*BufferedReader br = new BufferedReader(new InputStreamReader(
-                                (conn.getInputStream())));
-                        String output=br.readLine();
-                        AlertDialog.Builder alert = new AlertDialog.Builder(NewUserSignup.this);
-                        alert.setTitle("Confirmation");
-                        //alert.setMessage("Please check your mobile for access code");
-                        alert.setMessage(code);
-                        alert.setPositiveButton("OK",null);
-                        alert.show();*/conn.disconnect()
+                conn.disconnect()
             } catch (e: MalformedURLException) {
                 e.printStackTrace()
             } catch (e: IOException) {
@@ -642,30 +632,21 @@ class ConnectionToServer(prefs: Prefs) {
                 } catch (ex: Exception) {
                     Timber.i("SQL Exception Occured")
                 }
-//                val alert2 = AlertDialog.Builder(this@NewUserSignup)
-//                alert2.setTitle("Confirmation")
                 conn.close()
 
                 return "Access Code is sent to your mobile"
-//                alert2.setPositiveButton("OK", null)
-//                alert2.show()
+
             } else {
-//                val alert1 = AlertDialog.Builder(this@NewUserSignup)
-//                alert1.setTitle("Confirmation")
                 conn.close()
 
                 return "SMS Connection Server Error"
-//                alert1.setPositiveButton("OK", null)
-//                alert1.show()
             }
         } else {
-//            val alert3 = AlertDialog.Builder(this@NewUserSignup)
-//            alert3.setTitle("Confirmation")
+
             conn.close()
 
             return "Either Mobile or MemberID is not registered"
-//            alert3.setPositiveButton("OK", null)
-//            alert3.show()
+
         }
 
     }
@@ -692,7 +673,12 @@ class ConnectionToServer(prefs: Prefs) {
         val conn: Connection = ss.ConnectToSQLServer(prefs)
         stmt = conn.createStatement()
         return try {
-            UpdateSecurityCode(phoneNo.toString(),memberId.toString().toInt(),newPin.toInt(),stmt)
+            UpdateSecurityCode(
+                phoneNo.toString(),
+                memberId.toString().toInt(),
+                newPin.toInt(),
+                stmt
+            )
             conn.close()
             "Success"
         } catch (a: Exception) {
@@ -701,6 +687,60 @@ class ConnectionToServer(prefs: Prefs) {
         }
 
 
+    }
+
+    fun addComplaint(message: String, memberID: String?, phoneNo: String?): String {
+        var stmt: Statement? = null
+        val ss = SqlServerFunctions()
+        val conn: Connection = ss.ConnectToSQLServer(prefs)
+        stmt = conn.createStatement()
+        return try {
+            val qry =
+                "Insert into [tblComplaint]([MemberID],[ComplaintMsg],[ContactNumber]) Values(" + memberID + ",'" +
+                        message + "','" + phoneNo + "')"
+            stmt.execute(qry)
+            conn.close()
+            "Success"
+        } catch (a: Exception) {
+            conn.close()
+            "Error"
+        }
+    }
+
+    fun getComplaintList(memberID: String?, phoneNo: String?): MutableList<ComplaintResponse>? {
+        var stmt: Statement? = null
+        val ss = SqlServerFunctions()
+        val conn: Connection = ss.ConnectToSQLServer(prefs)
+        stmt = conn.createStatement()
+
+        var complaintList: MutableList<ComplaintResponse> = arrayListOf()
+
+        return try {
+            var resultset: ResultSet? = null
+
+            val qry =
+                "SELECT TOP 100 * " +
+                        "FROM tblComplaint " +
+                        "where MemberID=${memberID?.toInt()} and ContactNumber='$phoneNo' "
+//                        "ORDER BY ComptID DESC "
+            resultset = stmt.executeQuery(qry)
+
+            while (resultset.next()) {
+                val list: ComplaintResponse = ComplaintResponse(
+                    ComptID = resultset.getInt("ComptID"),
+                    MemberID = resultset.getInt("MemberID"),
+                    ComplaintMsg = resultset.getString("ComplaintMsg"),
+                    ComptDate = resultset.getString("ComptDate"),
+                    IsRectified = resultset.getInt("IsRectified")
+                )
+                complaintList.add(list)
+            }
+            conn.close()
+            complaintList
+        } catch (a: Exception) {
+            conn.close()
+            complaintList
+        }
     }
 }
 

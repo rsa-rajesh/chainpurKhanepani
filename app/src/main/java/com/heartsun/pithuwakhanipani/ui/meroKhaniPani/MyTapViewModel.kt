@@ -33,6 +33,7 @@ class MyTapViewModel(
     }
 
     fun delete(members: TblMember) = viewModelScope.launch {
+
         dbRepository.delete(members.MemberID)
     }
 
@@ -47,6 +48,24 @@ class MyTapViewModel(
     fun update(memberID: Int, changedPin: Int)= viewModelScope.launch {
         dbRepository.updatePin(memberID,changedPin)
 
+    }
+
+
+    private val _addComplaint = MutableLiveData<String>()
+    val addComplaint: LiveData<String> = _addComplaint
+    fun postComplaint(message: String, memberID: String?, phoneNo: String?) {
+        viewModelScope.launch {
+            _addComplaint.value = homeRepository.addComplaint(message,memberID,phoneNo)
+        }
+    }
+
+
+    private val _complaintList = MutableLiveData<MutableList<ComplaintResponse>>()
+    val complaintList: LiveData<MutableList<ComplaintResponse>> = _complaintList
+    fun getComplaintListServer(memberID: String?, phoneNo: String?) {
+        viewModelScope.launch {
+            _complaintList.value = homeRepository.getComplaintList(memberID,phoneNo)
+        }
     }
 
 

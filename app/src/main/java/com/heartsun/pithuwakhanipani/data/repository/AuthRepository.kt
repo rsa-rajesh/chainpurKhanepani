@@ -18,6 +18,8 @@ interface AuthRepository {
     suspend fun getUserDetails(phoneNo: String, pin: String): UserDetailsResponse?
     suspend fun requestPin(phoneNo: String, memberId: String): String?
     suspend fun changePinCode(phoneNo: String?, memberId: String?, newPin: String): String?
+    suspend fun addComplaint(message: String, memberID: String?, phoneNo: String?): String
+    suspend fun getComplaintList(memberID: String?, phoneNo: String?): MutableList<ComplaintResponse>?
 }
 
 class AuthRepoImpl(
@@ -73,5 +75,16 @@ class AuthRepoImpl(
         newPin: String
     ): String? {
         return connection.changePin(phoneNo,memberId,newPin)
+    }
+
+    override suspend fun addComplaint(message: String, memberID: String?, phoneNo: String?): String {
+        return connection.addComplaint(message,memberID,phoneNo)
+    }
+
+    override suspend fun getComplaintList(
+        memberID: String?,
+        phoneNo: String?
+    ): MutableList<ComplaintResponse>? {
+        return connection.getComplaintList(memberID,phoneNo)
     }
 }

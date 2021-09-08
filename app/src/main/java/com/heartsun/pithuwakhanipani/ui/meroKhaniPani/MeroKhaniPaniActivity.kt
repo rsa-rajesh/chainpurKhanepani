@@ -2,9 +2,12 @@ package com.heartsun.pithuwakhanipani.ui.meroKhaniPani
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import androidcommon.RColor
+import androidcommon.RDrawable
 import androidcommon.base.BaseActivity
 import androidcommon.extension.*
 import androidx.core.view.isVisible
@@ -49,6 +52,8 @@ class MeroKhaniPaniActivity : BaseActivity() {
 
     @DelicateCoroutinesApi
     private fun initViews() {
+        requestPinFromServerObserver()
+        addTapFromServerObserver()
 
         getTapsFromDb()
         with(binding) {
@@ -59,7 +64,6 @@ class MeroKhaniPaniActivity : BaseActivity() {
             }
             listOf(btAdd, btAddNew).forEach { it ->
                 it.setOnClickListener {
-                    addTapFromServerObserver()
                     openAddDialog()
                 }
             }
@@ -83,11 +87,25 @@ class MeroKhaniPaniActivity : BaseActivity() {
                 binding.clEmptyList.isVisible = false
                 tapListAdapter = TapListAdapter(
                     onItemClick = {
-                        startActivity(PersonalMenu.newIntent(this,address = it.Address.toString(),memberId = it.MemberID.toString(),registrationDate = it.RegDateTime.toString().split(" ")[0],name = it.MemName.toString(),phoneNo = it.ContactNo.toString(),it.PinCode.toString().toInt()))
+                        startActivity(
+                            PersonalMenu.newIntent(
+                                this,
+                                address = it.Address.toString(),
+                                memberId = it.MemberID.toString(),
+                                registrationDate = it.RegDateTime.toString().split(" ")[0],
+                                name = it.MemName.toString(),
+                                phoneNo = it.ContactNo.toString(),
+                                it.PinCode.toString().toInt()
+                            )
+                        )
                     }, onDeleteClick = {
-                        showCustomDialog(message = "तपाईँ साँच्चिकै सूचीबाट यो धारा हटाउन चाहनुहुन्छ ?",negLabel = "रद्द गर्नुहोस्",posLabel = "हटाउनुहोस्",onPosClick = {
-                            myTapViewModel.delete(members = it)
-                        })
+                        showCustomDialog(
+                            message = "तपाईँ साँच्चिकै सूचीबाट यो धारा हटाउन चाहनुहुन्छ ?",
+                            negLabel = "रद्द गर्नुहोस्",
+                            posLabel = "हटाउनुहोस्",
+                            onPosClick = {
+                                myTapViewModel.delete(members = it)
+                            })
                     }
                 )
                 tapListAdapter.items = it
@@ -108,6 +126,7 @@ class MeroKhaniPaniActivity : BaseActivity() {
     }
 
     private fun openAddDialog() {
+
         showAddTapDialog(onAddClick = { phoneNo, pin ->
             addTap(phoneNo, pin)
         }, onRequestClick = {
@@ -116,22 +135,63 @@ class MeroKhaniPaniActivity : BaseActivity() {
     }
 
     private fun addTap(phoneNo: String, pin: String) {
-        toastS("phone:-$phoneNo pin:-$pin")
+        showProgress()
         myTapViewModel.addTap(phoneNo, pin)
     }
 
     private fun requestNewPin(phoneNo: String, memberId: String) {
-        toastS("phone:-$phoneNo pin:-$memberId")
+        showProgress()
         myTapViewModel.requestPin(phoneNo, memberId)
     }
 
     private fun addTapFromServerObserver() {
         myTapViewModel.addTap.observe(this, {
             it ?: return@observe
-            for (member in it.tblMember) {
-                myTapViewModel.insert(members = member)
+            hideProgress()
+
+            if (it.status.equals("error", true)) {
+                showErrorDialog(
+                    message = it.message,
+                    "close",
+                    "Error",
+                    RDrawable.ic_error_for_dilog,
+                    color = Color.RED
+                )
+            } else {
+                for (member in it.tblMember!!) {
+                    myTapViewModel.insert(members = member)
+                }
+            }
+
+
+
+        })
+    }
+
+    private fun requestPinFromServerObserver() {
+        myTapViewModel.pinRequest.observe(this, {
+            it ?: return@observe
+            hideProgress()
+
+            if (it.equals("Access Code is sent to your mobile", true)) {
+                showErrorDialog(
+                    message = it,
+                    "close",
+                    "Success",
+                    RDrawable.ic_success_for_dilog,
+                    color = Color.GREEN
+                )
+            } else {
+                showErrorDialog(
+                    message = it,
+                    "close",
+                    "Error",
+                    RDrawable.ic_error_for_dilog,
+                    color = Color.RED
+                )
             }
         })
+
     }
 
 }

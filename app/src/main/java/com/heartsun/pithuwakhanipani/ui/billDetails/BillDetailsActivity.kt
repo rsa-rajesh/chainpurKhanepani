@@ -188,7 +188,6 @@ class BillDetailsActivity : BaseActivity() {
                 binding.cvCommunityRate.isVisible = true
                 binding.tvBillDetails.isVisible = true
                 billDetailsAdapter = BillDetailsAdapter()
-//                billDetailsAdapter.items = it.billDetails
                 billDetailsAdapter.items = bills
 
                 binding.rvCommunityRate.layoutManager = LinearLayoutManager(this)

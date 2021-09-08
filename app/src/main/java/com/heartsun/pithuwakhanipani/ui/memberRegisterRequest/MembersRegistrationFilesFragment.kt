@@ -37,7 +37,6 @@ class MembersRegistrationFilesFragment : BaseFragment<FragmentMembersRegisterati
     ) = FragmentMembersRegisterationFilesBinding.inflate(inflater, container, false)
 
     private lateinit var filesListAdapter: FilesListAdapter
-    private val registerViewModel by viewModel<RegisterViewModel>()
     private var whichPermission = Manifest.permission.INTERNET
     private var onPermissionGranted: () -> Unit = {}
 
@@ -80,7 +79,6 @@ class MembersRegistrationFilesFragment : BaseFragment<FragmentMembersRegisterati
         }
         if (boolean){
             (activity as MemberRegisterActivity?)!!.requestRegistrationToServer()
-//            context?.let { registerViewModel.sendRegistrationRequestToServer(details, it) }
         }else{
             toastS("कृपया सबै आवश्यक फाइलहरू छनोट गर्नुहोस् ।")
         }
@@ -145,8 +143,10 @@ class MembersRegistrationFilesFragment : BaseFragment<FragmentMembersRegisterati
     private fun pickFromCamera() {
         showProgress()
         ImagePicker.with(this)
-            .compress(1024)
+            .compress(512)
             .cameraOnly()
+            .crop()
+            .maxResultSize(1080, 1080)
             .createIntent {
                 startImagePicker.launch(it)
             }
@@ -155,7 +155,9 @@ class MembersRegistrationFilesFragment : BaseFragment<FragmentMembersRegisterati
     private fun pickFromGallery() {
         showProgress()
         ImagePicker.with(this)
-            .compress(1024)
+            .compress(512)
+            .crop()
+            .maxResultSize(1080, 1080)
             .galleryOnly()
             .createIntent {
                 startImagePicker.launch(it)
@@ -176,18 +178,15 @@ class MembersRegistrationFilesFragment : BaseFragment<FragmentMembersRegisterati
                         filesListAdapter.notifyItemChanged(indexOfImage)
 
                     }
-
-//                    setImageUri(displayOnUi)
                 }
                 ImagePicker.RESULT_ERROR -> {
                     toastS(ImagePicker.getError(result))
                 }
                 else -> {
-                    toastS("Task Cancelled")
+                    hideProgress()
                 }
             }
         }
-
 }
 
 

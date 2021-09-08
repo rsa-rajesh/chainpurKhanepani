@@ -2,21 +2,18 @@ package com.heartsun.pithuwakhanipani.ui.memberRegisterRequest
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import androidcommon.RDrawable
 import androidcommon.base.BaseActivity
-import androidcommon.extension.toastS
+import androidcommon.extension.showErrorDialog
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.heartsun.pithuwakhanipani.R
 import com.heartsun.pithuwakhanipani.databinding.ActivityMemberRegisterBinding
 import com.heartsun.pithuwakhanipani.domain.RegistrationRequest
 import com.heartsun.pithuwakhanipani.domain.dbmodel.TblDocumentType
-import com.heartsun.pithuwakhanipani.ui.sameetee.MemberTypeAdapter
-import com.heartsun.pithuwakhanipani.ui.sameetee.SameeteeListActivity
 import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.concurrent.thread
 
 class MemberRegisterActivity : BaseActivity() {
 
@@ -28,6 +25,7 @@ class MemberRegisterActivity : BaseActivity() {
     companion object {
         var registerRequest: RegistrationRequest? =
             RegistrationRequest(null, null, null, null, null, null, null, null, null, null)
+
         fun newIntent(context: Context): Intent {
             return Intent(context, MemberRegisterActivity::class.java)
         }
@@ -50,12 +48,12 @@ class MemberRegisterActivity : BaseActivity() {
             }
             toolbar.tvToolbarTitle.text = "Member Registration"
         }
+        showProgress()
         getFilesRequirementFromDb()
         requestObserver()
     }
 
     private fun getFilesRequirementFromDb() {
-        showProgress()
 
         registerViewModel.fileTypeFromLocalDb.observe(this, { it ->
             it ?: return@observe
@@ -65,9 +63,10 @@ class MemberRegisterActivity : BaseActivity() {
                     registerViewModel.getFileRequirementFromServer()
                 }
             } else {
-                var docs:MutableList<RegistrationRequest.RequiredDocuments> = arrayListOf()
-                for (fileType in  it){
-                    var file: RegistrationRequest.RequiredDocuments = RegistrationRequest.RequiredDocuments(fileType.DocTypeName,null)
+                var docs: MutableList<RegistrationRequest.RequiredDocuments> = arrayListOf()
+                for (fileType in it) {
+                    var file: RegistrationRequest.RequiredDocuments =
+                        RegistrationRequest.RequiredDocuments(fileType.DocTypeName, null)
                     docs.add(file)
                 }
                 registerRequest?.files = docs
@@ -75,14 +74,15 @@ class MemberRegisterActivity : BaseActivity() {
 
                 hideProgress()
             }
-        })    }
+        })
+    }
 
     private fun rateFromServerObserver() {
         registerViewModel.fileTypesFromServer.observe(this, {
             it ?: return@observe
-            var count:Int=1
+            var count: Int = 1
             for (fileType in it.documentTypes) {
-               val file:TblDocumentType= TblDocumentType(count,fileType.DocumentName)
+                val file: TblDocumentType = TblDocumentType(count, fileType.DocumentName)
                 count++
                 registerViewModel.insert(fileTypes = file)
             }
@@ -90,24 +90,50 @@ class MemberRegisterActivity : BaseActivity() {
         })
     }
 
-    fun requestRegistrationToServer(){
+    fun requestRegistrationToServer() {
         showProgress()
-        registerViewModel.sendRegistrationRequestToServer(registerRequest,this)
+        thread {
+            Thread.sleep(100)
+            registerViewModel.sendRegistrationRequestToServer(registerRequest, this)
+        }
+
+
     }
 
     private fun requestObserver() {
         registerViewModel.registrationResponse.observe(this, {
             it ?: return@observe
-            if(it.equals("Success",true)){
-                toastS("New Tap Request Successfully Submitted")
+            hideProgress()
+            if (it.equals("Success", true)) {
+                showErrorDialog(
+                    message = "New Tap Request Successfully Submitted",
+                    "close",
+                    "Success",
+                    RDrawable.ic_success_for_dilog,
+                    color = Color.GREEN,
+                    onBtnClick = {
+                        onBackPressed()
+                        this.finish()
+                    }
+                )
 
-                var files =  registerRequest?.files
-
-                registerRequest =RegistrationRequest(null, null, null, null, null, null, null, null, null, files)
-
-                Navigation.findNavController(binding.btDownloadForm)
-                    .navigate(R.id.action_membersRegistrationFilesFragment_to_membersRegistrationFormFragment);
+            } else {
+                showErrorDialog(
+                    message = "Sorry!!! couldn't complete your request now please try again later ",
+                    "retry",
+                    "Error",
+                    RDrawable.ic_error_for_dilog,
+                    color = Color.RED
+                )
             }
+//            if(it.equals("Success",true)){
+//                toastS("New Tap Request Successfully Submitted")
+//                var files =  registerRequest?.files
+//                registerRequest =RegistrationRequest(null, null, null, null, null, null, null, null, null, files)
+//
+//                this.findNavController(binding.navHostFragmentContainer.id)
+//                    .navigate(R.id.action_membersRegistrationFilesFragment_to_membersRegistrationFormFragment);
+//            }
         })
     }
 
