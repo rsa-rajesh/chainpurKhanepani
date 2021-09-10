@@ -80,12 +80,26 @@ class MemberRegisterActivity : BaseActivity() {
     private fun rateFromServerObserver() {
         registerViewModel.fileTypesFromServer.observe(this, {
             it ?: return@observe
-            var count: Int = 1
-            for (fileType in it.documentTypes) {
-                val file: TblDocumentType = TblDocumentType(count, fileType.DocumentName)
-                count++
-                registerViewModel.insert(fileTypes = file)
+
+
+            if (it.status.equals("success",true)){
+                var count: Int = 1
+                for (fileType in it.documentTypes) {
+                    val file: TblDocumentType = TblDocumentType(count, fileType.DocumentName)
+                    count++
+                    registerViewModel.insert(fileTypes = file)
+                }
+            }else {
+                hideProgress()
+                showErrorDialog(
+                    message = "Sorry!!! couldn't connect to the server \n please try again later",
+                    "retry",
+                    "Error",
+                    RDrawable.ic_error_for_dilog,
+                    color = Color.RED
+                )
             }
+
 
         })
     }
@@ -118,6 +132,7 @@ class MemberRegisterActivity : BaseActivity() {
                 )
 
             } else {
+                hideProgress()
                 showErrorDialog(
                     message = "Sorry!!! couldn't complete your request now please try again later ",
                     "retry",

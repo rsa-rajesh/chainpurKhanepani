@@ -2,8 +2,11 @@ package com.heartsun.pithuwakhanipani.ui.sameetee
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import androidcommon.RDrawable
 import androidcommon.base.BaseActivity
+import androidcommon.extension.showErrorDialog
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heartsun.pithuwakhanipani.databinding.ActivitySameeteeSelectionBinding
@@ -58,15 +61,22 @@ class SameeteeSelectionActivity : BaseActivity() {
                     homeViewModel.getMembersFromServer()
                 }
             } else {
-                binding.clEmptyList.isVisible=false
+                binding.clEmptyList.isVisible = false
                 memberTypeAdapter = MemberTypeAdapter(
                     onItemClick = {
-                        startActivity(SameeteeListActivity.newIntent(this,it.MemTypeID,it.MemberType.orEmpty(),it.isOldMember))
+                        startActivity(
+                            SameeteeListActivity.newIntent(
+                                this,
+                                it.MemTypeID,
+                                it.MemberType.orEmpty(),
+                                it.isOldMember
+                            )
+                        )
                     }
                 )
                 memberTypeAdapter.items = it
                 binding.rvMemberList.layoutManager = LinearLayoutManager(this)
-                binding.rvMemberList.adapter= memberTypeAdapter
+                binding.rvMemberList.adapter = memberTypeAdapter
                 hideProgress()
             }
         })
@@ -75,13 +85,27 @@ class SameeteeSelectionActivity : BaseActivity() {
     private fun membersFromServerObserver() {
         homeViewModel.membersFromServer.observe(this, {
             it ?: return@observe
-            for (memberType in it.tblBoardMemberType){
-                homeViewModel.insert(memberType)
-            }
-            for (members in it.tblContact){
-                homeViewModel.insert(members)
+
+            if (it.status.equals("success", true)) {
+                for (memberType in it.tblBoardMemberType!!) {
+                    homeViewModel.insert(memberType)
+                }
+                for (members in it.tblContact!!) {
+                    homeViewModel.insert(members)
+                }
+            } else {
+                hideProgress()
+                showErrorDialog(
+                    message = "Sorry!!! couldn't couldn't connect to server",
+                    "retry",
+                    "Error",
+                    RDrawable.ic_server_error,
+                    color = Color.RED,
+                    onBtnClick = {
+                        homeViewModel.getMembersFromServer()
+                    }
+                )
             }
         })
     }
-
 }

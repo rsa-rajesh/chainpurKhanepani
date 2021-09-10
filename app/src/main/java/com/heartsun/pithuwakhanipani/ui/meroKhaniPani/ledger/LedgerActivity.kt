@@ -3,10 +3,13 @@ package com.heartsun.pithuwakhanipani.ui.meroKhaniPani.ledger
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidcommon.RDrawable
 import androidcommon.RLayout
 import androidcommon.base.BaseActivity
+import androidcommon.extension.showErrorDialog
 import androidcommon.extension.toastS
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -79,35 +82,44 @@ class LedgerActivity : BaseActivity() {
         registerViewModel.billDetailsFromServer.observe(this, {
 
             it ?: return@observe
-//            hideProgress()
-            if (it.billDetails.isEmpty()) {
-                binding.cvCommunityRate.isVisible = false
-                toastS("सदस्यता नम्बर फेला परेन")
-            } else {
 
-
-                var bills: MutableList<BillDetails> = arrayListOf()
-                for (billDetails in it.billDetails) {
-                    if (billDetails.PaidStatus != 1) {
-                        bills.add(billDetails)
-                    }
+            if (it.status.equals("success",true)){
+                if (it.billDetails.isEmpty()) {
+                    binding.cvCommunityRate.isVisible = false
+                    toastS("सदस्यता नम्बर फेला परेन")
                 }
+                else {
 
-                binding.tvName.text = "ग्राहकको नाम :-" + it.billDetails[0].MemName
-                binding.tvAddress.text = "ठेगाना :-" + it.billDetails[0].Address
-                binding.tvDharaNo.text = "दर्ता न. :-" + it.billDetails[0].MemberID
-                binding.tvDharaType.text = "धाराको प्रकार :-" + it.billDetails[0].TapType
 
-                binding.cvCommunityRate.isVisible = true
-                billDetailsAdapter = BillDetailsAdapter()
-                billDetailsAdapter.items = it.billDetails
+                    var bills: MutableList<BillDetails> = arrayListOf()
+                    for (billDetails in it.billDetails) {
+                        if (billDetails.PaidStatus != 1) {
+                            bills.add(billDetails)
+                        }
+                    }
 
-                binding.rvCommunityRate.layoutManager = LinearLayoutManager(this)
-                binding.rvCommunityRate.adapter = billDetailsAdapter
+                    binding.tvName.text = "ग्राहकको नाम :-" + it.billDetails[0].MemName
+                    binding.tvAddress.text = "ठेगाना :-" + it.billDetails[0].Address
+                    binding.tvDharaNo.text = "दर्ता न. :-" + it.billDetails[0].MemberID
+                    binding.tvDharaType.text = "धाराको प्रकार :-" + it.billDetails[0].TapType
+
+                    binding.cvCommunityRate.isVisible = true
+                    billDetailsAdapter = BillDetailsAdapter()
+                    billDetailsAdapter.items = it.billDetails
+
+                    binding.rvCommunityRate.layoutManager = LinearLayoutManager(this)
+                    binding.rvCommunityRate.adapter = billDetailsAdapter
+                }
+            }else{
+                showErrorDialog(
+                    message = "Sorry!!! couldn't connect to the server \n please try again later",
+                    "retry",
+                    "Error",
+                    RDrawable.ic_error_for_dilog,
+                    color = Color.RED
+                )
             }
-
             hideProgress()
-
         })
     }
 

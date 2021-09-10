@@ -32,7 +32,8 @@ data class RegistrationRequest(
     var FemaleCount: String?,
 
     @SerializedName("files")
-    var files: List<RequiredDocuments>?
+    var files: List<RequiredDocuments>?,
+
 ) {
     data class RequiredDocuments(
         @SerializedName("documentName")
@@ -45,6 +46,8 @@ data class RegistrationRequest(
 
 data class DocumentTypesResponse(
     val documentTypes: List<RegistrationRequest.RequiredDocuments>,
+    val status:String,
+    val message:String
 )
 
 data class BillDetails(
@@ -79,5 +82,7 @@ data class BillDetails(
 )
 
 data class BillDetailsResponse(
-    val billDetails: List<BillDetails>
+    val billDetails: List<BillDetails>,
+    val status:String,
+    val message:String
 )

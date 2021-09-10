@@ -65,6 +65,5 @@ class FilesListAdapter(
                 onRemoveFileClicked(position)
             }
         }
-
     }
 }

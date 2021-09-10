@@ -2,9 +2,12 @@ package com.heartsun.pithuwakhanipani.ui.waterRate
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidcommon.RDrawable
 import androidcommon.base.BaseActivity
+import androidcommon.extension.showErrorDialog
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
@@ -171,14 +174,27 @@ class WaterRateActivity : BaseActivity() {
         homeViewModel.ratesFromServer.observe(this, {
             it ?: return@observe
 
-            for (tapType in it.tapType) {
-                homeViewModel.insert(tapType)
-            }
-            for (tapType in it.readingSetupDetails) {
-                homeViewModel.insert(tapType)
-            }
-            for (tapType in it.readingSetup) {
-                homeViewModel.insert(tapType)
+            if(it.status.equals("Success",true)){
+
+                for (tapType in it.tapType) {
+                    homeViewModel.insert(tapType)
+                }
+                for (tapType in it.readingSetupDetails) {
+                    homeViewModel.insert(tapType)
+                }
+                for (tapType in it.readingSetup) {
+                    homeViewModel.insert(tapType)
+                }
+            }else{
+                hideProgress()
+
+                showErrorDialog(
+                    message = "Sorry!!! couldn't connect to the server \n please try again later",
+                    "retry",
+                    "Error",
+                    RDrawable.ic_error_for_dilog,
+                    color = Color.RED
+                )
             }
         })
     }

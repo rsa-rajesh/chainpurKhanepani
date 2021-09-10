@@ -27,6 +27,8 @@ import java.util.*
 
 class ConnectionToServer(prefs: Prefs) {
     var prefs: Prefs = prefs
+
+    //
     fun getRates(): WaterRateListResponse {
         var stmt: Statement? = null
         var resultset: ResultSet? = null
@@ -37,10 +39,6 @@ class ConnectionToServer(prefs: Prefs) {
         val query2 = "select * from TBLReadingSetup"
         val query3 = "select * from tblTapTypeMaster"
 
-        val ss = SqlServerFunctions()
-        val conn: Connection = ss.ConnectToSQLServer(prefs)
-        stmt = conn.createStatement()
-
 
         var tapTypeList: MutableList<TblTapTypeMaster> = arrayListOf()
         var readingSetupList: MutableList<TBLReadingSetup> = arrayListOf()
@@ -48,52 +46,70 @@ class ConnectionToServer(prefs: Prefs) {
 
 
 
-        resultset = stmt.executeQuery(query)
-        while (resultset.next()) {
+        try {
 
-            val readingSetupDetails: TBLReadingSetupDtl = TBLReadingSetupDtl(
-                VNO = resultset.getInt("VNO"),
-                SrNo = resultset.getInt("SrNo"),
-                MnNo = resultset.getInt("MnNo"),
-                MxNo = resultset.getInt("MxNo"),
-                Amt = resultset.getFloat("Amt"),
-                Rate = resultset.getFloat("Rate")
+            val ss = SqlServerFunctions()
+            val conn: Connection = ss.ConnectToSQLServer(prefs)
+            stmt = conn.createStatement()
+
+            resultset = stmt.executeQuery(query)
+            while (resultset.next()) {
+                val readingSetupDetails: TBLReadingSetupDtl = TBLReadingSetupDtl(
+                    VNO = resultset.getInt("VNO"),
+                    SrNo = resultset.getInt("SrNo"),
+                    MnNo = resultset.getInt("MnNo"),
+                    MxNo = resultset.getInt("MxNo"),
+                    Amt = resultset.getFloat("Amt"),
+                    Rate = resultset.getFloat("Rate")
+                )
+                readingSetupDetailsList.add(readingSetupDetails)
+            }
+            resultset2 = stmt.executeQuery(query2)
+            while (resultset2.next()) {
+                val readingSetup: TBLReadingSetup = TBLReadingSetup(
+                    VNO = resultset2.getInt("VNO"),
+                    FixCharges = resultset2.getInt("FixCharges"),
+                    TapTypeID = resultset2.getInt("TapTypeID"),
+                    TapSizeID = resultset2.getInt("TapSizeID"),
+                    Remarks = resultset2.getString("Remarks")
+                )
+                readingSetupList.add(readingSetup)
+            }
+
+            resultset3 = stmt.executeQuery(query3)
+            while (resultset3.next()) {
+                val tapType: TblTapTypeMaster = TblTapTypeMaster(
+                    TapTypeID = resultset3.getInt("TapTypeID"),
+                    TapTypeName = resultset3.getString("TapTypeName")
+                )
+                tapTypeList.add(tapType)
+            }
+
+            conn.close()
+
+            return WaterRateListResponse(
+                readingSetup = readingSetupList,
+                readingSetupDetails = readingSetupDetailsList,
+                tapType = tapTypeList,
+                status = "success",
+                message = "success"
             )
-            readingSetupDetailsList.add(readingSetupDetails)
+
+        } catch (e: Exception) {
+            return WaterRateListResponse(
+                readingSetup = readingSetupList,
+                readingSetupDetails = readingSetupDetailsList,
+                tapType = tapTypeList,
+                status = "error",
+                message = "sorry Couldn't connect to the server"
+            )
+
         }
 
 
-        resultset2 = stmt.executeQuery(query2)
-        while (resultset2.next()) {
-            val readingSetup: TBLReadingSetup = TBLReadingSetup(
-                VNO = resultset2.getInt("VNO"),
-                FixCharges = resultset2.getInt("FixCharges"),
-                TapTypeID = resultset2.getInt("TapTypeID"),
-                TapSizeID = resultset2.getInt("TapSizeID"),
-                Remarks = resultset2.getString("Remarks")
-            )
-            readingSetupList.add(readingSetup)
-
-        }
-
-        resultset3 = stmt.executeQuery(query3)
-        while (resultset3.next()) {
-            val tapType: TblTapTypeMaster = TblTapTypeMaster(
-                TapTypeID = resultset3.getInt("TapTypeID"),
-                TapTypeName = resultset3.getString("TapTypeName")
-            )
-            tapTypeList.add(tapType)
-        }
-
-        conn.close()
-
-        return WaterRateListResponse(
-            readingSetup = readingSetupList,
-            readingSetupDetails = readingSetupDetailsList,
-            tapType = tapTypeList
-        )
     }
 
+    //
     fun getMembers(context: Context): MembersListResponse {
         var stmt: Statement? = null
         var resultset: ResultSet? = null
@@ -102,79 +118,102 @@ class ConnectionToServer(prefs: Prefs) {
         val query = "select * from tblBoardMemberType"
         val query2 = "select * from tblContact"
 
-        val ss = SqlServerFunctions()
-        val conn: Connection = ss.ConnectToSQLServer(prefs)
-        stmt = conn.createStatement()
-
         var memberTypeList: MutableList<TblBoardMemberType> = arrayListOf()
         var membersList: MutableList<TblContact> = arrayListOf()
 
-        resultset = stmt.executeQuery(query2)
-        while (resultset.next()) {
+        try {
 
-            if (resultset.getBytes("Photo") != null) {
-                val data: ByteArray = resultset.getBytes("Photo")
-                val imageStream = ByteArrayInputStream(data)
-                val theImage = BitmapFactory.decodeStream(imageStream)
-                val image = File(
-                    context.getExternalFilesDir(null),
-                    "memberImage" + resultset.getInt("ContID").toString() + ".png"
-                )
-                val fos = FileOutputStream(image)
-                fos.use { theImage.compress(Bitmap.CompressFormat.PNG, 100, it) }
-                val tblContact: TblContact = TblContact(
-                    ContID = resultset.getInt("ContID"),
-                    ContactName = resultset.getString("ContactName"),
-                    ContactNumber = resultset.getString("ContactNumber"),
-                    IsActive = resultset.getInt("IsActive"),
-                    Post = resultset.getString("Post"),
-                    MemberType = resultset.getInt("MemberType"),
-                    Tenure = resultset.getString("Tenure"),
-                    Address = resultset.getString("Address"),
-                    Image = Uri.parse(image.path).toString()
-                )
-                membersList.add(tblContact)
+            val ss = SqlServerFunctions()
+            val conn: Connection = ss.ConnectToSQLServer(prefs)
+            stmt = conn.createStatement()
 
-            } else {
-                val tblContact: TblContact = TblContact(
-                    ContID = resultset.getInt("ContID"),
-                    ContactName = resultset.getString("ContactName"),
-                    ContactNumber = resultset.getString("ContactNumber"),
-                    IsActive = resultset.getInt("IsActive"),
-                    Post = resultset.getString("Post"),
-                    MemberType = resultset.getInt("MemberType"),
-                    Tenure = resultset.getString("Tenure"),
-                    Address = resultset.getString("Address"),
-                    Image = null
 
-                )
-                membersList.add(tblContact)
+            resultset = stmt.executeQuery(query2)
+            while (resultset.next()) {
+                if (resultset.getBytes("Photo") != null) {
+                    val data: ByteArray = resultset.getBytes("Photo")
+                    val imageStream = ByteArrayInputStream(data)
+                    val theImage = BitmapFactory.decodeStream(imageStream)
+                    val image = File(
+                        context.getExternalFilesDir(null),
+                        "memberImage" + resultset.getInt("ContID").toString() + ".png"
+                    )
+
+                    val fos = FileOutputStream(image)
+                    fos.use { theImage.compress(Bitmap.CompressFormat.PNG, 100, it) }
+                    val tblContact: TblContact = TblContact(
+                        ContID = resultset.getInt("ContID"),
+                        ContactName = resultset.getString("ContactName"),
+                        ContactNumber = resultset.getString("ContactNumber"),
+                        IsActive = resultset.getInt("IsActive"),
+                        Post = resultset.getString("Post"),
+                        MemberType = resultset.getInt("MemberType"),
+                        Tenure = resultset.getString("Tenure"),
+                        Address = resultset.getString("Address"),
+                        Image = Uri.parse(image.path).toString()
+                    )
+                    membersList.add(tblContact)
+
+                } else {
+                    val tblContact: TblContact = TblContact(
+                        ContID = resultset.getInt("ContID"),
+                        ContactName = resultset.getString("ContactName"),
+                        ContactNumber = resultset.getString("ContactNumber"),
+                        IsActive = resultset.getInt("IsActive"),
+                        Post = resultset.getString("Post"),
+                        MemberType = resultset.getInt("MemberType"),
+                        Tenure = resultset.getString("Tenure"),
+                        Address = resultset.getString("Address"),
+                        Image = null
+
+                    )
+                    membersList.add(tblContact)
+
+                }
 
             }
 
-        }
+
+            resultset2 = stmt.executeQuery(query)
+            while (resultset2.next()) {
+                val tblBoardMemberType: TblBoardMemberType = TblBoardMemberType(
+                    MemTypeID = resultset2.getInt("MemTypeID"),
+                    MemberType = resultset2.getString("MemberType"),
+                    isOldMember = resultset2.getInt("isOldMember"),
+                )
+                memberTypeList.add(tblBoardMemberType)
+
+            }
 
 
-        resultset2 = stmt.executeQuery(query)
-        while (resultset2.next()) {
-            val tblBoardMemberType: TblBoardMemberType = TblBoardMemberType(
-                MemTypeID = resultset2.getInt("MemTypeID"),
-                MemberType = resultset2.getString("MemberType"),
-                isOldMember = resultset2.getInt("isOldMember"),
+            conn.close()
+
+            return MembersListResponse(
+                tblContact = membersList,
+                tblBoardMemberType = memberTypeList,
+                status = "success",
+                message = "success"
             )
-            memberTypeList.add(tblBoardMemberType)
+        } catch (e: Exception) {
 
+            return MembersListResponse(
+                tblContact = null,
+                tblBoardMemberType = null,
+                status = "error",
+                message = "sorry Couldn't connect to the server"
+            )
         }
 
 
-        conn.close()
-
-        return MembersListResponse(
-            tblContact = membersList,
-            tblBoardMemberType = memberTypeList,
-        )
+//        return MembersListResponse(
+//            tblContact = membersList,
+//            tblBoardMemberType = memberTypeList,
+//            status = "success",
+//            message = "success"
+//        )
     }
 
+    //
     fun getNotices(context: Context): NoticesListResponse? {
 
         var stmt: Statement? = null
@@ -182,65 +221,68 @@ class ConnectionToServer(prefs: Prefs) {
 
         val query = "select * from tblNotice where IsActive=1"
 
-        val ss = SqlServerFunctions()
-        val conn: Connection = ss.ConnectToSQLServer(prefs)
-        stmt = conn.createStatement()
-
-
         var noticesList: MutableList<TblNotice> = arrayListOf()
 
 
+        try {
+            val ss = SqlServerFunctions()
+            val conn: Connection = ss.ConnectToSQLServer(prefs)
+            stmt = conn.createStatement()
+            resultset = stmt.executeQuery(query)
+            while (resultset.next()) {
+                if (resultset.getBytes("NoticeFile") != null) {
+                    val data: ByteArray = resultset.getBytes("NoticeFile")
+                    val imageStream = ByteArrayInputStream(data)
+                    val theImage = BitmapFactory.decodeStream(imageStream)
+                    val image = File(
+                        context.getExternalFilesDir(null),
+                        "noticeImage" + resultset.getInt("NoticeID").toString() + ".png"
+                    )
+                    val fos = FileOutputStream(image)
+                    fos.use { theImage.compress(Bitmap.CompressFormat.PNG, 100, it) }
+                    val notices: TblNotice = TblNotice(
+                        NoticeID = resultset.getInt("NoticeID"),
+                        NoticeHeadline = resultset.getString("NoticeHeadline"),
+                        NoticeDesc = resultset.getString("NoticeDesc"),
+                        DateNep = resultset.getString("DateNep"),
+                        DateTimeEng = resultset.getString("DateTimeEng"),
+                        NoticeFile = Uri.parse(image.path).toString()
 
+                    )
+                    noticesList.add(notices)
+                } else {
 
-        resultset = stmt.executeQuery(query)
-        while (resultset.next()) {
+                    val notices: TblNotice = TblNotice(
+                        NoticeID = resultset.getInt("NoticeID"),
+                        NoticeHeadline = resultset.getString("NoticeHeadline"),
+                        NoticeDesc = resultset.getString("NoticeDesc"),
+                        DateNep = resultset.getString("DateNep"),
+                        DateTimeEng = resultset.getString("DateTimeEng"),
+                        NoticeFile = null
+                    )
+                    noticesList.add(notices)
 
-
-            if (resultset.getBytes("NoticeFile") != null) {
-                val data: ByteArray = resultset.getBytes("NoticeFile")
-                val imageStream = ByteArrayInputStream(data)
-                val theImage = BitmapFactory.decodeStream(imageStream)
-                val image = File(
-                    context.getExternalFilesDir(null),
-                    "noticeImage" + resultset.getInt("NoticeID").toString() + ".png"
-                )
-                val fos = FileOutputStream(image)
-                fos.use { theImage.compress(Bitmap.CompressFormat.PNG, 100, it) }
-
-
-                val notices: TblNotice = TblNotice(
-                    NoticeID = resultset.getInt("NoticeID"),
-                    NoticeHeadline = resultset.getString("NoticeHeadline"),
-                    NoticeDesc = resultset.getString("NoticeDesc"),
-                    DateNep = resultset.getString("DateNep"),
-                    DateTimeEng = resultset.getString("DateTimeEng"),
-                    NoticeFile = Uri.parse(image.path).toString()
-
-                )
-                noticesList.add(notices)
-            } else {
-
-                val notices: TblNotice = TblNotice(
-                    NoticeID = resultset.getInt("NoticeID"),
-                    NoticeHeadline = resultset.getString("NoticeHeadline"),
-                    NoticeDesc = resultset.getString("NoticeDesc"),
-                    DateNep = resultset.getString("DateNep"),
-                    DateTimeEng = resultset.getString("DateTimeEng"),
-                    NoticeFile = null
-                )
-                noticesList.add(notices)
-
+                }
             }
+            conn.close()
+
+            return NoticesListResponse(
+                tblNotice = noticesList,
+                status = "success",
+                message = "success"
+            )
+        } catch (e: Exception) {
+            return NoticesListResponse(
+                tblNotice = noticesList,
+                status = "error",
+                message = "sorry Couldn't connect to the server"
+            )
         }
 
 
-        conn.close()
-
-        return NoticesListResponse(
-            tblNotice = noticesList
-        )
     }
 
+    //
     fun getAboutOrg(context: Context): AboutOrgResponse? {
 
         var stmt: Statement? = null
@@ -248,118 +290,150 @@ class ConnectionToServer(prefs: Prefs) {
 
         val query = "select * from TblAboutOrg where Cont_id=1"
 
-        val ss = SqlServerFunctions()
-        val conn: Connection = ss.ConnectToSQLServer(prefs)
-        stmt = conn.createStatement()
-
         var aboutOrg: TblAboutOrg? = null
 
-        resultset = stmt.executeQuery(query)
-        while (resultset.next()) {
-            if (resultset.getBytes("Cont_image") != null) {
-                val data: ByteArray = resultset.getBytes("Cont_image")
-                val imageStream = ByteArrayInputStream(data)
-                val theImage = BitmapFactory.decodeStream(imageStream)
-                val image = File(
-                    context.getExternalFilesDir(null),
-                    "aboutOrgImage.png"
-                )
-                val fos = FileOutputStream(image)
-                fos.use { theImage.compress(Bitmap.CompressFormat.PNG, 100, it) }
+        try {
+            val ss = SqlServerFunctions()
+            val conn: Connection = ss.ConnectToSQLServer(prefs)
+            stmt = conn.createStatement()
+
+            resultset = stmt.executeQuery(query)
+            while (resultset.next()) {
+                if (resultset.getBytes("Cont_image") != null) {
+                    val data: ByteArray = resultset.getBytes("Cont_image")
+                    val imageStream = ByteArrayInputStream(data)
+                    val theImage = BitmapFactory.decodeStream(imageStream)
+                    val image = File(
+                        context.getExternalFilesDir(null),
+                        "aboutOrgImage.png"
+                    )
+                    val fos = FileOutputStream(image)
+                    fos.use { theImage.compress(Bitmap.CompressFormat.PNG, 100, it) }
 
 
-                val about: TblAboutOrg = TblAboutOrg(
-                    Cont_id = resultset.getInt("Cont_id"),
-                    Cont_details = resultset.getString("Cont_details"),
-                    Cont_image = Uri.parse(image.path).toString()
-                )
-                aboutOrg = about
-            } else {
-                val about: TblAboutOrg = TblAboutOrg(
-                    Cont_id = resultset.getInt("Cont_id"),
-                    Cont_details = resultset.getString("Cont_details"),
-                    Cont_image = null
-                )
-                aboutOrg = about
-
-
+                    val about: TblAboutOrg = TblAboutOrg(
+                        Cont_id = resultset.getInt("Cont_id"),
+                        Cont_details = resultset.getString("Cont_details"),
+                        Cont_image = Uri.parse(image.path).toString()
+                    )
+                    aboutOrg = about
+                } else {
+                    val about: TblAboutOrg = TblAboutOrg(
+                        Cont_id = resultset.getInt("Cont_id"),
+                        Cont_details = resultset.getString("Cont_details"),
+                        Cont_image = null
+                    )
+                    aboutOrg = about
+                }
             }
-        }
-        conn.close()
+            conn.close()
 
-        return aboutOrg?.let {
-            AboutOrgResponse(
-                tblAbout = it
-            )
+            return aboutOrg?.let {
+                AboutOrgResponse(
+                    tblAbout = it,
+                    status = "success",
+                    message = "success"
+
+                )
+            }
+        } catch (e: Exception) {
+            return aboutOrg?.let {
+                AboutOrgResponse(
+                    tblAbout = it,
+                    status = "error",
+                    message = "sorry Couldn't connect to the server"
+                )
+            }
         }
 
 
     }
 
+    //
     fun getContactList(context: Context): ContactsListResponse? {
 
         var stmt: Statement? = null
         var resultset: ResultSet? = null
 
         val query = "select * from TblDepartmentContact"
-
-        val ss = SqlServerFunctions()
-        val conn: Connection = ss.ConnectToSQLServer(prefs)
-        stmt = conn.createStatement()
-
-
         var contactsList: MutableList<TblDepartmentContact> = arrayListOf()
 
-        resultset = stmt.executeQuery(query)
-        while (resultset.next()) {
+        try {
+            val ss = SqlServerFunctions()
+            val conn: Connection = ss.ConnectToSQLServer(prefs)
+            stmt = conn.createStatement()
+            resultset = stmt.executeQuery(query)
+            while (resultset.next()) {
+                val contacts: TblDepartmentContact = TblDepartmentContact(
+                    Dept_id = resultset.getInt("Dept_id"),
+                    Dept_name = resultset.getString("Dept_name").orEmpty(),
+                    Dept_contact = resultset.getString("Dept_contact").orEmpty(),
+                    Dept_mail = resultset.getString("Dept_mail").orEmpty(),
 
-            val contacts: TblDepartmentContact = TblDepartmentContact(
-                Dept_id = resultset.getInt("Dept_id"),
-                Dept_name = resultset.getString("Dept_name").orEmpty(),
-                Dept_contact = resultset.getString("Dept_contact").orEmpty(),
-                Dept_mail = resultset.getString("Dept_mail").orEmpty(),
+                    )
+                contactsList.add(contacts)
+            }
 
-                )
-            contactsList.add(contacts)
+            conn.close()
 
+            return ContactsListResponse(
+                tblDepartmentContact = contactsList,
+                status = "success",
+                message = "success"
+            )
+        } catch (e: Exception) {
+            return ContactsListResponse(
+                tblDepartmentContact = contactsList,
+                status = "error",
+                message = "sorry Couldn't connect to the server"
+            )
         }
 
-        conn.close()
 
-        return ContactsListResponse(
-            tblDepartmentContact = contactsList
-        )
     }
-
+//
     fun getRequiredFiles(context: Context): DocumentTypesResponse? {
 
         var stmt: Statement? = null
         var resultset: ResultSet? = null
 
         val query = "select * from tblDocumentType"
-
-        val ss = SqlServerFunctions()
-        val conn: Connection = ss.ConnectToSQLServer(prefs)
-        stmt = conn.createStatement()
-
         var contactsList: MutableList<RegistrationRequest.RequiredDocuments> = arrayListOf()
 
-        resultset = stmt.executeQuery(query)
-        while (resultset.next()) {
-            val contacts: RegistrationRequest.RequiredDocuments =
-                RegistrationRequest.RequiredDocuments(
-                    DocumentName = resultset.getString("DocTypeName"),
-                    DocImage = null,
-                )
-            contactsList.add(contacts)
-        }
-        conn.close()
+        try {
+            val ss = SqlServerFunctions()
+            val conn: Connection = ss.ConnectToSQLServer(prefs)
+            stmt = conn.createStatement()
+            resultset = stmt.executeQuery(query)
+            while (resultset.next()) {
+                val contacts: RegistrationRequest.RequiredDocuments =
+                    RegistrationRequest.RequiredDocuments(
+                        DocumentName = resultset.getString("DocTypeName"),
+                        DocImage = null,
+                    )
+                contactsList.add(contacts)
+            }
+            conn.close()
+            return DocumentTypesResponse(
+                documentTypes = contactsList,
+                status = "success",
+                message = "success"
+            )
+        }catch (e:java.lang.Exception){
 
-        return DocumentTypesResponse(
-            documentTypes = contactsList
-        )
+            return DocumentTypesResponse(
+                documentTypes = contactsList,
+                status = "error",
+                message = "sorry Couldn't connect to the server"
+            )
+        }
+
+
+
+
     }
 
+    //
     fun requestForReg(data: RegistrationRequest?, context: Context): String? {
         var stmt: Statement? = null
         var maxId: Int = 0
@@ -423,6 +497,7 @@ class ConnectionToServer(prefs: Prefs) {
         return stream.toByteArray()
     }
 
+    //
     fun getBillDetails(context: Context, memberId: Int): BillDetailsResponse? {
 
         var stmt: Statement? = null
@@ -433,69 +508,85 @@ class ConnectionToServer(prefs: Prefs) {
                 ",[NetAmt] FROM [tblTempBillDetail] Where Amt>0 and MemberID=" + memberId
             .toString()
 
-        val ss = SqlServerFunctions()
-        val conn: Connection = ss.ConnectToSQLServer(prefs)
-        stmt = conn.createStatement()
-
-
         var billDetailsList: MutableList<BillDetails> = arrayListOf()
 
-        resultset = stmt.executeQuery(query)
+
+        try {
+            val ss = SqlServerFunctions()
+            val conn: Connection = ss.ConnectToSQLServer(prefs)
+            stmt = conn.createStatement()
 
 
-        val totalBillDetails: BillDetails = BillDetails(
-            999999, null, 0, null, null, null, 0, 0f, null, null, 1, 0f, 0f, 0f
-        )
 
-        while (resultset.next()) {
+            resultset = stmt.executeQuery(query)
 
-            totalBillDetails.TotReading =
-                totalBillDetails.TotReading?.plus(resultset.getInt("TotReading"))
-            totalBillDetails.Amt = totalBillDetails.Amt?.plus(resultset.getInt("Amt"))
-            totalBillDetails.Dis = totalBillDetails.Dis?.plus(resultset.getInt("Dis"))
-            totalBillDetails.Fine = totalBillDetails.Fine?.plus(resultset.getInt("Fine"))
-            totalBillDetails.NetAmt = totalBillDetails.NetAmt?.plus(resultset.getInt("NetAmt"))
-            totalBillDetails.MemberID = resultset.getInt("MemberID")
-            totalBillDetails.MemName = resultset.getString("MemName")
-            totalBillDetails.TapNo = resultset.getInt("TapNo")
-            totalBillDetails.Address = resultset.getString("Address").orEmpty()
-            totalBillDetails.TapType = resultset.getString("TapType").orEmpty()
-            totalBillDetails.RID = resultset.getInt("RID")
-            totalBillDetails.Inv_Date = resultset.getString("Inv_Date").orEmpty()
-            totalBillDetails.Sam_Date = resultset.getString("Sam_Date").orEmpty()
 
-            val billDetails: BillDetails = BillDetails(
-                MemberID = resultset.getInt("MemberID"),
-                MemName = resultset.getString("MemName").orEmpty(),
-                TapNo = resultset.getInt("TapNo"),
-                Address = resultset.getString("Address").orEmpty(),
-                TapType = resultset.getString("TapType").orEmpty(),
-                RID = resultset.getInt("RID"),
-                TotReading = resultset.getInt("TotReading"),
-                Amt = resultset.getFloat("Amt"),
-                Inv_Date = resultset.getString("Inv_Date").orEmpty(),
-                Sam_Date = resultset.getString("Sam_Date").orEmpty(),
-                Dis = resultset.getFloat("Dis"),
-                Fine = resultset.getFloat("Fine"),
-                NetAmt = resultset.getFloat("NetAmt"),
-                PaidStatus = resultset.getInt("PaidStatus")
+            val totalBillDetails: BillDetails = BillDetails(
+                999999, null, 0, null, null, null, 0, 0f, null, null, 1, 0f, 0f, 0f
             )
 
-            billDetailsList.add(billDetails)
+            while (resultset.next()) {
+
+                totalBillDetails.TotReading =
+                    totalBillDetails.TotReading?.plus(resultset.getInt("TotReading"))
+                totalBillDetails.Amt = totalBillDetails.Amt?.plus(resultset.getInt("Amt"))
+                totalBillDetails.Dis = totalBillDetails.Dis?.plus(resultset.getInt("Dis"))
+                totalBillDetails.Fine = totalBillDetails.Fine?.plus(resultset.getInt("Fine"))
+                totalBillDetails.NetAmt = totalBillDetails.NetAmt?.plus(resultset.getInt("NetAmt"))
+                totalBillDetails.MemberID = resultset.getInt("MemberID")
+                totalBillDetails.MemName = resultset.getString("MemName")
+                totalBillDetails.TapNo = resultset.getInt("TapNo")
+                totalBillDetails.Address = resultset.getString("Address").orEmpty()
+                totalBillDetails.TapType = resultset.getString("TapType").orEmpty()
+                totalBillDetails.RID = resultset.getInt("RID")
+                totalBillDetails.Inv_Date = resultset.getString("Inv_Date").orEmpty()
+                totalBillDetails.Sam_Date = resultset.getString("Sam_Date").orEmpty()
+
+                val billDetails: BillDetails = BillDetails(
+                    MemberID = resultset.getInt("MemberID"),
+                    MemName = resultset.getString("MemName").orEmpty(),
+                    TapNo = resultset.getInt("TapNo"),
+                    Address = resultset.getString("Address").orEmpty(),
+                    TapType = resultset.getString("TapType").orEmpty(),
+                    RID = resultset.getInt("RID"),
+                    TotReading = resultset.getInt("TotReading"),
+                    Amt = resultset.getFloat("Amt"),
+                    Inv_Date = resultset.getString("Inv_Date").orEmpty(),
+                    Sam_Date = resultset.getString("Sam_Date").orEmpty(),
+                    Dis = resultset.getFloat("Dis"),
+                    Fine = resultset.getFloat("Fine"),
+                    NetAmt = resultset.getFloat("NetAmt"),
+                    PaidStatus = resultset.getInt("PaidStatus")
+                )
+
+                billDetailsList.add(billDetails)
+            }
+
+            conn.close()
+
+
+            if (billDetailsList.isNotEmpty()) {
+                billDetailsList.add(totalBillDetails)
+            }
+
+            return BillDetailsResponse(
+                billDetails = billDetailsList,
+                message = "success",
+                status = "success"
+            )
+
+        }catch (e:Exception){
+            return BillDetailsResponse(
+                billDetails = billDetailsList,
+                message = "Couldn't connect to server please try again later",
+                status = "error"
+            )
         }
 
-        conn.close()
 
-
-        if (billDetailsList.isNotEmpty()) {
-            billDetailsList.add(totalBillDetails)
-        }
-
-        return BillDetailsResponse(
-            billDetails = billDetailsList
-        )
     }
 
+    //
     fun addTapResponce(context: Context, phoneNo: String, pin: String): UserDetailsResponse? {
 
         var stmt: Statement? = null
@@ -529,7 +620,7 @@ class ConnectionToServer(prefs: Prefs) {
                 tblMember.add(member)
             }
             conn.close()
-        }catch (e:Exception){
+        } catch (e: Exception) {
             return UserDetailsResponse(
                 tblMember = null,
                 message = "Couldn't connect to server please try again later",
@@ -539,7 +630,7 @@ class ConnectionToServer(prefs: Prefs) {
 
 
 
-        if (tapCount==0){
+        if (tapCount == 0) {
             return UserDetailsResponse(
                 tblMember = null,
                 message = "Contact or PIN code doesn't match",
@@ -554,22 +645,24 @@ class ConnectionToServer(prefs: Prefs) {
         )
     }
 
-
-
-
-
+    //
     fun requestPin(phoneNo: String, memberId: String): String? {
         var RC = 0
         var SFRC = 0
         var code = 0
         var stmt: Statement? = null
         var resultset: ResultSet? = null
-
+        var TokenStr: String?=null
+        var ShortStr: String?=null
         var SecCode = ""
         val ss: SqlServerFunctions = SqlServerFunctions()
+        var conn: Connection?=null
         val smsfeatquery =
             "Select * from tblHospitalSetting Where SettingName='OTPSMSEnabled' and SettingValue='True'"
-        val conn: Connection = ss.ConnectToSQLServer(prefs)
+
+
+    try {
+        conn= ss.ConnectToSQLServer(prefs)
         stmt = conn.createStatement()
 
         resultset = stmt.executeQuery(smsfeatquery)
@@ -590,14 +683,20 @@ class ConnectionToServer(prefs: Prefs) {
             RC += 1
         }
 
-        val TokenStr: String = GetFieldData(
+         TokenStr= GetFieldData(
             "SettingValue",
             "Select * from tblHospitalSetting Where SettingName='SMSTokenValue'", stmt
         )
-        val ShortStr: String = GetFieldData(
+       ShortStr = GetFieldData(
             "SettingValue",
             "Select * from tblHospitalSetting Where SettingName='SMSShortName'", stmt
         )
+
+    }catch (e:Exception){
+
+        return "Couldn't connect to server please try again later"
+
+    }
 
         if (RC > 0) {
             try {
@@ -618,8 +717,12 @@ class ConnectionToServer(prefs: Prefs) {
                 code = conn.responseCode
                 conn.disconnect()
             } catch (e: MalformedURLException) {
+                return "Couldn't connect to SMS server"
+
                 e.printStackTrace()
             } catch (e: IOException) {
+                return "Couldn't connect to SMS server"
+
                 e.printStackTrace()
             }
             if (code == 200) {
@@ -650,7 +753,7 @@ class ConnectionToServer(prefs: Prefs) {
         }
 
     }
-
+//
     private fun GetFieldData(FieldName: String, qry: String, stmt: Statement?): String {
         val rs = stmt!!.executeQuery(qry)
         var RetVal: String = "0"
@@ -660,13 +763,14 @@ class ConnectionToServer(prefs: Prefs) {
         return RetVal
     }
 
-
+    //
     fun UpdateSecurityCode(mn: String, mmid: Int, sc: Int, stmt: Statement) {
         val qry =
             "Update tblMember Set PinCode=$sc where MemberID=$mmid and ContactNo='$mn'"
         stmt.executeUpdate(qry)
     }
 
+    //
     fun changePin(phoneNo: String?, memberId: String?, newPin: String): String? {
         var stmt: Statement? = null
         val ss = SqlServerFunctions()
@@ -689,6 +793,7 @@ class ConnectionToServer(prefs: Prefs) {
 
     }
 
+    //
     fun addComplaint(message: String, memberID: String?, phoneNo: String?): String {
         var stmt: Statement? = null
         val ss = SqlServerFunctions()
@@ -706,6 +811,7 @@ class ConnectionToServer(prefs: Prefs) {
             "Error"
         }
     }
+
 
     fun getComplaintList(memberID: String?, phoneNo: String?): MutableList<ComplaintResponse>? {
         var stmt: Statement? = null

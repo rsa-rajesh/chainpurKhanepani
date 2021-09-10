@@ -30,7 +30,7 @@ class ContactListAdapter(
     ) {
         val item = items[position]
         with(holder.binding) {
-            tvTitle.text = "ग्राहकको नाम :- "+item.Dept_name.toString().trim().orEmpty()
+            tvTitle.text = item.Dept_name.toString().trim().orEmpty()
             tvPhone.text = "फोन नम्बर :- "+item.Dept_contact.toString().trim().orEmpty()
             if (item.Dept_mail.toString().isEmpty()){
                 tvMail.isVisible=false

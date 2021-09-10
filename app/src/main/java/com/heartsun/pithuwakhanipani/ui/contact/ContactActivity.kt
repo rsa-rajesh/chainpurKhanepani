@@ -2,6 +2,7 @@ package com.heartsun.pithuwakhanipani.ui.contact
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidcommon.base.BaseActivity
 import androidx.core.view.isVisible
@@ -14,7 +15,9 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.util.Log
 import android.net.Uri
+import androidcommon.RDrawable
 import androidcommon.extension.loggerE
+import androidcommon.extension.showErrorDialog
 
 class ContactActivity : BaseActivity() {
 
@@ -95,9 +98,22 @@ class ContactActivity : BaseActivity() {
     private fun contactsFromServerObserver() {
         homeViewModel.contactsFromServer.observe(this, {
             it ?: return@observe
-            for (memberType in it.tblDepartmentContact) {
-                homeViewModel.insert(contacts = memberType)
+
+            if(it.status.equals("success",true)){
+                for (memberType in it.tblDepartmentContact) {
+                    homeViewModel.insert(contacts = memberType)
+                }
+            }else{
+                hideProgress()
+                showErrorDialog(
+                    message = "Sorry!!! couldn't connect to the server \n please try again later",
+                    "retry",
+                    "Error",
+                    RDrawable.ic_error_for_dilog,
+                    color = Color.RED
+                )
             }
+
         })
     }
 }

@@ -3,10 +3,13 @@ package com.heartsun.pithuwakhanipani.ui.meroKhaniPani.personalMenu
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidcommon.RDrawable
 import androidcommon.base.BaseActivity
 import androidcommon.extension.showChangePinDialog
+import androidcommon.extension.showErrorDialog
 import androidcommon.extension.toastS
 import com.heartsun.pithuwakhanipani.databinding.ActivityPersionalMenuBinding
 import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.MeroKhaniPaniActivity
@@ -145,10 +148,29 @@ class PersonalMenu : BaseActivity() {
             it ?: return@observe
             if (it.equals("success",true)){
                 myTapViewModel.update(memberId.toString().toInt(),changedPin)
-                toastS("PIN code successfully changed")
+
+
+                showErrorDialog(
+                    message = "PIN code successfully changed",
+                    "close",
+                    "Success",
+                    RDrawable.ic_success_for_dilog,
+                    color = Color.RED
+                )
+
+//                toastS("PIN code successfully changed")
                 pinCodee=changedPin
             }else{
-                toastS("Sorry can't change pin now")
+
+                hideProgress()
+                showErrorDialog(
+                    message = "Sorry can't change pin now",
+                    "close",
+                    "Error",
+                    RDrawable.ic_error_for_dilog,
+                    color = Color.RED
+                )
+//                toastS("Sorry can't change pin now")
             }
         })
     }

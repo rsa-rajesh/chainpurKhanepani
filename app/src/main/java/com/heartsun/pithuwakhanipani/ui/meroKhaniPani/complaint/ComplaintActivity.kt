@@ -3,8 +3,11 @@ package com.heartsun.pithuwakhanipani.ui.meroKhaniPani.complaint
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import androidcommon.RDrawable
 import androidcommon.base.BaseActivity
+import androidcommon.extension.showErrorDialog
 import androidcommon.extension.toastS
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -99,7 +102,19 @@ class ComplaintActivity : BaseActivity() {
 //                list.add(ComplaintResponse(null,memberID1.toString().toInt(),lastMessage,date.toString(),null))
 //                complaintListAdapter.items = list
             } else {
-                toastS("Unable to send \n Please try again later")
+
+
+                hideProgress()
+                showErrorDialog(
+                    message = "Unable to send \n" +
+                            " Please try again later",
+                    "retry",
+                    "Error",
+                    RDrawable.ic_error_for_dilog,
+                    color = Color.RED
+                )
+
+//                toastS("Unable to send \n Please try again later")
             }
             hideProgress()
 

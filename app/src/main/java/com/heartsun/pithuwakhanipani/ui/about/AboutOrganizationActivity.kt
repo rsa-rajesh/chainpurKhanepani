@@ -2,9 +2,12 @@ package com.heartsun.pithuwakhanipani.ui.about
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import androidcommon.RDrawable
 import androidcommon.base.BaseActivity
 import androidcommon.extension.load
+import androidcommon.extension.showErrorDialog
 import androidx.core.text.parseAsHtml
 import androidx.core.view.isVisible
 import com.heartsun.pithuwakhanipani.databinding.ActivityAboutOrganizationBinding
@@ -78,7 +81,21 @@ class AboutOrganizationActivity : BaseActivity() {
     private fun aboutOtgFromServerObserver() {
         homeViewModel.aboutOrgFromServer.observe(this, {
             it ?: return@observe
-            homeViewModel.insert(it.tblAbout)
+
+            if (it.status.equals("success",true)){
+                homeViewModel.insert(it.tblAbout)
+
+            }else{
+                hideProgress()
+                showErrorDialog(
+                    message = "Sorry!!! couldn't connect to the server \n please try again later",
+                    "retry",
+                    "Error",
+                    RDrawable.ic_error_for_dilog,
+                    color = Color.RED
+                )
+            }
+
         })
     }
 }

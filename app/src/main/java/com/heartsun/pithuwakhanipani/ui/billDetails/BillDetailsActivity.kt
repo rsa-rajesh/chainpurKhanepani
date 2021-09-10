@@ -3,7 +3,9 @@ package com.heartsun.pithuwakhanipani.ui.billDetails
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import androidcommon.RDrawable
 import androidcommon.base.BaseActivity
 import androidcommon.extension.toastS
 import androidx.core.view.isVisible
@@ -14,6 +16,7 @@ import com.heartsun.pithuwakhanipani.ui.memberRegisterRequest.RegisterViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidcommon.RLayout
+import androidcommon.extension.showErrorDialog
 import com.google.android.material.chip.Chip
 import com.heartsun.pithuwakhanipani.domain.BillDetails
 import org.koin.android.ext.android.get
@@ -112,11 +115,14 @@ class BillDetailsActivity : BaseActivity() {
 
             it ?: return@observe
 //            hideProgress()
+
+        if (it.status.equals("success",false)){
             if (it.billDetails.isEmpty()) {
                 binding.cvCommunityRate.isVisible = false
                 binding.tvBillDetails.isVisible = false
                 toastS("सदस्यता नम्बर फेला परेन")
-            } else {
+            }
+            else {
 
                 val totalBillDetails: BillDetails = BillDetails(
                     999999, null, 0, null, null, null, 0, 0f, null, null, 0, 0f, 0f, 0f
@@ -193,6 +199,16 @@ class BillDetailsActivity : BaseActivity() {
                 binding.rvCommunityRate.layoutManager = LinearLayoutManager(this)
                 binding.rvCommunityRate.adapter = billDetailsAdapter
             }
+        } else{
+            hideProgress()
+            showErrorDialog(
+                message = "Sorry!!! couldn't connect to the server \n please try again later",
+                "retry",
+                "Error",
+                RDrawable.ic_error_for_dilog,
+                color = Color.RED
+            )
+        }
         })
     }
 

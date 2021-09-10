@@ -2,8 +2,11 @@ package com.heartsun.pithuwakhanipani.ui.noticeBoard
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import androidcommon.RDrawable
 import androidcommon.base.BaseActivity
+import androidcommon.extension.showErrorDialog
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heartsun.pithuwakhanipani.databinding.ActivityNoticeBoardBinding
@@ -86,9 +89,24 @@ class NoticeBoardActivity : BaseActivity() {
     private fun noticesFromServerObserver() {
         homeViewModel.noticesFromServer.observe(this, {
             it ?: return@observe
-            for (notice in it.tblNotice) {
-                homeViewModel.insert(notice)
+
+            if(it.status.equals("success",true)){
+                for (notice in it.tblNotice) {
+                    homeViewModel.insert(notice)
+                }
+            }else{
+                hideProgress()
+                showErrorDialog(
+                    message = "Sorry!!! couldn't connect to the server \n please try again later",
+                    "retry",
+                    "Error",
+                    RDrawable.ic_error_for_dilog,
+                    color = Color.RED
+                )
             }
+
+
+
         })
     }
 }
