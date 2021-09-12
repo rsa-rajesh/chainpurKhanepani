@@ -17,20 +17,41 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clHeader"
+
+            <ImageView
+                android:rotation="180"
+                android:src="@drawable/bg_bottom_sheet"
                 android:layout_width="match_parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_height="@dimen/_160sdp"
+                app:tint="@color/primary_color" />
+
+            <ImageView
+                android:src="@drawable/ic_notification_solid"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                app:layout_constraintTop_toTopOf="@id/clHeader"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/clHeader"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_12sdp"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="15dp">
 
                 <ImageView
+                    android:background="@drawable/bg_circle_primary"
                     android:id="@+id/ivLogo"
+                    android:backgroundTint="@color/white"
                     android:layout_width="@dimen/_60sdp"
                     android:layout_height="@dimen/_60sdp"
                     android:src="@drawable/logo"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -39,26 +60,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_12sdp"
                     android:gravity="center"
-                    android:text="पिठुवा खानेपानी संस्था- रत्ननगर"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_16sdp"
+                    android:text="पिठुवा खानेपानी तथा सरसफाइ \n उपभोक्ता संस्था"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14sdp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@id/ivLogo"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ivLogo"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tvCompanyTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_12sdp"
-                    android:gravity="center"
-                    android:text="पिठुवा खानेपानी तथा सरसफाइ उपभोक्ता संस्था"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp"
-                    app:layout_constraintEnd_toStartOf="@id/ivLogo"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCompanyName" />
 
                 <TextView
                     android:id="@+id/tvCompanyAddress"
@@ -67,25 +75,13 @@
                     android:layout_marginEnd="@dimen/_12sdp"
                     android:gravity="center"
                     android:text="रत्ननगर-१५ माधवपुर,चितवन"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp"
-                    app:layout_constraintEnd_toStartOf="@id/ivLogo"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCompanyTitle" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_9sdp"
+                    app:layout_constraintEnd_toEndOf="@id/tvCompanyName"
+                    app:layout_constraintStart_toEndOf="@id/ivLogo"
+                    app:layout_constraintTop_toBottomOf="@id/tvCompanyName" />
 
-                <TextView
-                    android:id="@+id/tvCompanyContact"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_12sdp"
-                    android:gravity="center"
-                    android:text="टेलिफोन नम्वर:-०५६-५६२९०१"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp"
-                    app:layout_constraintEnd_toStartOf="@id/ivLogo"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCompanyAddress" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvImage_slider"
