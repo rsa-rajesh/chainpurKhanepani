@@ -106,10 +106,9 @@ class ComplaintActivity : BaseActivity() {
 
                 hideProgress()
                 showErrorDialog(
-                    message = "Unable to send \n" +
-                            " Please try again later",
-                    "retry",
-                    "Error",
+                    message = "पठाउन अक्षम \n कृपया पछि फेरि प्रयास गर्नुहोस्",
+                    "पुन: प्रयास गर्नुहोस्",
+                    "त्रुटि",
                     RDrawable.ic_error_for_dilog,
                     color = Color.RED
                 )

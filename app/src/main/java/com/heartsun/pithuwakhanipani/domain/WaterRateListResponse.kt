@@ -25,6 +25,12 @@ data class NoticesListResponse(
     val message:String
 )
 
+data class ActivitiesListResponse(
+    val tblActivity: List<TblActivity>,
+    val status:String,
+    val message:String
+)
+
 data class AboutOrgResponse(
     val tblAbout: TblAboutOrg,
     val status:String,

@@ -15,6 +15,7 @@ import com.heartsun.pithuwakhanipani.R
 import com.heartsun.pithuwakhanipani.data.Prefs
 import com.heartsun.pithuwakhanipani.ui.about.AboutAppActivity
 import com.heartsun.pithuwakhanipani.ui.about.AboutOrganizationActivity
+import com.heartsun.pithuwakhanipani.ui.activityes.ActivitiesActivity
 import com.heartsun.pithuwakhanipani.ui.billDetails.BillDetailsActivity
 import com.heartsun.pithuwakhanipani.ui.contact.ContactActivity
 import com.heartsun.pithuwakhanipani.ui.memberRegisterRequest.MemberRegisterActivity
@@ -43,7 +44,9 @@ class HomeActivity : BaseActivity() {
     companion object {
         fun newIntent(context: Context): Intent {
             return Intent(context, HomeActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             }
         }
     }
@@ -85,7 +88,8 @@ class HomeActivity : BaseActivity() {
                 cvSuchanaPati,
                 tvPoweredBy,
                 tvVersion,
-                cvBillDetails
+                cvBillDetails,
+                cvActivity
             ).forEach {
                 it.setOnClickListener { view ->
                     when (view) {
@@ -121,6 +125,10 @@ class HomeActivity : BaseActivity() {
                             activateViews(false)
                             startActivity(BillDetailsActivity.newIntent(this@HomeActivity))
                         }
+                        cvActivity->{
+                            activateViews(false)
+                            startActivity(ActivitiesActivity.newIntent(this@HomeActivity))
+                        }
                         tvVersion -> {
                             activateViews(false)
                             startActivity(AboutAppActivity.newIntent(this@HomeActivity))
@@ -148,8 +156,9 @@ class HomeActivity : BaseActivity() {
             cvPanikoDar.isClickable = status
             cvNayaDhara.isClickable = status
             cvMeroKahiPani.isClickable = status
+            cvActivity.isCheckable =status
             tvPoweredBy.isClickable = status
-
+            cvBillDetails.isCheckable =status
         }
     }
 

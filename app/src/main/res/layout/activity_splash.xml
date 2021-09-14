@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="पिठुवा खानेपानी संस्था- रत्ननगर"
+                    android:text="पपिठुवा खानेपानी तथा सरसफाइ \n उपभोक्ता संस्था"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_16sdp"
                     android:textStyle="bold"
@@ -49,17 +49,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tvCompanyTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="पिठुवा खानेपानी तथा सरसफाइ उपभोक्ता संस्था"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCompanyName" />
 
                 <TextView
                     android:id="@+id/tvCompanyAddress"
@@ -71,7 +60,7 @@
                     android:textSize="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCompanyTitle" />
+                    app:layout_constraintTop_toBottomOf="@id/tvCompanyName" />
 
                 <TextView
                     android:id="@+id/tvCompanyContact"

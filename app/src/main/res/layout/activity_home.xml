@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/table_row2_color"
     tools:context=".ui.HomeActivity">
 
     <ScrollView
@@ -31,8 +31,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 app:layout_constraintTop_toTopOf="@id/clHeader"
-                android:layout_width="@dimen/_22sdp"
-                android:layout_height="@dimen/_22sdp"/>
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 app:layout_constraintStart_toStartOf="parent"
@@ -119,11 +119,11 @@
                         android:id="@+id/cvMeroKahiPani"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardBackgroundColor="@color/tiles_background_color"
+                        app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="@dimen/_4sdp"
                         app:cardElevation="0dp"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:strokeColor="@color/primary_color"
+                        app:strokeColor="#FE0000"
                         app:strokeWidth="1dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -183,13 +183,13 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_90sdp"
                         android:layout_marginTop="@dimen/_12sdp"
-                        app:cardBackgroundColor="@color/tiles_background_color"
+                        app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="@dimen/_4sdp"
                         app:cardElevation="0dp"
                         app:layout_constraintEnd_toStartOf="@id/cvPanikoDar"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cvMeroKahiPani"
-                        app:strokeColor="@color/primary_color"
+                        app:strokeColor="#49936B"
                         app:strokeWidth="1dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -226,8 +226,7 @@
                                     android:textColor="@color/sub_text_color"
                                     android:textSize="@dimen/_12sdp"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@id/tv1" />
-
+                                    app:layout_constraintTop_toBottomOf="@id/tv1"/>
                             </LinearLayout>
 
 
@@ -241,13 +240,13 @@
                         android:layout_height="@dimen/_90sdp"
                         android:layout_marginStart="@dimen/_22sdp"
                         android:layout_marginTop="@dimen/_12sdp"
-                        app:cardBackgroundColor="@color/tiles_background_color"
+                        app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="@dimen/_4sdp"
                         app:cardElevation="0dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/cvSamitee"
                         app:layout_constraintTop_toBottomOf="@id/cvMeroKahiPani"
-                        app:strokeColor="@color/primary_color"
+                        app:strokeColor="#5A4540"
                         app:strokeWidth="1dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -273,7 +272,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintDimensionRatio="1:1"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"/>
 
                                 <TextView
                                     android:layout_gravity="center"
@@ -299,13 +298,13 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_90sdp"
                         android:layout_marginTop="@dimen/_12sdp"
-                        app:cardBackgroundColor="@color/tiles_background_color"
+                        app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="@dimen/_4sdp"
                         app:cardElevation="0dp"
                         app:layout_constraintEnd_toStartOf="@id/cvSastakoBarama"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cvSamitee"
-                        app:strokeColor="@color/primary_color"
+                        app:strokeColor="#DB41E1"
                         app:strokeWidth="1dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -323,7 +322,6 @@
 
                                 <ImageView
                                     android:layout_gravity="center"
-
                                     android:layout_width="@dimen/_50sdp"
                                     android:layout_height="@dimen/_50sdp"
                                     android:alpha=".8"
@@ -358,13 +356,13 @@
                         android:layout_height="@dimen/_90sdp"
                         android:layout_marginStart="@dimen/_22sdp"
                         android:layout_marginTop="@dimen/_12sdp"
-                        app:cardBackgroundColor="@color/tiles_background_color"
+                        app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="@dimen/_4sdp"
                         app:cardElevation="0dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/cvSuchanaPati"
                         app:layout_constraintTop_toBottomOf="@id/cvPanikoDar"
-                        app:strokeColor="@color/primary_color"
+                        app:strokeColor="#F83B00"
                         app:strokeWidth="1dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -415,13 +413,13 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_90sdp"
                         android:layout_marginTop="@dimen/_12sdp"
-                        app:cardBackgroundColor="@color/tiles_background_color"
+                        app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="@dimen/_4sdp"
                         app:cardElevation="0dp"
                         app:layout_constraintEnd_toStartOf="@id/cvNayaDhara"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cvSuchanaPati"
-                        app:strokeColor="@color/primary_color"
+                        app:strokeColor="#2081C3"
                         app:strokeWidth="1dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -474,13 +472,13 @@
                         android:layout_height="@dimen/_90sdp"
                         android:layout_marginStart="@dimen/_22sdp"
                         android:layout_marginTop="@dimen/_12sdp"
-                        app:cardBackgroundColor="@color/tiles_background_color"
+                        app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="@dimen/_4sdp"
                         app:cardElevation="0dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/cvSamparka"
-                        app:layout_constraintTop_toBottomOf="@id/cvSastakoBarama"
-                        app:strokeColor="@color/primary_color"
+                        app:layout_constraintTop_toBottomOf="@id/cvActivity"
+                        app:strokeColor="#7AC74F"
                         app:strokeWidth="1dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -526,18 +524,80 @@
 
                     </com.google.android.material.card.MaterialCardView>
 
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvActivity"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_90sdp"
+                        android:layout_marginStart="@dimen/_22sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/_4sdp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/cvSamparka"
+                        app:layout_constraintTop_toBottomOf="@id/cvSastakoBarama"
+                        app:strokeColor="#fdca40"
+                        app:strokeWidth="1dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <ImageView
+                                    android:layout_gravity="center"
+                                    android:layout_width="@dimen/_50sdp"
+                                    android:layout_height="@dimen/_50sdp"
+                                    android:alpha=".8"
+                                    android:src="@drawable/ic_calendar"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintDimensionRatio="1:1"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:layout_gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8sdp"
+                                    android:gravity="center"
+                                    android:text="क्रियाकलाप"
+                                    android:textColor="@color/sub_text_color"
+                                    android:textSize="@dimen/_12sdp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/tv1" />
+
+                            </LinearLayout>
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+
+
+
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cvBillDetails"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_90sdp"
                         android:layout_marginTop="@dimen/_12sdp"
-                        app:cardBackgroundColor="@color/tiles_background_color"
+                        app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="@dimen/_4sdp"
                         app:cardElevation="0dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/cvNayaDhara"
+                        app:layout_constraintTop_toBottomOf="@id/cvActivity"
                         app:layout_constraintEnd_toEndOf="@id/cvSamparka"
-                        app:strokeColor="@color/primary_color"
+                        app:strokeColor="#515B3A"
                         app:strokeWidth="1dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout

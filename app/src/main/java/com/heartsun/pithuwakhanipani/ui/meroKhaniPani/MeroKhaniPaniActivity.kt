@@ -152,8 +152,8 @@ class MeroKhaniPaniActivity : BaseActivity() {
             if (it.status.equals("error", true)) {
                 showErrorDialog(
                     message = it.message,
-                    "close",
-                    "Error",
+                    "बन्द गर्नुहोस्",
+                    "त्रुटि",
                     RDrawable.ic_error_for_dilog,
                     color = Color.RED
                 )
@@ -176,16 +176,16 @@ class MeroKhaniPaniActivity : BaseActivity() {
             if (it.equals("Access Code is sent to your mobile", true)) {
                 showErrorDialog(
                     message = it,
-                    "close",
-                    "Success",
+                    "बन्द गर्नुहोस्",
+                    "सफलता",
                     RDrawable.ic_success_for_dilog,
                     color = Color.GREEN
                 )
             } else {
                 showErrorDialog(
                     message = it,
-                    "close",
-                    "Error",
+                    "बन्द गर्नुहोस्",
+                    "त्रुटि",
                     RDrawable.ic_error_for_dilog,
                     color = Color.RED
                 )

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/table_row2_color"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.meroKhaniPani.ledger.LedgerActivity">
@@ -30,17 +31,13 @@
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:orientation="vertical">
 
-
-
-
-
                 <com.google.android.material.card.MaterialCardView
                     android:visibility="visible"
                     android:id="@+id/cvCommunityRate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    app:cardBackgroundColor="@color/tiles_background_color"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="@dimen/_4sdp"
                     app:cardElevation="0dp"
                     app:strokeColor="@color/primary_color"
@@ -101,7 +98,6 @@
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvDharaNo" />
-
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/tableHead1"

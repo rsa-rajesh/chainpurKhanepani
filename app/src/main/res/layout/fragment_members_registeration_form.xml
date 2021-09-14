@@ -32,7 +32,7 @@
                     android:id="@+id/memberName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Member Full Name"
+                    android:hint="सदस्यको पूरा नाम"
                     android:maxLength="50"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"
@@ -53,7 +53,7 @@
                     android:id="@+id/address"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Member Address"
+                    android:hint="सदस्यको ठेगाना"
                     android:maxLength="100"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"
@@ -83,7 +83,7 @@
                         android:minWidth="@dimen/_100sdp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_regular"
-                        android:text="Male" />
+                        android:text="पुरुष" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
                         android:id="@+id/female"
@@ -91,7 +91,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:fontFamily="@font/montserrat_regular"
-                        android:text="Female" />
+                        android:text="महिला" />
                 </RadioGroup>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -111,7 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:maxLength="12"
-                    android:hint="Citizenship Number"
+                    android:hint="नागरिकता नम्बर"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"
                     />
@@ -133,7 +133,7 @@
                     android:layout_height="match_parent"
                     android:inputType="phone"
                     android:maxLength="10"
-                    android:hint="Contact Number"
+                    android:hint="सम्पर्क नम्बर"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"
                     />
@@ -153,7 +153,7 @@
                     android:id="@+id/fatherOrHusbandName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Father/Husband Name"
+                    android:hint="बुबा/श्रीमानको नाम"
                     android:maxLength="50"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"
@@ -174,7 +174,7 @@
                     android:layout_width="match_parent"
                     android:maxLength="50"
                     android:layout_height="match_parent"
-                    android:hint="Grand Father/Father In Law Name"
+                    android:hint="हजुरबुवा/ससुराको नाममा"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"
                     />
@@ -196,7 +196,7 @@
                     android:layout_height="match_parent"
                     android:inputType="number"
                     android:maxLength="2"
-                    android:hint="Male Count"
+                    android:hint="पुरुष गणना"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"
                     />
@@ -218,7 +218,7 @@
                     android:layout_height="match_parent"
                     android:inputType="number"
                     android:maxLength="2"
-                    android:hint="Female Count"
+                    android:hint="महिला गणना"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"
                     />
@@ -231,10 +231,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_32sdp"
-                android:backgroundTint="@color/primary_color"
+                android:backgroundTint="@color/highlight_green"
                 android:paddingHorizontal="@dimen/_22sdp"
                 android:paddingVertical="@dimen/_8sdp"
-                android:text="Select Documents"
+                android:text="कागजात चयन गर्नुहोस्"
                 android:textColor="@color/white"
                 android:textAllCaps="false"
                 android:textSize="@dimen/_14sdp"

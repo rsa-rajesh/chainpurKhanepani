@@ -25,9 +25,11 @@
         android:layout_marginEnd="@dimen/_16sdp"
         android:text="फारम डाउनलोड गर्नुहोस्"
         app:icon="@drawable/ic_pdf_file"
+        android:textColor="@color/highlight_green"
+        app:iconTint="@color/highlight_red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/colorGrey" />
+        app:strokeColor="@color/highlight_green" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment_container"
@@ -47,6 +49,7 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/clError"
+    android:visibility="gone"
     android:background="@color/lite_gray"
     app:layout_constraintTop_toBottomOf="@id/toolbar"
     app:layout_constraintBottom_toBottomOf="parent"
@@ -73,10 +76,12 @@
         android:layout_marginEnd="@dimen/_16sdp"
         android:text="फारम डाउनलोड गर्नुहोस्"
         app:icon="@drawable/ic_pdf_file"
+        app:iconTint="@color/highlight_red"
+        android:textColor="@color/highlight_green"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvErrorMsg"
-        app:strokeColor="@color/colorGrey" />
+        app:strokeColor="@color/highlight_green" />
 
 
 

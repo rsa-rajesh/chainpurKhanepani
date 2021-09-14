@@ -25,8 +25,8 @@ fun Context.getBaseDialog(): Dialog {
 
 fun Context.showErrorDialog(
     message: String,
-    label: String = "Ok",
-    title: String = "Water Supply",
+    label: String = "ठीक छ",
+    title: String = "पानीको आपूर्ति",
     @DrawableRes icon: Int = R.drawable.ic_server_error,
     color: Int = Color.RED,
     isCancellable: Boolean = true,
@@ -60,8 +60,8 @@ fun Context.showErrorDialog(
 fun Context.showCustomDialog(
     message: String,
     hideNegOption: Boolean = false,
-    negLabel: String = "Cancel",
-    posLabel: String = "Ok",
+    negLabel: String = "रद्द गर्नुहोस्",
+    posLabel: String = "ठीक छ",
     onPosClick: () -> Unit = {},
     onNegClick: () -> Unit = {},
     icon: Int = R.drawable.logo
@@ -111,10 +111,10 @@ fun Context.showAddTapDialog(
             btAddNew.setOnClickListener {
                 when {
                     phoneNumber.text.isNullOrBlank() -> {
-                        tiPhoneNumber.error = "Phone number is required"
+                        tiPhoneNumber.error = "फोन नम्बर आवश्यक छ"
                     }
                     pin.text.isNullOrBlank() -> {
-                        tiPin.error = "Validation Pin is required"
+                        tiPin.error = "वैधता पिन आवश्यक छ"
                         tiPhoneNumber.error = null
                     }
                     else -> {
@@ -157,26 +157,20 @@ fun Context.showRequestPinDialog(
 
                 when {
                     phoneNumber.text.isNullOrBlank() -> {
-                        tiPhoneNumber.error = "Phone number is required"
+                        tiPhoneNumber.error = "फोन नम्बर आवश्यक छ"
                     }
                     memberId.text.isNullOrBlank() -> {
-                        tiMemberId.error = "Member id is required"
+                        tiMemberId.error = "सदस्य आईडी आवश्यक छ"
                         tiPhoneNumber.error = null
                     }
-
                     else -> {
                         tiMemberId.error = null
                         tiPhoneNumber.error = null
-
                         onRequestClick(phoneNumber.text.toString(), memberId.text.toString())
                         dismiss()
-
                     }
                 }
-
-
             }
-
             btClose.setOnClickListener {
                 dismiss()
             }
@@ -201,26 +195,26 @@ fun Context.showChangePinDialog(
 
                 when {
                     oldPin.text.isNullOrBlank() -> {
-                        tiOldPin.error = "Old Pin is required"
+                        tiOldPin.error = "पुरानो पिन आवश्यक छ"
                     }
 
                     oldPin.text.toString().toInt() != oldPinCode -> {
-                        tiOldPin.error = "Old pin don't match"
+                        tiOldPin.error = "पुरानो पिन मिलेन"
                     }
 
                     newPin.text.isNullOrBlank() -> {
-                        tiNewPin.error = "New Pin id is required"
+                        tiNewPin.error = "नयाँ पिन आईडी आवश्यक छ"
                         tiOldPin.error = null
                     }
                     confirmPin.text.isNullOrBlank() -> {
-                        tiConfirmPin.error = "Confirm Pin id is required"
+                        tiConfirmPin.error = "यकिन पिन आईडी आवश्यक छ"
                         tiNewPin.error = null
                         tiOldPin.error = null
 
                     }
 
                     !confirmPin.text.toString().equals(newPin.text.toString(), false) -> {
-                        tiConfirmPin.error = "Confirm Pin and new pin don't match"
+                        tiConfirmPin.error = "यकीन पिन र नयाँ पिन मेल खाएन"
                         tiNewPin.error = null
                         tiOldPin.error = null
 
@@ -236,8 +230,6 @@ fun Context.showChangePinDialog(
 
                     }
                 }
-
-
             }
 
             btClose.setOnClickListener {

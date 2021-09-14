@@ -1,6 +1,7 @@
 package com.heartsun.pithuwakhanipani.ui.memberRegisterRequest
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.heartsun.pithuwakhanipani.domain.RegistrationRequest
 import com.heartsun.pithuwakhanipani.domain.dbmodel.TBLReadingSetupDtl
 import com.heartsun.pithuwakhanipani.domain.dbmodel.TblBoardMemberType
 import com.heartsun.pithuwakhanipani.domain.dbmodel.TblNotice
+import java.util.*
 import kotlin.properties.Delegates
 
 class FilesListAdapter(
@@ -43,8 +45,18 @@ class FilesListAdapter(
         holder: VBViewHolder<ItemRegisterFilesListBinding>,
         position: Int
     ) {
+
+
         val item = items[position]
         with(holder.binding) {
+
+            val properNoun = arrayOf("#FE0000", "#0090B5", "#4E9D67", "#DB41E1", "#F83B00", "#515B3A","#7AC74F")
+            val random = Random()
+            val index: Int = random.nextInt(properNoun.size)
+            cvMeroKahiPani.setStrokeColor(ColorStateList.valueOf(Color.parseColor(properNoun[index])))
+
+
+
             tvFileName.text = item.DocumentName.toString().orEmpty()
             tvFileType.text = item.DocumentName.toString().orEmpty()
             if (item.DocImage==null){

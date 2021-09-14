@@ -101,7 +101,7 @@ class ConnectionToServer(prefs: Prefs) {
                 readingSetupDetails = readingSetupDetailsList,
                 tapType = tapTypeList,
                 status = "error",
-                message = "sorry Couldn't connect to the server"
+                message = "माफ गर्नुहोस् सर्भरमा जडान गर्न सकिएन"
             )
 
         }
@@ -200,7 +200,7 @@ class ConnectionToServer(prefs: Prefs) {
                 tblContact = null,
                 tblBoardMemberType = null,
                 status = "error",
-                message = "sorry Couldn't connect to the server"
+                message = "माफ गर्नुहोस् सर्भरमा जडान गर्न सकिएन"
             )
         }
 
@@ -275,7 +275,7 @@ class ConnectionToServer(prefs: Prefs) {
             return NoticesListResponse(
                 tblNotice = noticesList,
                 status = "error",
-                message = "sorry Couldn't connect to the server"
+                message = "माफ गर्नुहोस् सर्भरमा जडान गर्न सकिएन"
             )
         }
 
@@ -341,7 +341,7 @@ class ConnectionToServer(prefs: Prefs) {
                 AboutOrgResponse(
                     tblAbout = it,
                     status = "error",
-                    message = "sorry Couldn't connect to the server"
+                    message = "माफ गर्नुहोस् सर्भरमा जडान गर्न सकिएन"
                 )
             }
         }
@@ -385,7 +385,7 @@ class ConnectionToServer(prefs: Prefs) {
             return ContactsListResponse(
                 tblDepartmentContact = contactsList,
                 status = "error",
-                message = "sorry Couldn't connect to the server"
+                message = "माफ गर्नुहोस् सर्भरमा जडान गर्न सकिएन"
             )
         }
 
@@ -424,7 +424,7 @@ class ConnectionToServer(prefs: Prefs) {
             return DocumentTypesResponse(
                 documentTypes = contactsList,
                 status = "error",
-                message = "sorry Couldn't connect to the server"
+                message = "माफ गर्नुहोस् सर्भरमा जडान गर्न सकिएन"
             )
         }
 
@@ -578,7 +578,7 @@ class ConnectionToServer(prefs: Prefs) {
         }catch (e:Exception){
             return BillDetailsResponse(
                 billDetails = billDetailsList,
-                message = "Couldn't connect to server please try again later",
+                message = "सर्भरमा जडान गर्न सकिएन कृपया पछि फेरि प्रयास गर्नुहोस्",
                 status = "error"
             )
         }
@@ -623,7 +623,7 @@ class ConnectionToServer(prefs: Prefs) {
         } catch (e: Exception) {
             return UserDetailsResponse(
                 tblMember = null,
-                message = "Couldn't connect to server please try again later",
+                message = "सर्भरमा जडान गर्न सकिएन कृपया पछि फेरि प्रयास गर्नुहोस्",
                 status = "error"
             )
         }
@@ -633,7 +633,7 @@ class ConnectionToServer(prefs: Prefs) {
         if (tapCount == 0) {
             return UserDetailsResponse(
                 tblMember = null,
-                message = "Contact or PIN code doesn't match",
+                message = "सम्पर्क वा पिन सङ्केत मिल्दो छैन",
                 status = "error"
             )
         }
@@ -846,6 +846,71 @@ class ConnectionToServer(prefs: Prefs) {
         } catch (a: Exception) {
             conn.close()
             complaintList
+        }
+    }
+
+    fun getActivities(context: Context): ActivitiesListResponse? {
+        var stmt: Statement? = null
+        var resultset: ResultSet? = null
+
+        val query = "select * from TblActivity where IsActive=1"
+
+        var activitiesList: MutableList<TblActivity> = arrayListOf()
+
+
+        try {
+            val ss = SqlServerFunctions()
+            val conn: Connection = ss.ConnectToSQLServer(prefs)
+            stmt = conn.createStatement()
+            resultset = stmt.executeQuery(query)
+            while (resultset.next()) {
+                if (resultset.getBytes("ActivityFile") != null) {
+                    val data: ByteArray = resultset.getBytes("ActivityFile")
+                    val imageStream = ByteArrayInputStream(data)
+                    val theImage = BitmapFactory.decodeStream(imageStream)
+                    val image = File(
+                        context.getExternalFilesDir(null),
+                        "activityImage" + resultset.getInt("ActivityID").toString() + ".png"
+                    )
+                    val fos = FileOutputStream(image)
+                    fos.use { theImage.compress(Bitmap.CompressFormat.PNG, 100, it) }
+                    val notices: TblActivity = TblActivity(
+                        ActivityID = resultset.getInt("ActivityID"),
+                        ActivityHeadline = resultset.getString("ActivityHeadline"),
+                        ActivityDesc = resultset.getString("ActivityDesc"),
+                        DateNep = resultset.getString("DateNep"),
+                        DateTimeEng = resultset.getString("DateTimeEng"),
+                        ActivityFile = Uri.parse(image.path).toString()
+
+                    )
+                    activitiesList.add(notices)
+                } else {
+
+                    val notices: TblActivity = TblActivity(
+                        ActivityID = resultset.getInt("ActivityID"),
+                        ActivityHeadline = resultset.getString("ActivityHeadline"),
+                        ActivityDesc = resultset.getString("ActivityDesc"),
+                        DateNep = resultset.getString("DateNep"),
+                        DateTimeEng = resultset.getString("DateTimeEng"),
+                        ActivityFile = null
+                    )
+                    activitiesList.add(notices)
+
+                }
+            }
+            conn.close()
+
+            return ActivitiesListResponse(
+                tblActivity = activitiesList,
+                status = "success",
+                message = "success"
+            )
+        } catch (e: Exception) {
+            return ActivitiesListResponse(
+                tblActivity = activitiesList,
+                status = "error",
+                message = "माफ गर्नुहोस् सर्भरमा जडान गर्न सकिएन"
+            )
         }
     }
 }

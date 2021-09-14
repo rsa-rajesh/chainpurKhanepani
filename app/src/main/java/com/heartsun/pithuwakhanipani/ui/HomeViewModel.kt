@@ -87,8 +87,15 @@ class HomeViewModel(
         dbRepository.insert(notice)
     }
 
+    fun insert(activity: TblActivity) = viewModelScope.launch {
+        dbRepository.insert(activity)
+    }
+
     val noticesFromLocalDb: LiveData<List<TblNotice>> =
         dbRepository.tblNotices.asLiveData()
+
+    val activityFromLocalDb: LiveData<List<TblActivity>> =
+        dbRepository.tblActivities.asLiveData()
 
 
     private val _aboutOrg = MutableLiveData<AboutOrgResponse>()
@@ -125,5 +132,13 @@ class HomeViewModel(
     }
 
 
+
+    private val _activities = MutableLiveData<ActivitiesListResponse>()
+    val activitiesFromServer: LiveData<ActivitiesListResponse> = _activities
+    fun getActivitiesFromServer() {
+        viewModelScope.launch {
+            _activities.value = homeRepository.getActivities()
+        }
+    }
 
 }

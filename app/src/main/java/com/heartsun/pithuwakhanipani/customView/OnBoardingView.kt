@@ -1,13 +1,17 @@
 package com.heartsun.pithuwakhanipani.customView
 
+import android.R.attr
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidcommon.RColor
 import androidcommon.extension.loggerE
 import androidx.core.content.ContextCompat.startActivity
 import androidx.viewpager2.widget.ViewPager2
@@ -19,6 +23,12 @@ import com.heartsun.pithuwakhanipani.entity.OnBoardingPage
 import com.heartsun.pithuwakhanipani.ui.HomeActivity
 import com.heartsun.pithuwakhanipani.ui.waterRate.WaterRateActivity
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+import android.R.attr.button
+import android.graphics.Color
+import com.google.android.material.internal.ContextUtils.getActivity
+import com.heartsun.pithuwakhanipani.ui.OnBoardingActivity
+import com.heartsun.pithuwakhanipani.ui.about.AboutAppActivity
+
 
 class OnBoardingView @JvmOverloads
 constructor(
@@ -60,6 +70,7 @@ constructor(
 
     private fun addSlideChangeListener() {
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            @SuppressLint("ResourceAsColor")
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
@@ -73,16 +84,23 @@ constructor(
                 when (position) {
                     1 -> {
                         binding.startBtn.text = "Next"
+                        binding.startBtn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#EF4D4D"))
+
                         binding.titleTv.text = context.getString(R.string.onboard_second_title)
                         binding.descTV.text = context.getString(R.string.onboard_second_details)
                     }
                     2 -> {
                         binding.startBtn.text = "Start"
+                        binding.startBtn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#27AE60"))
+//                        binding.startBtn.backgroundTintList= ColorStateList.valueOf(Color.GREEN)
+
                         binding.titleTv.text = context.getString(R.string.onboard_third_title)
                         binding.descTV.text = context.getString(R.string.onboard_third_details)
                     }
                     else -> {
                         binding.startBtn.text = "Next"
+                        binding.startBtn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#EF4D4D"))
+
                         binding.titleTv.text = context.getString(R.string.onboard_first_title)
                         binding.descTV.text = context.getString(R.string.onboard_first_details)
                     }
@@ -95,7 +113,6 @@ constructor(
     private fun addingButtonsClickListeners() {
         binding.startBtn.setOnClickListener {
             if (positions == 2) {
-                setFirstTimeLaunchToFalse()
                 navigateToMainActivity()
             } else {
                 navigateToNextSlide()
@@ -103,21 +120,30 @@ constructor(
         }
     }
 
-    private fun setFirstTimeLaunchToFalse() {
-    }
+
 
     private fun navigateToNextSlide() {
         val nextSlidePos: Int = binding.slider1.currentItem.plus(1) ?: 0
         binding.slider1.setCurrentItem(nextSlidePos, true)
     }
 
+    @SuppressLint("RestrictedApi")
     private fun navigateToMainActivity() {
 
-        val intent = Intent(context, HomeActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        }
-        context.startActivity(intent)
+
+        var activity:OnBoardingActivity = getActivity(this.context) as OnBoardingActivity
+        activity.startActivity()
+
+//        (getActivity() as OnBoardingActivity?)?.startActivity()
+
+
+//        val intent = Intent(context, HomeActivity::class.java).apply {
+//            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//
+//        }
+//        context.startActivity(intent)
     }
 }
 

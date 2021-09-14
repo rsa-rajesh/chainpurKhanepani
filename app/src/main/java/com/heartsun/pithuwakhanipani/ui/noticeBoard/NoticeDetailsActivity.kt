@@ -31,12 +31,17 @@ class NoticeDetailsActivity : BaseActivity() {
     private val noticeDetails by lazy {
         intent.getStringExtra(Details)
     }
+    private val pageTitle by lazy {
+        intent.getStringExtra(PageTitle)
+    }
+
 
     companion object {
         private const val Date = "NoticePublishedDate"
         private const val ImageUrl = "NoticeImageUrl"
         private const val Title = "NoticeTitle"
         private const val Details = "NoticeDetails"
+        private const val PageTitle = "PageTitle"
 
 
         fun newIntent(
@@ -44,13 +49,17 @@ class NoticeDetailsActivity : BaseActivity() {
             date: String,
             image: String,
             title: String,
-            details: String
+            details: String,
+            pageTitle: String
+
         ): Intent {
             return Intent(context, NoticeDetailsActivity::class.java).apply {
                 putExtra(Date, date)
                 putExtra(ImageUrl, image)
                 putExtra(Title, title)
                 putExtra(Details, details)
+                putExtra(PageTitle, pageTitle)
+
             }
         }
     }
@@ -66,7 +75,8 @@ class NoticeDetailsActivity : BaseActivity() {
     private fun initViews() {
         with(binding) {
 
-            toolbar.tvToolbarTitle.text = "सूचना पाटी"
+//            toolbar.tvToolbarTitle.text = "सूचना पाटी"
+            toolbar.tvToolbarTitle.text = pageTitle
             toolbar.ivBack.setOnClickListener {
                 onBackPressed()
                 this@NoticeDetailsActivity.finish()

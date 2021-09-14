@@ -106,9 +106,10 @@ class ContactActivity : BaseActivity() {
             }else{
                 hideProgress()
                 showErrorDialog(
-                    message = "Sorry!!! couldn't connect to the server \n please try again later",
-                    "retry",
-                    "Error",
+                    message = "माफ गर्नुहोस्!!! सर्भरमा जडान गर्न सकेन \n" +
+                            " कृपया पछि फेरि प्रयास गर्नुहोस्",
+                    "पुन: प्रयास गर्नुहोस्",
+                    "त्रुटि",
                     RDrawable.ic_error_for_dilog,
                     color = Color.RED
                 )

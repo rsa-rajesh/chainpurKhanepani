@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/table_row2_color"
     tools:context=".ui.waterRate.WaterRateActivity">
 
     <include
@@ -46,7 +46,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    app:cardBackgroundColor="@color/tiles_background_color"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="@dimen/_4sdp"
                     app:cardElevation="0dp"
                     app:layout_constraintTop_toTopOf="parent"
@@ -142,7 +142,6 @@
 
                         </com.google.android.material.chip.ChipGroup>
 
-
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/tiUnit"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -216,7 +215,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    app:cardBackgroundColor="@color/tiles_background_color"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="@dimen/_4sdp"
                     app:cardElevation="0dp"
                     app:strokeColor="@color/primary_color"
@@ -306,7 +305,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_12sdp"
-                    app:cardBackgroundColor="@color/tiles_background_color"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="@dimen/_4sdp"
                     app:cardElevation="0dp"
                     app:strokeColor="@color/primary_color"

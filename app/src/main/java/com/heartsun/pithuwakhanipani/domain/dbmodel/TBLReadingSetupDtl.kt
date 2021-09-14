@@ -100,6 +100,25 @@ data class TblNotice(
     val NoticeFile: String?,
 )
 
+@Entity(tableName = "tblActivity")
+data class TblActivity(
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "ActivityID")
+    val ActivityID: Int,
+    @ColumnInfo(name = "ActivityHeadline")
+    val ActivityHeadline: String?,
+    @ColumnInfo(name = "ActivityDesc")
+    val ActivityDesc: String?,
+    @ColumnInfo(name = "DateNep")
+    val DateNep: String?,
+    @ColumnInfo(name = "DateTimeEng")
+    val DateTimeEng: String?,
+    @ColumnInfo(name = "ActivityFile")
+    val ActivityFile: String?,
+)
+
+
+
 @Entity(tableName = "tblAboutOrg")
 data class TblAboutOrg(
     @PrimaryKey(autoGenerate = false)

@@ -44,6 +44,7 @@
             android:layout_width="@dimen/_24sdp"
             android:layout_height="@dimen/_24sdp"
             android:background="@drawable/bg_circle_primary"
+            android:backgroundTint="@color/highlight_red"
             android:padding="@dimen/dp_8_x_1"
             android:src="@drawable/ic_camera"
             app:layout_constraintEnd_toEndOf="parent"
@@ -77,6 +78,7 @@
 
 
         <ImageView
+            android:backgroundTint="@color/highlight_green"
             android:id="@+id/ivGallery"
             android:layout_width="@dimen/_24sdp"
             android:layout_height="@dimen/_24sdp"

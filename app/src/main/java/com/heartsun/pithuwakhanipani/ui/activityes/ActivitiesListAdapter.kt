@@ -1,4 +1,4 @@
-package com.heartsun.pithuwakhanipani.ui.noticeBoard
+package com.heartsun.pithuwakhanipani.ui.activityes
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
@@ -15,16 +15,17 @@ import com.heartsun.pithuwakhanipani.databinding.ItemMemberTypeListBinding
 import com.heartsun.pithuwakhanipani.databinding.ItemNoticeListBinding
 import com.heartsun.pithuwakhanipani.databinding.ItemUnitRateListBinding
 import com.heartsun.pithuwakhanipani.domain.dbmodel.TBLReadingSetupDtl
+import com.heartsun.pithuwakhanipani.domain.dbmodel.TblActivity
 import com.heartsun.pithuwakhanipani.domain.dbmodel.TblBoardMemberType
 import com.heartsun.pithuwakhanipani.domain.dbmodel.TblNotice
 import java.util.*
 import kotlin.properties.Delegates
 
-class NoticeListAdapter(
-    private val onItemClick: (item: TblNotice) -> Unit = {}
+class ActivitiesListAdapter(
+    private val onItemClick: (item: TblActivity) -> Unit = {}
 ) :
-    ImmutableRecyclerAdapter<TblNotice, ItemNoticeListBinding>() {
-    override var items: List<TblNotice> by Delegates.observable(emptyList()) { _, old, new ->
+    ImmutableRecyclerAdapter<TblActivity, ItemNoticeListBinding>() {
+    override var items: List<TblActivity> by Delegates.observable(emptyList()) { _, old, new ->
         autoNotify(old, new) { o, n -> o == n }
     }
 
@@ -39,17 +40,17 @@ class NoticeListAdapter(
     ) {
         val item = items[position]
         with(holder.binding) {
-            tvPublishedDate.text = "मिति :- " + item.DateNep.toString().orEmpty()
-            tvNoticeTitle.text = item.NoticeHeadline.toString().orEmpty().parseAsHtml()
-            tvNoticeDetails.text = item.NoticeDesc.toString().orEmpty().parseAsHtml()
+            tvPublishedDate.text = "मिति :- " + item.DateNep.orEmpty()
+            tvNoticeTitle.text = item.ActivityHeadline.orEmpty().parseAsHtml()
+            tvNoticeDetails.text = item.ActivityDesc.orEmpty().parseAsHtml()
             val properNoun = arrayOf("#FE0000", "#0090B5", "#4E9D67", "#DB41E1", "#F83B00", "#515B3A","#7AC74F")
             val random = Random()
             val index: Int = random.nextInt(properNoun.size)
             cvMeroKahiPani.setStrokeColor(ColorStateList.valueOf(Color.parseColor(properNoun[index])))
-            if (item.NoticeFile.isNullOrEmpty()) {
+            if (item.ActivityFile.isNullOrEmpty()) {
                 cvImage.isVisible = false
             } else {
-                ivImage.load( item.NoticeFile)
+                ivImage.load( item.ActivityFile)
             }
         }
 

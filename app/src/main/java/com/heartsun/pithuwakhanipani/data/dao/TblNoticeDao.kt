@@ -19,6 +19,19 @@ interface TblNoticeDao {
     suspend fun deleteAll()
 }
 
+
+@Dao
+interface TblActivityDao {
+    @Query("SELECT * FROM tblActivity")
+    fun getAllData(): Flow<List<TblActivity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(table: TblActivity)
+
+    @Query("DELETE FROM tblActivity")
+    suspend fun deleteAll()
+}
+
 @Dao
 interface TblAboutOrgDao {
     @Query("SELECT * FROM tblAboutOrg")

@@ -20,6 +20,7 @@ interface AuthRepository {
     suspend fun changePinCode(phoneNo: String?, memberId: String?, newPin: String): String?
     suspend fun addComplaint(message: String, memberID: String?, phoneNo: String?): String
     suspend fun getComplaintList(memberID: String?, phoneNo: String?): MutableList<ComplaintResponse>?
+    suspend fun getActivities(): ActivitiesListResponse?
 }
 
 class AuthRepoImpl(
@@ -86,5 +87,11 @@ class AuthRepoImpl(
         phoneNo: String?
     ): MutableList<ComplaintResponse>? {
         return connection.getComplaintList(memberID,phoneNo)
+    }
+
+
+
+    override suspend fun getActivities(): ActivitiesListResponse? {
+        return connection.getActivities(context)
     }
 }

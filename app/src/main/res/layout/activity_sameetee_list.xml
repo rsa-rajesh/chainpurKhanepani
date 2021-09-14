@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="पिठुवा खानेपानी संस्था- रत्ननगर"
+                    android:text="पिठुवा खानेपानी तथा सरसफाइ \n उपभोक्ता संस्था"
                     android:textColor="@color/main_text_color"
                     android:textSize="@dimen/_16sdp"
                     android:textStyle="bold"
@@ -120,11 +120,13 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_16sdp"
             android:text="PDF बनाउनुहोस्"
+            android:textColor="@color/highlight_red"
+            app:iconTint="@color/highlight_red"
             app:icon="@drawable/ic_pdf_file"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:strokeColor="@color/colorGrey" />
+            app:strokeColor="@color/highlight_red" />
 
 
 

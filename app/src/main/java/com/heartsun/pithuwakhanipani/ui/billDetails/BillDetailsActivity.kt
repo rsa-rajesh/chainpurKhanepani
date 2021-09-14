@@ -21,6 +21,10 @@ import com.google.android.material.chip.Chip
 import com.heartsun.pithuwakhanipani.domain.BillDetails
 import org.koin.android.ext.android.get
 import kotlin.concurrent.thread
+import android.app.Activity
+
+import android.view.inputmethod.InputMethodManager
+
 
 class BillDetailsActivity : BaseActivity() {
 
@@ -95,6 +99,7 @@ class BillDetailsActivity : BaseActivity() {
             }
             btSubmit.setOnClickListener {
                 showProgress()
+                hideSoftKeyboard(this@BillDetailsActivity)
 
                 if (!etUnit.text.isNullOrBlank()) {
                     getReport()
@@ -116,99 +121,99 @@ class BillDetailsActivity : BaseActivity() {
             it ?: return@observe
 //            hideProgress()
 
-        if (it.status.equals("success",false)){
-            if (it.billDetails.isEmpty()) {
-                binding.cvCommunityRate.isVisible = false
-                binding.tvBillDetails.isVisible = false
-                toastS("सदस्यता नम्बर फेला परेन")
-            }
-            else {
+            if (it.status.equals("success", false)) {
+                if (it.billDetails.isEmpty()) {
+                    binding.cvCommunityRate.isVisible = false
+                    binding.tvBillDetails.isVisible = false
+                    toastS("सदस्यता नम्बर फेला परेन")
+                } else {
 
-                val totalBillDetails: BillDetails = BillDetails(
-                    999999, null, 0, null, null, null, 0, 0f, null, null, 0, 0f, 0f, 0f
-                )
-                var bills: MutableList<BillDetails> = arrayListOf()
-                for (billDetails in it.billDetails) {
-                    if (billDetails.PaidStatus != 1) {
-                        bills.add(billDetails)
-                        totalBillDetails.TotReading =
-                            totalBillDetails.TotReading?.plus(billDetails.TotReading!!.toInt())
-                        totalBillDetails.Amt =
-                            totalBillDetails.Amt?.plus(billDetails.Amt!!.toFloat())
-                        totalBillDetails.Dis = totalBillDetails.Dis?.plus(billDetails.Dis!!)
-                        totalBillDetails.Fine = totalBillDetails.Fine?.plus(billDetails.Fine!!)
-                        totalBillDetails.NetAmt =
-                            totalBillDetails.NetAmt?.plus(billDetails.NetAmt!!)
-                        totalBillDetails.MemberID = billDetails.MemberID
-                        totalBillDetails.MemName = billDetails.MemName
-                        totalBillDetails.TapNo = billDetails.TapNo
-                        totalBillDetails.Address = billDetails.Address
-                        totalBillDetails.TapType = billDetails.TapType
-                        totalBillDetails.RID = billDetails.RID
-                        totalBillDetails.Inv_Date = billDetails.Inv_Date
-                        totalBillDetails.Sam_Date = billDetails.Sam_Date
-                        totalBillDetails.PaidStatus = billDetails.PaidStatus
+                    val totalBillDetails: BillDetails = BillDetails(
+                        999999, null, 0, null, null, null, 0, 0f, null, null, 0, 0f, 0f, 0f
+                    )
+                    var bills: MutableList<BillDetails> = arrayListOf()
+                    for (billDetails in it.billDetails) {
+                        if (billDetails.PaidStatus != 1) {
+                            bills.add(billDetails)
+                            totalBillDetails.TotReading =
+                                totalBillDetails.TotReading?.plus(billDetails.TotReading!!.toInt())
+                            totalBillDetails.Amt =
+                                totalBillDetails.Amt?.plus(billDetails.Amt!!.toFloat())
+                            totalBillDetails.Dis = totalBillDetails.Dis?.plus(billDetails.Dis!!)
+                            totalBillDetails.Fine = totalBillDetails.Fine?.plus(billDetails.Fine!!)
+                            totalBillDetails.NetAmt =
+                                totalBillDetails.NetAmt?.plus(billDetails.NetAmt!!)
+                            totalBillDetails.MemberID = billDetails.MemberID
+                            totalBillDetails.MemName = billDetails.MemName
+                            totalBillDetails.TapNo = billDetails.TapNo
+                            totalBillDetails.Address = billDetails.Address
+                            totalBillDetails.TapType = billDetails.TapType
+                            totalBillDetails.RID = billDetails.RID
+                            totalBillDetails.Inv_Date = billDetails.Inv_Date
+                            totalBillDetails.Sam_Date = billDetails.Sam_Date
+                            totalBillDetails.PaidStatus = billDetails.PaidStatus
+                        }
+
                     }
 
-                }
-
-                bills.add(totalBillDetails)
+                    bills.add(totalBillDetails)
 
 
-                var idsString: String? = prefs.memberIds
+                    var idsString: String? = prefs.memberIds
 
-                if (!idsString.isNullOrBlank()) {
-                    var memberIds = prefs.memberIds?.split("-")?.toMutableList()
-                    if (memberIds?.contains(
-                            it.billDetails[0].MemberID.toString().orEmpty()
-                        ) == true
-                    ) {
-                    } else {
+                    if (!idsString.isNullOrBlank()) {
+                        var memberIds = prefs.memberIds?.split("-")?.toMutableList()
+                        if (memberIds?.contains(
+                                it.billDetails[0].MemberID.toString().orEmpty()
+                            ) == true
+                        ) {
+                        } else {
 
-                        memberIds?.reverse()
-                        memberIds?.set(5, it.billDetails[0].MemberID.toString().orEmpty())
-                        memberIds?.reverse()
+                            memberIds?.reverse()
+                            memberIds?.set(5, it.billDetails[0].MemberID.toString().orEmpty())
+                            memberIds?.reverse()
 
-                        var ids: String = ""
+                            var ids: String = ""
 
-                        if (memberIds != null) {
-                            for (id in memberIds) {
-                                ids = "$ids$id-"
+                            if (memberIds != null) {
+                                for (id in memberIds) {
+                                    ids = "$ids$id-"
+                                }
+                            }
+
+                            if (ids.length > 1) {
+                                ids = ids.substring(0, ids.lastIndex - 1)
+                                prefs.memberIds = ids
                             }
                         }
-
-                        if (ids.length > 1) {
-                            ids = ids.substring(0, ids.lastIndex - 1)
-                            prefs.memberIds = ids
-                        }
+                    } else {
+                        prefs.memberIds = it.billDetails[0].MemberID.toString().orEmpty()
                     }
-                } else {
-                    prefs.memberIds = it.billDetails[0].MemberID.toString().orEmpty()
+
+                    binding.tvName.text = "ग्राहकको नाम :-" + it.billDetails[0].MemName
+                    binding.tvAddress.text = "ठेगाना :-" + it.billDetails[0].Address
+                    binding.tvDharaNo.text = "धारा न. :-" + it.billDetails[0].TapNo
+                    binding.tvDharaType.text = "धाराको प्रकार :-" + it.billDetails[0].TapType
+
+                    binding.cvCommunityRate.isVisible = true
+                    binding.tvBillDetails.isVisible = true
+                    billDetailsAdapter = BillDetailsAdapter()
+                    billDetailsAdapter.items = bills
+
+                    binding.rvCommunityRate.layoutManager = LinearLayoutManager(this)
+                    binding.rvCommunityRate.adapter = billDetailsAdapter
                 }
-
-                binding.tvName.text = "ग्राहकको नाम :-" + it.billDetails[0].MemName
-                binding.tvAddress.text = "ठेगाना :-" + it.billDetails[0].Address
-                binding.tvDharaNo.text = "धारा न. :-" + it.billDetails[0].TapNo
-                binding.tvDharaType.text = "धाराको प्रकार :-" + it.billDetails[0].TapType
-
-                binding.cvCommunityRate.isVisible = true
-                binding.tvBillDetails.isVisible = true
-                billDetailsAdapter = BillDetailsAdapter()
-                billDetailsAdapter.items = bills
-
-                binding.rvCommunityRate.layoutManager = LinearLayoutManager(this)
-                binding.rvCommunityRate.adapter = billDetailsAdapter
+            } else {
+                hideProgress()
+                showErrorDialog(
+                    message = "माफ गर्नुहोस्!!! सर्भरमा जडान गर्न सकेन \n" +
+                            " कृपया पछि फेरि प्रयास गर्नुहोस्",
+                    "पुन: प्रयास गर्नुहोस्",
+                    "त्रुटि",
+                    RDrawable.ic_error_for_dilog,
+                    color = Color.RED
+                )
             }
-        } else{
-            hideProgress()
-            showErrorDialog(
-                message = "Sorry!!! couldn't connect to the server \n please try again later",
-                "retry",
-                "Error",
-                RDrawable.ic_error_for_dilog,
-                color = Color.RED
-            )
-        }
         })
     }
 
@@ -216,6 +221,18 @@ class BillDetailsActivity : BaseActivity() {
         thread {
             Thread.sleep(100)
             registerViewModel.getBillingDetails(binding.etUnit.text.toString().toInt())
+        }
+    }
+
+    fun hideSoftKeyboard(activity: Activity) {
+        val inputMethodManager = activity.getSystemService(
+            INPUT_METHOD_SERVICE
+        ) as InputMethodManager
+        if (inputMethodManager.isAcceptingText) {
+            inputMethodManager.hideSoftInputFromWindow(
+                activity.currentFocus!!.windowToken,
+                0
+            )
         }
     }
 }

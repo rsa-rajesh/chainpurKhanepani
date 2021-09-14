@@ -46,7 +46,7 @@ class MemberRegisterActivity : BaseActivity() {
                 onBackPressed()
                 this@MemberRegisterActivity.finish()
             }
-            toolbar.tvToolbarTitle.text = "Member Registration"
+            toolbar.tvToolbarTitle.text = "सदस्य दर्ता"
         }
         showProgress()
         getFilesRequirementFromDb()
@@ -92,9 +92,10 @@ class MemberRegisterActivity : BaseActivity() {
             }else {
                 hideProgress()
                 showErrorDialog(
-                    message = "Sorry!!! couldn't connect to the server \n please try again later",
-                    "retry",
-                    "Error",
+                    message = "माफ गर्नुहोस्!!! सर्भरमा जडान गर्न सकेन \n" +
+                            " कृपया पछि फेरि प्रयास गर्नुहोस्",
+                    "पुन: प्रयास गर्नुहोस्",
+                    "त्रुटि",
                     RDrawable.ic_error_for_dilog,
                     color = Color.RED
                 )
@@ -120,9 +121,9 @@ class MemberRegisterActivity : BaseActivity() {
             hideProgress()
             if (it.equals("Success", true)) {
                 showErrorDialog(
-                    message = "New Tap Request Successfully Submitted",
-                    "close",
-                    "Success",
+                    message = "नयाँ धारा अनुरोध सफलतापूर्वक पेश गरियो",
+                    "बन्द गर्नुहोस्",
+                    "सफलता",
                     RDrawable.ic_success_for_dilog,
                     color = Color.GREEN,
                     onBtnClick = {
@@ -134,9 +135,9 @@ class MemberRegisterActivity : BaseActivity() {
             } else {
                 hideProgress()
                 showErrorDialog(
-                    message = "Sorry!!! couldn't complete your request now please try again later ",
-                    "retry",
-                    "Error",
+                    message = "माफ गर्नुहोस्!!! तपाईँको अनुरोध अहिले पूरा गर्न सकेन कृपया पछि फेरि प्रयास गर्नुहोस् ",
+                    "पुन: प्रयास गर्नुहोस्",
+                    "त्रुटि",
                     RDrawable.ic_error_for_dilog,
                     color = Color.RED
                 )

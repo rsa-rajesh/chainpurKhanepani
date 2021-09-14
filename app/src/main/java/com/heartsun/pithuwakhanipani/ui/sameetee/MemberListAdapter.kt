@@ -3,6 +3,7 @@ package com.heartsun.pithuwakhanipani.ui.sameetee
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ import com.heartsun.pithuwakhanipani.domain.dbmodel.TblBoardMemberType
 import com.heartsun.pithuwakhanipani.domain.dbmodel.TblContact
 import com.ouattararomuald.slider.loaders.glide.GlideApp
 import java.io.File
+import java.util.*
 import kotlin.properties.Delegates
 
 class MemberListAdapter(private val context:Context) :
@@ -40,6 +42,14 @@ class MemberListAdapter(private val context:Context) :
     ) {
         val item = items[position]
         with(holder.binding) {
+
+            val properNoun = arrayOf("#FE0000", "#0090B5", "#4E9D67", "#DB41E1", "#F83B00", "#515B3A","#7AC74F")
+            val random = Random()
+            val index: Int = random.nextInt(properNoun.size)
+            cvMeroKahiPani.setStrokeColor(ColorStateList.valueOf(Color.parseColor(properNoun[index])))
+
+
+
             tvName.text = item.ContactName.toString().orEmpty()
             tvContact.text = item.ContactNumber.toString().orEmpty()
             tvPosition.text = item.Post.toString().orEmpty()

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_4sdp"
-        app:cardBackgroundColor="@color/tiles_background_color"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/_4sdp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -80,7 +80,9 @@
                     android:paddingHorizontal="4dp"
                     android:paddingVertical="1dp"
                     android:text="call"
+                    app:strokeColor="@color/highlight_green"
                     android:textAllCaps="false"
+                    android:textColor="@color/highlight_green"
                     app:layout_constraintBottom_toBottomOf="@id/tvPhone"
                     app:layout_constraintStart_toEndOf="@id/tvPhone"
                     app:layout_constraintTop_toTopOf="@id/tvPhone" />
@@ -100,6 +102,8 @@
                     android:paddingVertical="1dp"
                     android:text="mail"
                     android:textAllCaps="false"
+                    android:textColor="@color/highlight_red"
+                    app:strokeColor="@color/highlight_red"
                     app:layout_constraintBottom_toBottomOf="@id/tvMail"
                     app:layout_constraintStart_toEndOf="@id/tvMail"
                     app:layout_constraintTop_toTopOf="@id/tvMail" />

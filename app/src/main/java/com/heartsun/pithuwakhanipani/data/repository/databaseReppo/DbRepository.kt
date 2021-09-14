@@ -191,4 +191,25 @@ class DbRepository(database: KanipaniDatabase) {
 
     val getAllTaps: Flow<List<TblMember>> =
         tblMemberDao.getAllData()
+
+
+
+
+    //for activity list -- starts
+
+    private var tblActivity: TblActivityDao = database.tblActivityDao()
+
+    suspend fun insert(activity: TblActivity) {
+        tblActivity.insert(table = activity)
+
+    }
+
+    suspend fun deleteAll(tblActivity1: TblActivity) {
+        tblActivity.deleteAll()
+    }
+
+    val tblActivities: Flow<List<TblActivity>> =
+        tblActivity.getAllData()
+
+
 }

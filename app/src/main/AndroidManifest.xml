@@ -47,6 +47,9 @@
             android:name=".ui.noticeBoard.NoticeBoardActivity"
             android:exported="true" />
         <activity
+            android:name=".ui.activityes.ActivitiesActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.sameetee.SameeteeListActivity"
             android:exported="true" />
         <activity

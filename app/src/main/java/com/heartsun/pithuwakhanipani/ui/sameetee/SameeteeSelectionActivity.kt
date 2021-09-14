@@ -96,9 +96,9 @@ class SameeteeSelectionActivity : BaseActivity() {
             } else {
                 hideProgress()
                 showErrorDialog(
-                    message = "Sorry!!! couldn't couldn't connect to server",
-                    "retry",
-                    "Error",
+                    message = "माफ गर्नुहोस्!!! सर्भरमा जडान गर्न सकेन",
+                    "पुन: प्रयास गर्नुहोस्",
+                    "त्रुटि",
                     RDrawable.ic_server_error,
                     color = Color.RED,
                     onBtnClick = {

@@ -1,4 +1,4 @@
-package com.heartsun.pithuwakhanipani.ui.noticeBoard
+package com.heartsun.pithuwakhanipani.ui.activityes
 
 import android.content.Context
 import android.content.Intent
@@ -11,6 +11,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heartsun.pithuwakhanipani.databinding.ActivityNoticeBoardBinding
 import com.heartsun.pithuwakhanipani.ui.HomeViewModel
+import com.heartsun.pithuwakhanipani.ui.noticeBoard.NoticeDetailsActivity
+import com.heartsun.pithuwakhanipani.ui.noticeBoard.NoticeListAdapter
 import com.heartsun.pithuwakhanipani.ui.sameetee.MemberTypeAdapter
 import com.heartsun.pithuwakhanipani.ui.sameetee.SameeteeListActivity
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -18,18 +20,18 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class NoticeBoardActivity : BaseActivity() {
+class ActivitiesActivity : BaseActivity() {
 
     private val binding by lazy {
         ActivityNoticeBoardBinding.inflate(layoutInflater)
     }
     private val homeViewModel by viewModel<HomeViewModel>()
 
-    private lateinit var noticeListAdapter: NoticeListAdapter
+    private lateinit var noticeListAdapter: ActivitiesListAdapter
 
     companion object {
         fun newIntent(context: Context): Intent {
-            return Intent(context, NoticeBoardActivity::class.java)
+            return Intent(context, ActivitiesActivity::class.java)
         }
     }
 
@@ -45,36 +47,36 @@ class NoticeBoardActivity : BaseActivity() {
         with(binding) {
             toolbar.ivBack.setOnClickListener {
                 onBackPressed()
-                this@NoticeBoardActivity.finish()
+                this@ActivitiesActivity.finish()
             }
-            toolbar.tvToolbarTitle.text = "सूचना पाटी"
+            toolbar.tvToolbarTitle.text = "क्रियाकलाप"
         }
         showProgress()
-        noticesFromServerObserver()
+        activityFromServerObserver()
         getNoticesFromDb()
     }
 
     @DelicateCoroutinesApi
     private fun getNoticesFromDb() {
-        homeViewModel.noticesFromLocalDb.observe(this, { it ->
+        homeViewModel.activityFromLocalDb.observe(this, { it ->
             it ?: return@observe
             if (it.isNullOrEmpty()) {
-                noticesFromServerObserver()
+                activityFromServerObserver()
                 GlobalScope.launch {
-                    homeViewModel.getNoticesFromServer()
+                    homeViewModel.getActivitiesFromServer()
                 }
             } else {
                 binding.clEmptyList.isVisible = false
-                noticeListAdapter = NoticeListAdapter(
+                noticeListAdapter = ActivitiesListAdapter(
                     onItemClick = {
                         startActivity(
                             NoticeDetailsActivity.newIntent(
                                 context = this,
-                                title = it.NoticeHeadline.orEmpty(),
-                                details = it.NoticeDesc.orEmpty(),
-                                image = it.NoticeFile.orEmpty(),
+                                title = it.ActivityHeadline.orEmpty(),
+                                details = it.ActivityDesc.orEmpty(),
+                                image = it.ActivityFile.orEmpty(),
                                 date = it.DateNep.orEmpty(),
-                                pageTitle = "सूचना पाटी"
+                                pageTitle = "क्रियाकलाप"
                             )
                         )
                     }
@@ -87,12 +89,12 @@ class NoticeBoardActivity : BaseActivity() {
         })
     }
 
-    private fun noticesFromServerObserver() {
-        homeViewModel.noticesFromServer.observe(this, {
+    private fun activityFromServerObserver() {
+        homeViewModel.activitiesFromServer.observe(this, {
             it ?: return@observe
 
             if(it.status.equals("success",true)){
-                for (notice in it.tblNotice) {
+                for (notice in it.tblActivity) {
                     homeViewModel.insert(notice)
                 }
             }else{

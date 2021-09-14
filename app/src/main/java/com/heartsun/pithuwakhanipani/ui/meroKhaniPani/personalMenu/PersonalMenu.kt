@@ -151,9 +151,9 @@ class PersonalMenu : BaseActivity() {
 
 
                 showErrorDialog(
-                    message = "PIN code successfully changed",
-                    "close",
-                    "Success",
+                    message = "पिन कोड सफलतापूर्वक परिवर्तन भयो ।",
+                    "बन्द गर्नुहोस्",
+                    "सफलता",
                     RDrawable.ic_success_for_dilog,
                     color = Color.RED
                 )
@@ -164,9 +164,9 @@ class PersonalMenu : BaseActivity() {
 
                 hideProgress()
                 showErrorDialog(
-                    message = "Sorry can't change pin now",
-                    "close",
-                    "Error",
+                    message = "माफ गर्नुहोस्, अहिले पिन परिवर्तन गर्न सकिँदैन",
+                    "बन्द गर्नुहोस्",
+                    "त्रुटि",
                     RDrawable.ic_error_for_dilog,
                     color = Color.RED
                 )

@@ -11,7 +11,7 @@ import com.heartsun.pithuwakhanipani.domain.dbmodel.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [TBLReadingSetupDtl::class,TBLReadingSetup::class,TblTapTypeMaster::class,TblContact::class,TblBoardMemberType::class,TblNotice::class,TblAboutOrg::class,TblDepartmentContact::class,TblDocumentType::class,TblMember::class], version = 1)
+@Database(entities = [TBLReadingSetupDtl::class,TBLReadingSetup::class,TblTapTypeMaster::class,TblContact::class,TblBoardMemberType::class,TblNotice::class,TblAboutOrg::class,TblDepartmentContact::class,TblDocumentType::class,TblMember::class,TblActivity::class], version = 1)
 abstract class KanipaniDatabase :RoomDatabase() {
 
     abstract fun tBLReadingSetupDtlDao(): TBLReadingSetupDtlDao
@@ -26,6 +26,7 @@ abstract class KanipaniDatabase :RoomDatabase() {
     abstract fun tblDepartmentContactDao(): TblDepartmentContactDao
     abstract fun tblDocumentTypeDao(): TblDocumentTypeDao
     abstract fun tblMemberDao(): TblMemberDao
+    abstract fun tblActivityDao(): TblActivityDao
 
 
     private class KanipaniDatabaseCallback(
@@ -45,7 +46,7 @@ abstract class KanipaniDatabase :RoomDatabase() {
                     val tblDepartmentContactDao= database.tblDepartmentContactDao()
                     val tblDocumentTypeDao= database.tblDocumentTypeDao()
                     val tblMemberDao= database.tblMemberDao()
-
+                    val tblActivityDao= database.tblActivityDao()
 
                     tBLReadingSetupDtlDao.deleteAll()
                     tBLReadingSetupDao.deleteAll()
@@ -57,6 +58,7 @@ abstract class KanipaniDatabase :RoomDatabase() {
                     tblDepartmentContactDao.deleteAll()
                     tblDocumentTypeDao.deleteAll()
                     tblMemberDao.deleteAll()
+                    tblActivityDao.deleteAll()
                 }
             }
         }

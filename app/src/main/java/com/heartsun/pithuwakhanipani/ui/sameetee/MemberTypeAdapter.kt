@@ -1,6 +1,7 @@
 package com.heartsun.pithuwakhanipani.ui.sameetee
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.heartsun.pithuwakhanipani.databinding.ItemMemberTypeListBinding
 import com.heartsun.pithuwakhanipani.databinding.ItemUnitRateListBinding
 import com.heartsun.pithuwakhanipani.domain.dbmodel.TBLReadingSetupDtl
 import com.heartsun.pithuwakhanipani.domain.dbmodel.TblBoardMemberType
+import java.util.*
 import kotlin.properties.Delegates
 
 class MemberTypeAdapter(
@@ -33,6 +35,11 @@ class MemberTypeAdapter(
         val item = items[position]
         with(holder.binding) {
             tv1.text = item.MemberType.toString().orEmpty()
+            val properNoun = arrayOf("#FE0000", "#0090B5", "#4E9D67", "#DB41E1", "#F83B00", "#515B3A","#7AC74F")
+            val random = Random()
+            val index: Int = random.nextInt(properNoun.size)
+            cvMeroKahiPani.setStrokeColor(ColorStateList.valueOf(Color.parseColor(properNoun[index])))
+
         }
 
 
