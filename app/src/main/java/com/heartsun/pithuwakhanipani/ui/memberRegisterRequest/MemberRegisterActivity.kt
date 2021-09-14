@@ -100,8 +100,6 @@ class MemberRegisterActivity : BaseActivity() {
                     color = Color.RED
                 )
             }
-
-
         })
     }
 
@@ -142,14 +140,6 @@ class MemberRegisterActivity : BaseActivity() {
                     color = Color.RED
                 )
             }
-//            if(it.equals("Success",true)){
-//                toastS("New Tap Request Successfully Submitted")
-//                var files =  registerRequest?.files
-//                registerRequest =RegistrationRequest(null, null, null, null, null, null, null, null, null, files)
-//
-//                this.findNavController(binding.navHostFragmentContainer.id)
-//                    .navigate(R.id.action_membersRegistrationFilesFragment_to_membersRegistrationFormFragment);
-//            }
         })
     }
 

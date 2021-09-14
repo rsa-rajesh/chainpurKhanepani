@@ -582,11 +582,8 @@ class ConnectionToServer(prefs: Prefs) {
                 status = "error"
             )
         }
-
-
     }
 
-    //
     fun addTapResponce(context: Context, phoneNo: String, pin: String): UserDetailsResponse? {
 
         var stmt: Statement? = null

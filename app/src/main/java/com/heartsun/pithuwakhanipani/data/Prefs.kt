@@ -116,18 +116,4 @@ class Prefs(private val sharedPreferences: SharedPreferences) {
             sharedPreferences.edit { putString(NO_OF_TAPS, value) }
         }
 
-
-
-//    var profileDetail: UserDetailsResponse?
-//        get() {
-//            val jsonString = sharedPreferences.getString(UserDetails, null)
-//            return Gson().fromJson(
-//                jsonString ?: return null,
-//                object : TypeToken<UserDetailsResponse>() {}.type
-//            )
-//        }
-//        set(value) {
-//            sharedPreferences.edit() { putString(UserDetails, Gson().toJson(value)) }
-//        }
-
 }

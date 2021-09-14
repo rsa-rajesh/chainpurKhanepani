@@ -134,16 +134,7 @@ constructor(
         var activity:OnBoardingActivity = getActivity(this.context) as OnBoardingActivity
         activity.startActivity()
 
-//        (getActivity() as OnBoardingActivity?)?.startActivity()
 
-
-//        val intent = Intent(context, HomeActivity::class.java).apply {
-//            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-//            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-//
-//        }
-//        context.startActivity(intent)
     }
 }
 
