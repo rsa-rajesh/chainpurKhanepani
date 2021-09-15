@@ -118,6 +118,22 @@ data class TblActivity(
 )
 
 
+@Entity(tableName = "tblSliderImages")
+data class TblSliderImages(
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "SliderID")
+    val SliderID: Int,
+    @ColumnInfo(name = "SliderTitle")
+    val SliderTitle: String?,
+    @ColumnInfo(name = "SliderImageUrl")
+    val SliderImageUrl: String?,
+    @ColumnInfo(name = "Url")
+    val Url: String?,
+    @ColumnInfo(name = "SliderImageFile")
+    val SliderImageFile: String?
+)
+
+
 
 @Entity(tableName = "tblAboutOrg")
 data class TblAboutOrg(

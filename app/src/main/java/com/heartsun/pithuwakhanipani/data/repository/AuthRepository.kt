@@ -21,6 +21,7 @@ interface AuthRepository {
     suspend fun addComplaint(message: String, memberID: String?, phoneNo: String?): String
     suspend fun getComplaintList(memberID: String?, phoneNo: String?): MutableList<ComplaintResponse>?
     suspend fun getActivities(): ActivitiesListResponse?
+    suspend fun getSliderImages(): SliderListResponse?
 }
 
 class AuthRepoImpl(
@@ -93,5 +94,9 @@ class AuthRepoImpl(
 
     override suspend fun getActivities(): ActivitiesListResponse? {
         return connection.getActivities(context)
+    }
+
+    override suspend fun getSliderImages(): SliderListResponse? {
+        return connection.getSliderImages(context)
     }
 }

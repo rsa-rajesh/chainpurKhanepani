@@ -49,10 +49,7 @@ class DbRepository(database: KanipaniDatabase) {
         tblTapTypeMasterDao.deleteAll()
     }
 
-    //for tap types and rates -- ends
 
-
-    //for member types and members -- starts
 
     private var tblBoardMemberType: TblBoardMemberTypeDao = database.tblBoardMemberTypeDao()
     private var tblContact: TblContactDao = database.tblContactDao()
@@ -210,6 +207,25 @@ class DbRepository(database: KanipaniDatabase) {
 
     val tblActivities: Flow<List<TblActivity>> =
         tblActivity.getAllData()
+
+
+
+
+    //for activity list -- starts
+
+    private var tblSliderImages: TblSliderImagesDao = database.tblSliderImagesDao()
+
+    suspend fun insert(activity: TblSliderImages) {
+        tblSliderImages.insert(table = activity)
+
+    }
+
+    suspend fun deleteAll(tblSliderImages1: TblSliderImages) {
+        tblSliderImages.deleteAll()
+    }
+
+    val tblSliderImagess: Flow<List<TblSliderImages>> =
+        tblSliderImages.getAllData()
 
 
 }

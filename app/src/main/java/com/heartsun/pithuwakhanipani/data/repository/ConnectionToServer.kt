@@ -484,10 +484,9 @@ class ConnectionToServer(prefs: Prefs) {
             pics.setBytes(3, docImg)
             pics.execute()
         }
+
         stmt.execute(query1)
-
         conn.close()
-
         return "Success"
     }
 
@@ -910,6 +909,67 @@ class ConnectionToServer(prefs: Prefs) {
             )
         }
     }
+
+    fun getSliderImages(context: Context): SliderListResponse? {
+        var stmt: Statement? = null
+        var resultset: ResultSet? = null
+
+        val query = "SELECT TOP 4 * FROM TblSliderImages"
+
+        var sliderList: MutableList<TblSliderImages> = arrayListOf()
+
+
+        try {
+            val ss = SqlServerFunctions()
+            val conn: Connection = ss.ConnectToSQLServer(prefs)
+            stmt = conn.createStatement()
+            resultset = stmt.executeQuery(query)
+            while (resultset.next()) {
+                if (resultset.getBytes("SliderImageFile") != null) {
+                    val data: ByteArray = resultset.getBytes("SliderImageFile")
+                    val imageStream = ByteArrayInputStream(data)
+                    val theImage = BitmapFactory.decodeStream(imageStream)
+                    val image = File(
+                        context.getExternalFilesDir(null),
+                        "SliderImage" + resultset.getInt("SliderID").toString() + ".png"
+                    )
+                    val fos = FileOutputStream(image)
+                    fos.use { theImage.compress(Bitmap.CompressFormat.PNG, 100, it) }
+                    val notices: TblSliderImages = TblSliderImages(
+                        SliderID = resultset.getInt("SliderID"),
+                        SliderTitle = resultset.getString("SliderTitle"),
+                        SliderImageUrl = resultset.getString("SliderImageUrl"),
+                        Url = resultset.getString("DateNep"),
+                        SliderImageFile = Uri.parse(image.path).toString()
+
+                    )
+                    sliderList.add(notices)
+                } else {
+
+                    val notices: TblSliderImages = TblSliderImages(
+                        SliderID = resultset.getInt("SliderID"),
+                        SliderTitle = resultset.getString("SliderTitle"),
+                        SliderImageUrl = resultset.getString("SliderImageUrl"),
+                        Url = resultset.getString("Url"),
+                        SliderImageFile = null
+                    )
+                    sliderList.add(notices)
+
+                }
+            }
+            conn.close()
+
+            return SliderListResponse(
+                tblSliderImages = sliderList,
+                status = "success",
+                message = "success"
+            )
+        } catch (e: Exception) {
+            return SliderListResponse(
+                tblSliderImages = sliderList,
+                status = "error",
+                message = "माफ गर्नुहोस् सर्भरमा जडान गर्न सकिएन"
+            )
+        }
+    }
 }
-
-

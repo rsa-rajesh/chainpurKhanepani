@@ -5,8 +5,6 @@ import com.heartsun.pithuwakhanipani.data.repository.AuthRepository
 import com.heartsun.pithuwakhanipani.data.repository.databaseReppo.DbRepository
 import com.heartsun.pithuwakhanipani.domain.*
 import com.heartsun.pithuwakhanipani.domain.dbmodel.*
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -87,6 +85,10 @@ class HomeViewModel(
         dbRepository.insert(notice)
     }
 
+    fun insert(sliderImages: TblSliderImages) = viewModelScope.launch {
+        dbRepository.insert(sliderImages)
+    }
+
     fun insert(activity: TblActivity) = viewModelScope.launch {
         dbRepository.insert(activity)
     }
@@ -97,6 +99,9 @@ class HomeViewModel(
     val activityFromLocalDb: LiveData<List<TblActivity>> =
         dbRepository.tblActivities.asLiveData()
 
+
+    val sliderImagesFromLocalDb: LiveData<List<TblSliderImages>> =
+        dbRepository.tblSliderImagess.asLiveData()
 
     private val _aboutOrg = MutableLiveData<AboutOrgResponse>()
     val aboutOrgFromServer: LiveData<AboutOrgResponse> = _aboutOrg
@@ -113,7 +118,6 @@ class HomeViewModel(
     val aboutOrgFromLocalDb: LiveData<List<TblAboutOrg>> =
         dbRepository.about.asLiveData()
 
-//contacts
 
     val contactsListFromLocalDb: LiveData<List<TblDepartmentContact>> =
         dbRepository.contact.asLiveData()
@@ -141,4 +145,16 @@ class HomeViewModel(
         }
     }
 
+    private val _sliders = MutableLiveData<SliderListResponse>()
+    val slidersFromServer: LiveData<SliderListResponse> = _sliders
+    fun getSlidersFromServer() {
+        viewModelScope.launch {
+            _sliders.value = homeRepository.getSliderImages()
+        }
+    }
+
+
+    fun deleteAllSlider(slider: TblSliderImages) = viewModelScope.launch {
+        dbRepository.deleteAll(tblSliderImages1 = slider)
+    }
 }

@@ -155,7 +155,7 @@ class PersonalMenu : BaseActivity() {
                     "बन्द गर्नुहोस्",
                     "सफलता",
                     RDrawable.ic_success_for_dilog,
-                    color = Color.RED
+                    color = Color.GREEN
                 )
 
 //                toastS("PIN code successfully changed")

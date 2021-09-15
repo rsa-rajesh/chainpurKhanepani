@@ -28,7 +28,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         return binding.root
     }
 
-    open fun showProgress(message: String = "Loading…") {
+    open fun showProgress(message: String = "लोड गरिँदैछ...") {
         progressDialog.showProgress(message)
     }
 

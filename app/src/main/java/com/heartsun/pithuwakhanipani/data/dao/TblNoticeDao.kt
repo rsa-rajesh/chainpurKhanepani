@@ -32,6 +32,20 @@ interface TblActivityDao {
     suspend fun deleteAll()
 }
 
+
+@Dao
+interface TblSliderImagesDao {
+    @Query("SELECT * FROM tblSliderImages")
+    fun getAllData(): Flow<List<TblSliderImages>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(table: TblSliderImages)
+
+    @Query("DELETE FROM tblSliderImages")
+    suspend fun deleteAll()
+}
+
+
 @Dao
 interface TblAboutOrgDao {
     @Query("SELECT * FROM tblAboutOrg")

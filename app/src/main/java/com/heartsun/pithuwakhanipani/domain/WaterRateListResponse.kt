@@ -31,6 +31,14 @@ data class ActivitiesListResponse(
     val message:String
 )
 
+data class SliderListResponse(
+    val tblSliderImages: List<TblSliderImages>,
+    val status:String,
+    val message:String
+)
+
+
+
 data class AboutOrgResponse(
     val tblAbout: TblAboutOrg,
     val status:String,

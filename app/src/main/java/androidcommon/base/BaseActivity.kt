@@ -69,6 +69,4 @@ abstract class BaseActivity : AppCompatActivity() {
         requestPermissionLauncher.launch(whichPermission)
     }
 
-
-
 }
