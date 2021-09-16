@@ -104,7 +104,7 @@ class MeroKhaniPaniActivity : BaseActivity() {
                             negLabel = "रद्द गर्नुहोस्",
                             posLabel = "हटाउनुहोस्",
                             onPosClick = {
-                                myTapViewModel.delete(members = it)
+                                myTapViewModel.delete(members = it.MemberID)
                             })
                     }
                 )

@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.Window
 import androidcommon.RColor
+import androidcommon.RStyle
 import androidx.annotation.ColorLong
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
@@ -101,6 +102,8 @@ fun Context.showAddTapDialog(
     icon: Int = R.drawable.ic_notification
 ) {
     val dialog = getBaseDialog()
+    dialog.window?.attributes?.windowAnimations=RStyle.DialogAnimation
+
     val dialogView = DilogAddNewBinding.inflate(LayoutInflater.from(this), null, false)
     dialog.apply {
         setContentView(dialogView.root)
@@ -141,20 +144,18 @@ fun Context.showRequestPinDialog(
     onRequestClick: (phoneNo: String, memberId: String) -> Unit = { s: String, s1: String -> }
 ) {
     val dialog = getBaseDialog()
+    dialog.window?.attributes?.windowAnimations=RStyle.DialogAnimation
     val dialogView = DilogRequestPinBinding.inflate(LayoutInflater.from(this), null, false)
     dialog.apply {
         setContentView(dialogView.root)
         setCancelable(false)
         show()
         with(dialogView) {
-
-
             btAddNew.setOnClickListener {
                 onAddClick()
                 dismiss()
             }
             btRequestPin.setOnClickListener {
-
                 when {
                     phoneNumber.text.isNullOrBlank() -> {
                         tiPhoneNumber.error = "फोन नम्बर आवश्यक छ"
@@ -183,6 +184,7 @@ fun Context.showChangePinDialog(
     oldPinCode: Int = 0
 ) {
     val dialog = getBaseDialog()
+    dialog.window?.attributes?.windowAnimations=RStyle.DialogAnimation
     val dialogView = DilogChangePinBinding.inflate(LayoutInflater.from(this), null, false)
     dialog.apply {
         setContentView(dialogView.root)

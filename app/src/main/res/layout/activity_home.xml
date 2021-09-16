@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/table_row2_color"
+    android:background="#E98A15"
     tools:context=".ui.HomeActivity">
 
     <ScrollView
@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_height="@dimen/_160sdp"
-                app:tint="@color/primary_color" />
+                app:tint="#003B36" />
 
             <ImageView
                 android:visibility="gone"
@@ -93,9 +93,9 @@
 
                 <com.ouattararomuald.slider.ImageSlider
                     android:id="@+id/image_slider"
-                    android:background="@drawable/loading_anim"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_120sdp"
+                    android:background="@drawable/loading_anim"
                     app:layout_constraintCircleRadius="@dimen/_8sdp" />
 
 
@@ -116,6 +116,7 @@
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cvMeroKahiPani"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardBackgroundColor="@color/white"
@@ -178,18 +179,124 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvLogin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#59114D"
+                        app:cardCornerRadius="@dimen/_4sdp"
+                        app:cardElevation="4dp"
+                        app:layout_constraintTop_toBottomOf="@id/cvMeroKahiPani">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_50sdp">
+
+
+                            <TextView
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_16sdp"
+                                android:text="लगइन गर्नुहोस्"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:layout_marginStart="@dimen/_12sdp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                            <ImageView
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:layout_marginEnd="@dimen/_12sdp"
+                                android:src="@drawable/ic_login"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                app:tint="@color/white" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvUser"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#59114D"
+                        app:cardCornerRadius="@dimen/_4sdp"
+                        app:cardElevation="4dp"
+                        app:layout_constraintTop_toBottomOf="@id/cvLogin"
+                    >
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_70sdp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_marginStart="@dimen/_16sdp"
+                                android:layout_width="0dp"
+                                app:layout_constraintWidth_percent=".8"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <TextView
+                                    android:id="@+id/tvName"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="ग्राहकको नाम :- "
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_14sdp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/tvMemberId"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="दर्ता नम्बर :- "
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_12sdp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/_40sdp"
+                                android:alpha=".1"
+                                android:rotationY="180"
+                                android:src="@drawable/ic_water_tap"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintDimensionRatio="1:1"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:tint="@color/white" />
+
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+
+
+                    <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cvSamitee"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_90sdp"
                         android:layout_marginTop="@dimen/_12sdp"
-                        app:cardBackgroundColor="@color/white"
+                        app:cardBackgroundColor="#003B36"
                          app:cardCornerRadius="@dimen/_4sdp"
-                        app:cardElevation="0dp"
+                        app:cardElevation="4dp"
                         app:layout_constraintEnd_toStartOf="@id/cvPanikoDar"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/cvMeroKahiPani"
-                        app:strokeColor="#49936B"
-                        app:strokeWidth="1dp">
+                        app:layout_constraintTop_toBottomOf="@id/cvUser"
+                        >
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -208,12 +315,12 @@
                                     android:layout_gravity="center"
                                     android:layout_width="@dimen/_50sdp"
                                     android:layout_height="@dimen/_50sdp"
-                                    android:alpha=".8"
                                     android:src="@drawable/ic_commetee"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintDimensionRatio="1:1"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:tint="@color/white" />
 
                                 <TextView
                                     android:layout_gravity="center"
@@ -222,7 +329,7 @@
                                     android:layout_marginTop="@dimen/_8sdp"
                                     android:gravity="center"
                                     android:text="समिति"
-                                    android:textColor="@color/sub_text_color"
+                                    android:textColor="@color/white"
                                     android:textSize="@dimen/_12sdp"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/tv1"/>
@@ -238,14 +345,14 @@
                         android:layout_height="@dimen/_90sdp"
                         android:layout_marginStart="@dimen/_22sdp"
                         android:layout_marginTop="@dimen/_12sdp"
-                        app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="@dimen/_4sdp"
-                        app:cardElevation="0dp"
+                        app:cardElevation="4dp"
+                        app:cardBackgroundColor="#003B36"
+
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/cvSamitee"
-                        app:layout_constraintTop_toBottomOf="@id/cvMeroKahiPani"
-                        app:strokeColor="#5A4540"
-                        app:strokeWidth="1dp">
+                        app:layout_constraintTop_toBottomOf="@id/cvUser"
+                        >
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -262,10 +369,9 @@
 
                                 <ImageView
                                     android:layout_gravity="center"
-
+                                    app:tint="@color/white"
                                     android:layout_width="@dimen/_50sdp"
                                     android:layout_height="@dimen/_50sdp"
-                                    android:alpha=".8"
                                     android:src="@drawable/ic_paniko_dar"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintDimensionRatio="1:1"
@@ -279,7 +385,7 @@
                                     android:layout_marginTop="@dimen/_8sdp"
                                     android:gravity="center"
                                     android:text="पानीको दर"
-                                    android:textColor="@color/sub_text_color"
+                                    android:textColor="@color/white"
                                     android:textSize="@dimen/_12sdp"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/tv1" />
@@ -296,14 +402,13 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_90sdp"
                         android:layout_marginTop="@dimen/_12sdp"
-                        app:cardBackgroundColor="@color/white"
+                        app:cardBackgroundColor="@color/primary_color"
                         app:cardCornerRadius="@dimen/_4sdp"
-                        app:cardElevation="0dp"
+                        app:cardElevation="4dp"
                         app:layout_constraintEnd_toStartOf="@id/cvSastakoBarama"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cvSamitee"
-                        app:strokeColor="#DB41E1"
-                        app:strokeWidth="1dp">
+                       >
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -322,12 +427,12 @@
                                     android:layout_gravity="center"
                                     android:layout_width="@dimen/_50sdp"
                                     android:layout_height="@dimen/_50sdp"
-                                    android:alpha=".8"
                                     android:src="@drawable/ic_noticeboard"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintDimensionRatio="1:1"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:tint="@color/white" />
 
                                 <TextView
                                     android:layout_gravity="center"
@@ -336,7 +441,7 @@
                                     android:layout_marginTop="@dimen/_8sdp"
                                     android:gravity="center"
                                     android:text="सूचना पाटी"
-                                    android:textColor="@color/sub_text_color"
+                                    android:textColor="@color/white"
                                     android:textSize="@dimen/_12sdp"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/tv1" />
@@ -354,14 +459,13 @@
                         android:layout_height="@dimen/_90sdp"
                         android:layout_marginStart="@dimen/_22sdp"
                         android:layout_marginTop="@dimen/_12sdp"
-                        app:cardBackgroundColor="@color/white"
+                        app:cardBackgroundColor="@color/primary_color"
                         app:cardCornerRadius="@dimen/_4sdp"
-                        app:cardElevation="0dp"
+                        app:cardElevation="4dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/cvSuchanaPati"
                         app:layout_constraintTop_toBottomOf="@id/cvPanikoDar"
-                        app:strokeColor="#F83B00"
-                        app:strokeWidth="1dp">
+                        >
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -380,12 +484,12 @@
                                     android:layout_gravity="center"
                                     android:layout_width="@dimen/_50sdp"
                                     android:layout_height="@dimen/_50sdp"
-                                    android:alpha=".8"
                                     android:src="@drawable/ic_info"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintDimensionRatio="1:1"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:tint="@color/white" />
 
                                 <TextView
                                     android:layout_gravity="center"
@@ -394,7 +498,7 @@
                                     android:layout_marginTop="@dimen/_8sdp"
                                     android:gravity="center"
                                     android:text="संस्थाको बारेमा"
-                                    android:textColor="@color/sub_text_color"
+                                    android:textColor="@color/white"
                                     android:textSize="@dimen/_12sdp"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/tv1" />
@@ -411,14 +515,12 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_90sdp"
                         android:layout_marginTop="@dimen/_12sdp"
-                        app:cardBackgroundColor="@color/white"
+                        app:cardBackgroundColor="@color/primary_color"
                         app:cardCornerRadius="@dimen/_4sdp"
-                        app:cardElevation="0dp"
+                        app:cardElevation="4dp"
                         app:layout_constraintEnd_toStartOf="@id/cvNayaDhara"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/cvSuchanaPati"
-                        app:strokeColor="#2081C3"
-                        app:strokeWidth="1dp">
+                        app:layout_constraintTop_toBottomOf="@id/cvSuchanaPati">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -435,15 +537,14 @@
 
                                 <ImageView
                                     android:layout_gravity="center"
-
                                     android:layout_width="@dimen/_50sdp"
                                     android:layout_height="@dimen/_50sdp"
-                                    android:alpha=".8"
                                     android:src="@drawable/ic_complain"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintDimensionRatio="1:1"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:tint="@color/white" />
 
                                 <TextView
                                     android:layout_gravity="center"
@@ -452,7 +553,7 @@
                                     android:layout_marginTop="@dimen/_8sdp"
                                     android:gravity="center"
                                     android:text="सम्पर्क"
-                                    android:textColor="@color/sub_text_color"
+                                    android:textColor="@color/white"
                                     android:textSize="@dimen/_12sdp"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/tv1" />
@@ -470,14 +571,13 @@
                         android:layout_height="@dimen/_90sdp"
                         android:layout_marginStart="@dimen/_22sdp"
                         android:layout_marginTop="@dimen/_12sdp"
-                        app:cardBackgroundColor="@color/white"
+                        app:cardBackgroundColor="@color/primary_color"
                         app:cardCornerRadius="@dimen/_4sdp"
-                        app:cardElevation="0dp"
+                        app:cardElevation="4dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/cvSamparka"
                         app:layout_constraintTop_toBottomOf="@id/cvActivity"
-                        app:strokeColor="#7AC74F"
-                        app:strokeWidth="1dp">
+                        >
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -496,12 +596,12 @@
                                     android:layout_gravity="center"
                                     android:layout_width="@dimen/_50sdp"
                                     android:layout_height="@dimen/_50sdp"
-                                    android:alpha=".8"
                                     android:src="@drawable/ic_register"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintDimensionRatio="1:1"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:tint="@color/white" />
 
                                 <TextView
                                     android:layout_gravity="center"
@@ -510,7 +610,7 @@
                                     android:layout_marginTop="@dimen/_8sdp"
                                     android:gravity="center"
                                     android:text="नयाँ धारा जोडान"
-                                    android:textColor="@color/sub_text_color"
+                                    android:textColor="@color/white"
                                     android:textSize="@dimen/_12sdp"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/tv1" />
@@ -528,14 +628,13 @@
                         android:layout_height="@dimen/_90sdp"
                         android:layout_marginStart="@dimen/_22sdp"
                         android:layout_marginTop="@dimen/_12sdp"
-                        app:cardBackgroundColor="@color/white"
+                        app:cardBackgroundColor="@color/primary_color"
                         app:cardCornerRadius="@dimen/_4sdp"
-                        app:cardElevation="0dp"
+                        app:cardElevation="4dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/cvSamparka"
                         app:layout_constraintTop_toBottomOf="@id/cvSastakoBarama"
-                        app:strokeColor="#fdca40"
-                        app:strokeWidth="1dp">
+                        >
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -554,12 +653,12 @@
                                     android:layout_gravity="center"
                                     android:layout_width="@dimen/_50sdp"
                                     android:layout_height="@dimen/_50sdp"
-                                    android:alpha=".8"
                                     android:src="@drawable/ic_calendar"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintDimensionRatio="1:1"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:tint="@color/white" />
 
                                 <TextView
                                     android:layout_gravity="center"
@@ -568,7 +667,7 @@
                                     android:layout_marginTop="@dimen/_8sdp"
                                     android:gravity="center"
                                     android:text="क्रियाकलाप"
-                                    android:textColor="@color/sub_text_color"
+                                    android:textColor="@color/white"
                                     android:textSize="@dimen/_12sdp"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/tv1" />
@@ -580,22 +679,18 @@
 
                     </com.google.android.material.card.MaterialCardView>
 
-
-
-
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cvBillDetails"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_90sdp"
                         android:layout_marginTop="@dimen/_12sdp"
-                        app:cardBackgroundColor="@color/white"
+                        app:cardBackgroundColor="@color/primary_color"
                         app:cardCornerRadius="@dimen/_4sdp"
-                        app:cardElevation="0dp"
+                        app:cardElevation="4dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cvActivity"
                         app:layout_constraintEnd_toEndOf="@id/cvSamparka"
-                        app:strokeColor="#515B3A"
-                        app:strokeWidth="1dp">
+                       >
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -614,12 +709,12 @@
                                     android:layout_gravity="center"
                                     android:layout_width="@dimen/_50sdp"
                                     android:layout_height="@dimen/_50sdp"
-                                    android:alpha=".8"
                                     android:src="@drawable/ic_bill_icon"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintDimensionRatio="1:1"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:tint="@color/white" />
 
                                 <TextView
                                     android:layout_gravity="center"
@@ -628,7 +723,7 @@
                                     android:layout_marginTop="@dimen/_8sdp"
                                     android:gravity="center"
                                     android:text="बिल विवरण हेर्नुहोस्"
-                                    android:textColor="@color/sub_text_color"
+                                    android:textColor="@color/white"
                                     android:textSize="@dimen/_12sdp"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/tv1" />
@@ -655,7 +750,7 @@
                         android:id="@+id/tvPoweredBy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="powered by:-Heartsun Technology"
+                        android:text="powered by:- Heartsun Technology"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

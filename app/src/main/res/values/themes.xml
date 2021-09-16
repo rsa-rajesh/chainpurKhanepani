@@ -98,4 +98,10 @@
         <item name="chipStrokeWidth">1dp</item>
         <item name="android:textColor">@color/color_choice_chip_background_color</item>
     </style>
+
+
+    <style name="DialogAnimation">
+    <item name="android:windowEnterAnimation">@android:anim/slide_in_left</item>
+    <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
+    </style>
 </resources>

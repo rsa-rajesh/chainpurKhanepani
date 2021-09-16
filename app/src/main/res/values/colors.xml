@@ -35,7 +35,7 @@
 
 
 <!--   water supply colors-->
-    <color name="primary_color">#213DF2</color>
+    <color name="primary_color">#003B36</color>
     <color name="secondary_color">#99223AF1</color>
     <color name="tiles_background_color">#26223AF1</color>
     <color name="main_text_color">#CC111111</color>

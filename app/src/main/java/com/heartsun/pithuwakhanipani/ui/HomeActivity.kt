@@ -7,15 +7,21 @@ import android.net.Uri
 import android.os.Bundle
 import androidcommon.RDrawable
 import androidcommon.base.BaseActivity
+import androidcommon.extension.showAddTapDialog
+import androidcommon.extension.showCustomDialog
 import androidcommon.extension.showErrorDialog
+import androidcommon.extension.showRequestPinDialog
 import com.heartsun.pithuwakhanipani.databinding.ActivityHomeBinding
 import com.ouattararomuald.slider.ImageSlider
 import com.ouattararomuald.slider.SliderAdapter
 import com.ouattararomuald.slider.loaders.glide.GlideImageLoaderFactory
 import androidx.core.text.parseAsHtml
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.request.RequestOptions
 import com.heartsun.pithuwakhanipani.R
 import com.heartsun.pithuwakhanipani.data.Prefs
+import com.heartsun.pithuwakhanipani.domain.dbmodel.TblMember
 import com.heartsun.pithuwakhanipani.ui.about.AboutAppActivity
 import com.heartsun.pithuwakhanipani.ui.about.AboutOrganizationActivity
 import com.heartsun.pithuwakhanipani.ui.activityes.ActivitiesActivity
@@ -23,6 +29,9 @@ import com.heartsun.pithuwakhanipani.ui.billDetails.BillDetailsActivity
 import com.heartsun.pithuwakhanipani.ui.contact.ContactActivity
 import com.heartsun.pithuwakhanipani.ui.memberRegisterRequest.MemberRegisterActivity
 import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.MeroKhaniPaniActivity
+import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.MyTapViewModel
+import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.TapListAdapter
+import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.personalMenu.PersonalMenu
 import com.heartsun.pithuwakhanipani.ui.noticeBoard.NoticeBoardActivity
 import com.heartsun.pithuwakhanipani.ui.sameetee.SameeteeSelectionActivity
 import com.heartsun.pithuwakhanipani.ui.waterRate.WaterRateActivity
@@ -43,8 +52,10 @@ class HomeActivity : BaseActivity() {
     }
 
     private val homeViewModel by viewModel<HomeViewModel>()
-
+    private val myTapViewModel by viewModel<MyTapViewModel>()
     private lateinit var imageSliderNew: ImageSlider
+
+    lateinit var member: TblMember
 
     companion object {
         fun newIntent(context: Context): Intent {
@@ -70,19 +81,22 @@ class HomeActivity : BaseActivity() {
 
             showProgress()
             slidersFromServerObserver()
-
+            addTapFromServerObserver()
+            requestPinFromServerObserver()
             GlobalScope.launch {
                 homeViewModel.getSlidersFromServer()
             }
-//            getSliderFromDb()
+            getTapsFromDb()
 
             tvNoOfTaps.text = "धारा स्ख्या:- " + prefs.noOfTaps.orEmpty()
 
-            val powered: String = "powered by:- <font color=#223AF1>Heartsun Technology</font>"
+            val powered: String =
+                "<font color=#ECE5F0>powered by:- </font><font color=#59114D>Heartsun Technology</font>"
             tvPoweredBy.text = powered.parseAsHtml()
 
             val version = getString(R.string.app_version)
-            val versions: String = "version:  <font color=#223AF1>$version</font>"
+            val versions: String =
+                "<font color=#ECE5F0>version: </font><font color=#59114D>$version</font>"
             tvVersion.text = versions.parseAsHtml()
 
             listOf(
@@ -96,7 +110,7 @@ class HomeActivity : BaseActivity() {
                 tvPoweredBy,
                 tvVersion,
                 cvBillDetails,
-                cvActivity
+                cvActivity, cvLogin, cvUser
             ).forEach {
                 it.setOnClickListener { view ->
                     when (view) {
@@ -139,6 +153,22 @@ class HomeActivity : BaseActivity() {
                         tvVersion -> {
                             activateViews(false)
                             startActivity(AboutAppActivity.newIntent(this@HomeActivity))
+                        }
+                        cvLogin -> {
+                            openAddDialog()
+                        }
+                        cvUser -> {
+                            startActivity(
+                                PersonalMenu.newIntent(
+                                    this@HomeActivity,
+                                    address = member.Address.toString(),
+                                    memberId = member.MemberID.toString(),
+                                    registrationDate = member.RegDateTime.toString().split(" ")[0],
+                                    name = member.MemName.toString(),
+                                    phoneNo = member.ContactNo.toString(),
+                                    member.PinCode.toString().toInt()
+                                )
+                            )
                         }
                         tvPoweredBy -> {
                             val url = "https://www.heartsun.com.np/"
@@ -240,6 +270,106 @@ class HomeActivity : BaseActivity() {
         val requestOptions = RequestOptions.errorOf(R.drawable.error_placeholder)
             .placeholder(R.drawable.loading_anim)
         return GlideImageLoaderFactory(requestOptions = requestOptions)
+    }
+
+
+    private fun openAddDialog() {
+
+        showAddTapDialog(onAddClick = { phoneNo, pin ->
+            addTap(phoneNo, pin)
+        }, onRequestClick = {
+            openRequestDialog()
+        })
+    }
+
+    private fun addTap(phoneNo: String, pin: String) {
+        showProgress()
+        myTapViewModel.addTap(phoneNo, pin)
+    }
+
+    private fun requestNewPin(phoneNo: String, memberId: String) {
+        showProgress()
+        myTapViewModel.requestPin(phoneNo, memberId)
+    }
+
+    private fun openRequestDialog() {
+        showRequestPinDialog(onAddClick = {
+            openAddDialog()
+        }, onRequestClick = { phoneNo, memberId ->
+            requestNewPin(phoneNo, memberId)
+        })
+    }
+
+    private fun addTapFromServerObserver() {
+        myTapViewModel.addTap.observe(this, {
+            it ?: return@observe
+            hideProgress()
+
+            if (it.status.equals("error", true)) {
+                showErrorDialog(
+                    message = it.message,
+                    "बन्द गर्नुहोस्",
+                    "त्रुटि",
+                    RDrawable.ic_error_for_dilog,
+                    color = Color.RED
+                )
+            } else {
+                for (member in it.tblMember!!) {
+                    myTapViewModel.insert(members = member)
+                }
+            }
+
+
+        })
+    }
+
+    private fun requestPinFromServerObserver() {
+        myTapViewModel.pinRequest.observe(this, {
+            it ?: return@observe
+            hideProgress()
+
+            if (it.equals("Access Code is sent to your mobile", true)) {
+                showErrorDialog(
+                    message = it,
+                    "बन्द गर्नुहोस्",
+                    "सफलता",
+                    RDrawable.ic_success_for_dilog,
+                    color = Color.GREEN
+                )
+            } else {
+                showErrorDialog(
+                    message = it,
+                    "बन्द गर्नुहोस्",
+                    "त्रुटि",
+                    RDrawable.ic_error_for_dilog,
+                    color = Color.RED
+                )
+            }
+        })
+
+    }
+
+    @DelicateCoroutinesApi
+    private fun getTapsFromDb() {
+        showProgress()
+        myTapViewModel.tapsListFromLocalDb.observe(this, { it ->
+            it ?: return@observe
+            if (it.isNullOrEmpty()) {
+                binding.cvLogin.isVisible = true
+                binding.cvUser.isVisible = false
+
+//                prefs.noOfTaps = "0"
+                hideProgress()
+
+            } else {
+                binding.cvLogin.isVisible = false
+                binding.cvUser.isVisible = true
+                binding.tvName.text =  "नाम :- " +it[0].MemName.orEmpty()
+                binding.tvMemberId.text ="दर्ता न. :- "+ it[0].MemberID.toString()
+                member = it[0]
+                hideProgress()
+            }
+        })
     }
 }
 

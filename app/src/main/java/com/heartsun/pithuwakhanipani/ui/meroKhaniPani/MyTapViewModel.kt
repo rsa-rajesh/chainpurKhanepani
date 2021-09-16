@@ -32,9 +32,9 @@ class MyTapViewModel(
         dbRepository.insert(members)
     }
 
-    fun delete(members: TblMember) = viewModelScope.launch {
+    fun delete(members: Int) = viewModelScope.launch {
 
-        dbRepository.delete(members.MemberID)
+        dbRepository.delete(members)
     }
 
     private val _changePin = MutableLiveData<String>()

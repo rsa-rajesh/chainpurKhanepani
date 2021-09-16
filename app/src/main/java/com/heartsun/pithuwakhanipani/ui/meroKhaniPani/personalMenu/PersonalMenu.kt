@@ -8,8 +8,10 @@ import android.os.Bundle
 import androidcommon.RDrawable
 import androidcommon.base.BaseActivity
 import androidcommon.extension.showChangePinDialog
+import androidcommon.extension.showCustomDialog
 import androidcommon.extension.showErrorDialog
 import com.heartsun.pithuwakhanipani.databinding.ActivityPersionalMenuBinding
+import com.heartsun.pithuwakhanipani.ui.HomeActivity
 import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.MyTapViewModel
 import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.complaint.ComplaintActivity
 import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.ledger.LedgerActivity
@@ -101,7 +103,7 @@ class PersonalMenu : BaseActivity() {
             }
             toolbar.tvToolbarTitle.text = "मेरो खानेपानी"
 
-            listOf(cvLedger, cvComplain, cvChangePin).forEach {
+            listOf(cvLedger, cvComplain, cvChangePin,cvLogOut).forEach {
                 it.setOnClickListener { view ->
                     when (view) {
                         cvComplain -> {
@@ -126,6 +128,24 @@ class PersonalMenu : BaseActivity() {
                             showChangePinDialog(onChangeClick = { newPin ->
                                 changePin(newPin = newPin)
                             }, oldPinCode = pinCodee.toString().toInt())
+                        }
+                        cvLogOut -> {
+
+                            showCustomDialog(
+                                message = "तपाईँ वास्तवमै लगआउट गर्न चाहनुहुन्छ ?",
+                                negLabel = "रद्द गर्नुहोस्",
+                                posLabel = "लगआउट",
+                                onPosClick = {
+                                    if (!memberId.isNullOrEmpty()){
+                                        myTapViewModel.delete(members = memberId.toString().toInt())
+                                        startActivity(
+                                            HomeActivity.newIntent(
+                                                this@PersonalMenu
+                                            )
+                                        )
+                                    }
+                                })
+
                         }
                     }
                 }
