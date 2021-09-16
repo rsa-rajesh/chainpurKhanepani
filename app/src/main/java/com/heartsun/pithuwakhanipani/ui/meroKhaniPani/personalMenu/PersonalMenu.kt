@@ -4,25 +4,18 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidcommon.RDrawable
 import androidcommon.base.BaseActivity
 import androidcommon.extension.showChangePinDialog
 import androidcommon.extension.showErrorDialog
-import androidcommon.extension.toastS
 import com.heartsun.pithuwakhanipani.databinding.ActivityPersionalMenuBinding
-import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.MeroKhaniPaniActivity
 import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.MyTapViewModel
 import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.complaint.ComplaintActivity
 import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.ledger.LedgerActivity
-import com.heartsun.pithuwakhanipani.ui.noticeBoard.NoticeDetailsActivity
-import com.heartsun.pithuwakhanipani.ui.waterRate.WaterRateActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.properties.Delegates
 
 class PersonalMenu : BaseActivity() {
-
 
     private val binding by lazy {
         ActivityPersionalMenuBinding.inflate(layoutInflater)
@@ -30,27 +23,31 @@ class PersonalMenu : BaseActivity() {
 
     private val myTapViewModel by viewModel<MyTapViewModel>()
 
-
     private val name by lazy {
         intent.getStringExtra(name1)
     }
+
     private val address by lazy {
         intent.getStringExtra(address1)
     }
+
     private val memberId by lazy {
         intent.getStringExtra(memberId1)
     }
+
     private val registrationDate by lazy {
         intent.getStringExtra(registrationDate1)
     }
+
     private val phoneNo by lazy {
         intent.getStringExtra(phoneNo1)
     }
+
     private val pinCode by lazy {
-        intent.getIntExtra(pinCode1,0)
+        intent.getIntExtra(pinCode1, 0)
     }
 
-    var  pinCodee=0
+    var pinCodee = 0
     var changedPin = 0
 
     companion object {
@@ -69,7 +66,6 @@ class PersonalMenu : BaseActivity() {
             name: String,
             phoneNo: String,
             pinCode: Int,
-
             ): Intent {
             return Intent(context, PersonalMenu::class.java).apply {
                 putExtra(name1, name)
@@ -78,7 +74,6 @@ class PersonalMenu : BaseActivity() {
                 putExtra(registrationDate1, registrationDate)
                 putExtra(phoneNo1, phoneNo)
                 putExtra(pinCode1, pinCode)
-
             }
         }
     }
@@ -98,8 +93,7 @@ class PersonalMenu : BaseActivity() {
             tvDharaNo.text = "दर्ता न. :- " + memberId.orEmpty()
             tvRegistrationDate.text = "दर्ता भएको मिति :- " + registrationDate.orEmpty()
 
-            pinCodee=pinCode
-//            toastS(pinCode.toString())
+            pinCodee = pinCode
 
             toolbar.ivBack.setOnClickListener {
                 onBackPressed()
@@ -116,7 +110,9 @@ class PersonalMenu : BaseActivity() {
                                     this@PersonalMenu,
                                     memberId.toString(), phoneNo.toString(),
                                 )
-                            )                        }
+                            )
+                        }
+
                         cvLedger -> {
                             startActivity(
                                 LedgerActivity.newIntent(
@@ -127,9 +123,9 @@ class PersonalMenu : BaseActivity() {
                         }
                         cvChangePin -> {
                             changePinObserver()
-                            showChangePinDialog(onChangeClick = {newPin ->
+                            showChangePinDialog(onChangeClick = { newPin ->
                                 changePin(newPin = newPin)
-                            },oldPinCode = pinCodee.toString().toInt())
+                            }, oldPinCode = pinCodee.toString().toInt())
                         }
                     }
                 }
@@ -137,18 +133,16 @@ class PersonalMenu : BaseActivity() {
         }
     }
 
-
     private fun changePin(newPin: String) {
-        changedPin=newPin.toInt()
-        myTapViewModel.changePin(newPin, memberId,phoneNo)
+        changedPin = newPin.toInt()
+        myTapViewModel.changePin(newPin, memberId, phoneNo)
     }
 
     private fun changePinObserver() {
         myTapViewModel.changePin.observe(this, {
             it ?: return@observe
-            if (it.equals("success",true)){
-                myTapViewModel.update(memberId.toString().toInt(),changedPin)
-
+            if (it.equals("success", true)) {
+                myTapViewModel.update(memberId.toString().toInt(), changedPin)
 
                 showErrorDialog(
                     message = "पिन कोड सफलतापूर्वक परिवर्तन भयो ।",
@@ -157,11 +151,9 @@ class PersonalMenu : BaseActivity() {
                     RDrawable.ic_success_for_dilog,
                     color = Color.GREEN
                 )
+                pinCodee = changedPin
 
-//                toastS("PIN code successfully changed")
-                pinCodee=changedPin
-            }else{
-
+            } else {
                 hideProgress()
                 showErrorDialog(
                     message = "माफ गर्नुहोस्, अहिले पिन परिवर्तन गर्न सकिँदैन",
@@ -170,7 +162,6 @@ class PersonalMenu : BaseActivity() {
                     RDrawable.ic_error_for_dilog,
                     color = Color.RED
                 )
-//                toastS("Sorry can't change pin now")
             }
         })
     }
