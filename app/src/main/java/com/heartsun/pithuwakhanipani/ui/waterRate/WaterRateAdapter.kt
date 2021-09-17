@@ -31,9 +31,9 @@ class WaterRateAdapter(
         with(holder.binding) {
 
             if (position.mod(2) == 0) {
-                root.setBackgroundColor(Color.parseColor("#9EA7F1"))
+                root.setBackgroundColor(Color.parseColor("#9AF1E9"))
             } else {
-                root.setBackgroundColor(Color.parseColor("#F3F2F2"))
+                root.setBackgroundColor(Color.parseColor("#EBBA7D"))
             }
 
 
