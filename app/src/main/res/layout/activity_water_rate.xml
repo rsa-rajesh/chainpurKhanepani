@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/table_row2_color"
+    android:background="@color/background"
     tools:context=".ui.waterRate.WaterRateActivity">
 
     <include
@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="क्यालकुलेटर"
-                    android:textColor="@color/main_text_color"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_22sdp"
                     android:textStyle="bold" />
 
@@ -46,12 +46,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="@color/card_background"
                     app:cardCornerRadius="@dimen/_4sdp"
-                    app:cardElevation="0dp"
+                    app:cardElevation="4dp"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:strokeColor="@color/primary_color"
-                    app:strokeWidth="1dp">
+                  >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -63,7 +62,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="ग्राहक प्रकार चयन गर्नुहोस्"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -101,7 +100,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="धाराको आकार चयन गर्नुहोस्"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/cgType" />
@@ -144,17 +143,18 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/tiUnit"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            style="@style/textViewStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_8sdp"
                             android:hint="एकाई"
-                            app:boxStrokeColor="@color/primary_color"
-                            app:hintTextColor="@color/primary_color"
                             app:layout_constraintTop_toBottomOf="@id/cgSize">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etUnit"
+
+                                android:textColor="@color/white"
+                                android:textCursorDrawable="@null"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="numberDecimal"
@@ -175,7 +175,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0.00"
-                                android:textColor="@color/main_text_color"
+                                android:textColor="@color/white"
                                 android:textSize="@dimen/_32sdp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -187,7 +187,8 @@
                                 android:layout_marginTop="@dimen/_8sdp"
                                 android:layout_marginEnd="@dimen/_8sdp"
                                 android:text="कुल: रु."
-                                android:textColor="@color/primary_color"
+                                android:alpha=".8"
+                                android:textColor="@color/white"
                                 android:textSize="@dimen/_12sdp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@id/tvAmount"
@@ -205,7 +206,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_32sdp"
                     android:text="शुल्क विवरण"
-                    android:textColor="@color/main_text_color"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_22sdp"
                     android:textStyle="bold" />
 
@@ -215,11 +216,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="@color/card_background"
                     app:cardCornerRadius="@dimen/_4sdp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="@color/primary_color"
-                    app:strokeWidth="1dp">
+                    app:cardElevation="4dp"
+                    >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -233,7 +233,7 @@
                             android:paddingTop="@dimen/_12sdp"
                             android:paddingBottom="@dimen/_4sdp"
                             android:text="सामुदायिक"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -305,11 +305,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_12sdp"
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="@color/card_background"
                     app:cardCornerRadius="@dimen/_4sdp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="@color/primary_color"
-                    app:strokeWidth="1dp">
+                    app:cardElevation="4dp"
+                    >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -323,7 +322,7 @@
                             android:paddingTop="@dimen/_12sdp"
                             android:paddingBottom="@dimen/_4sdp"
                             android:text="सामुदायिक"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />

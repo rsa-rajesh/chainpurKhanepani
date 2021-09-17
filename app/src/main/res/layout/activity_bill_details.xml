@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".ui.billDetails.BillDetailsActivity">
 
     <include
@@ -36,12 +37,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="@color/card_background"
                     app:cardCornerRadius="@dimen/_4sdp"
-                    app:cardElevation="0dp"
+                    app:cardElevation="4dp"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:strokeColor="@color/primary_color"
-                    app:strokeWidth="1dp">
+                    >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -53,7 +53,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="अन्तिम ५ वटा बिल विवरण"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -68,23 +68,21 @@
                             app:layout_constraintTop_toBottomOf="@id/tvCalcuTitle1"
                             app:selectionRequired="true"
                             app:singleSelection="true">
-
-
                         </com.google.android.material.chip.ChipGroup>
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/tiUnit"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            style="@style/textViewStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_8sdp"
                             android:hint="सदस्य दर्ता नम्बर"
-                            app:boxStrokeColor="@color/primary_color"
-                            app:hintTextColor="@color/primary_color"
                             app:layout_constraintTop_toBottomOf="@id/cgType">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etUnit"
+                                android:textColor="@color/white"
+                                android:textCursorDrawable="@null"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="numberDecimal"
@@ -98,7 +96,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:backgroundTint="@color/highlight_green"
+                            android:backgroundTint="@color/primary_color"
                             android:paddingHorizontal="@dimen/_22sdp"
                             android:paddingVertical="@dimen/_8sdp"
                             android:text="बिल विवरण हेर्नुहोस्"
@@ -122,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_32sdp"
                     android:text="बिल विवरण"
-                    android:textColor="@color/main_text_color"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_22sdp"
                     android:textStyle="bold" />
 
@@ -133,11 +131,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="@color/card_background"
                     app:cardCornerRadius="@dimen/_4sdp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="@color/primary_color"
-                    app:strokeWidth="1dp">
+                    app:cardElevation="4dp"
+                   >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -151,7 +148,7 @@
                             android:paddingTop="@dimen/_12sdp"
                             android:paddingBottom="@dimen/_4sdp"
                             android:text="ग्राहकको नाम :-"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -164,7 +161,7 @@
                             android:paddingTop="@dimen/_12sdp"
                             android:paddingBottom="@dimen/_4sdp"
                             android:text="ठेगाना :-"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvName" />
@@ -177,7 +174,7 @@
                             android:paddingTop="@dimen/_12sdp"
                             android:paddingBottom="@dimen/_4sdp"
                             android:text="धारा न. :-"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvAddress" />
@@ -190,7 +187,7 @@
                             android:paddingTop="@dimen/_12sdp"
                             android:paddingBottom="@dimen/_4sdp"
                             android:text="धाराको प्रकार :-"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvDharaNo" />

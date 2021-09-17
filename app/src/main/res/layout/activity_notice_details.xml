@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/table_row2_color"
+    android:background="@color/background"
     tools:context=".ui.noticeBoard.NoticeDetailsActivity">
 
 
@@ -31,12 +31,11 @@
         android:id="@+id/cvNotice"
         app:cardElevation="0dp"
         android:layout_margin="@dimen/_12sdp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/card_background"
         app:cardCornerRadius="@dimen/_4sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:strokeColor="@color/primary_color"
-        app:strokeWidth="1dp">
+        >
 
         <ScrollView
             android:scrollbars="none"
@@ -71,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:text="अब घरमा बसी बसी अनलाइन पेमेन्ट मार्फत भुक्तानी"
-                    android:textColor="@color/main_text_color"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_18sdp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +105,7 @@
 पिठुवा खानेपानी तथा स उ संस्थाको खानेपानी महशुल अब घरमा बसी बसी अनलाइन पेमेन्ट मार्फत भुक्तानी गर्न सक्नुहुनेछ।अब हामी १,IME PAY (अाइएमी पे) २,KHALTI (खल्ती) अनलाइन पेमेन्टमा जोडिएका छौं।
 
 पिठुवा खानेपानी तथा स उ संस्थाको खानेपानी महशुल अब घरमा बसी बसी अनलाइन पेमेन्ट मार्फत भुक्तानी गर्न सक्नुहुनेछ।अब हामी १,IME PAY (अाइएमी पे) २,KHALTI (खल्ती) अनलाइन पेमेन्टमा जोडिएका छौं।"
-                    android:textColor="@color/sub_text_color"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_12sdp" />
 
 
@@ -121,7 +120,7 @@
     <ImageView
         android:src="@drawable/ic_water_tap"
         android:rotationY="180"
-        android:alpha=".15"
+        android:alpha=".1"
         app:layout_constraintEnd_toEndOf="@id/cvNotice"
         android:layout_marginTop="@dimen/_22sdp"
         android:layout_width="@dimen/_60sdp"

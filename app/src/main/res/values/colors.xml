@@ -40,7 +40,8 @@
     <color name="tiles_background_color">#26223AF1</color>
     <color name="main_text_color">#CC111111</color>
     <color name="sub_text_color">#99111111</color>
-    <color name="background">#EFEFEF</color>
+    <color name="background">#E98A15</color>
+    <color name="card_background">#59114D</color>
 
 
     <color name="table_row1_color">#D2F4C4</color>

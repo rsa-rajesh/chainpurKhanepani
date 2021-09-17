@@ -9,13 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_4sdp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/card_background"
         app:cardCornerRadius="@dimen/_4sdp"
-        app:cardElevation="0dp"
+        app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/primary_color"
-        app:strokeWidth="1dp">
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -34,6 +33,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cvProfileImage"
                     android:layout_width="@dimen/_80sdp"
+                    app:cardBackgroundColor="@color/card_background"
                     android:layout_height="@dimen/_80sdp"
                     android:layout_marginVertical="@dimen/_8sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -65,7 +65,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Rajesh Adhikari "
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp"
                         android:textStyle="bold"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -75,7 +75,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="member"
-                        android:textColor="@color/primary_color"
+                        android:textColor="@color/background"
                         android:textSize="@dimen/_12sdp"
                         app:layout_constraintTop_toBottomOf="@id/tvName" />
 
@@ -86,7 +86,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Bharatpur-15 chitwan"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_12sdp"
                         app:layout_constraintTop_toBottomOf="@id/tvPosition" />
                     <TextView
@@ -95,7 +95,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="9845180574"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_12sdp"
                         app:layout_constraintTop_toBottomOf="@id/tvAddress" />
 
@@ -109,7 +109,7 @@
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_50sdp"
-                android:alpha=".15"
+                android:alpha=".1"
                 android:rotationY="180"
                 android:src="@drawable/ic_water_tap"
                 app:layout_constraintBottom_toBottomOf="parent"

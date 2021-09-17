@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/table_row2_color"
+    android:background="@color/background"
     tools:context=".ui.about.AboutOrganizationActivity">
 
     <ImageView
@@ -23,16 +23,15 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvNotice"
-        app:cardElevation="0dp"
+        app:cardElevation="4dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="@dimen/_12sdp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/card_background"
         app:cardCornerRadius="@dimen/_4sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:strokeColor="@color/primary_color"
-        app:strokeWidth="1dp">
+        >
 
         <ScrollView
             android:layout_width="match_parent"
@@ -72,6 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
+                    android:textColor="@color/white"
                     android:text=""
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cvImage" />

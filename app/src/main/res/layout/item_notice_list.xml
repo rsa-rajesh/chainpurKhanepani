@@ -10,13 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_4sdp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/card_background"
         app:cardCornerRadius="@dimen/_4sdp"
-        app:cardElevation="0dp"
+        app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/primary_color"
-        app:strokeWidth="1dp">
+      >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -73,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:text="अब घरमा बसी बसी अनलाइन पेमेन्ट मार्फत ..."
-                    android:textColor="@color/main_text_color"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_13sdp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +86,7 @@
                     android:text= "पिठुवा खानेपानी तथा स उ संस्थाको खानेपानी महशुल अब घरमा बसी
 बसी अनलाइन पेमेन्ट मार्फत भुक्तानी गर्न सक्नुहुनेछ।अब हामी १, IME
 PAY (अाइएमी पे) ..."
-                    android:textColor="@color/sub_text_color"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_10sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -101,7 +100,7 @@ PAY (अाइएमी पे) ..."
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_4sdp"
                 android:text="@string/read_more"
-                android:textColor="@color/highlight_green"
+                android:textColor="@color/background"
                 android:textSize="@dimen/_8sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
@@ -109,7 +108,7 @@ PAY (अाइएमी पे) ..."
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_30sdp"
-                android:alpha=".15"
+                android:alpha=".1"
                 android:rotationY="180"
                 android:src="@drawable/ic_water_tap"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/table_row2_color"
+    android:background="@color/background"
     tools:context=".ui.meroKhaniPani.complaint.ComplaintActivity">
 
     <include
@@ -12,9 +12,7 @@
         layout="@layout/toolbar_layout" />
 
     <com.google.android.material.card.MaterialCardView
-        app:strokeColor="@color/primary_color"
-        app:strokeWidth="1dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/card_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="@dimen/_12sdp"
@@ -54,7 +52,7 @@
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginEnd="@dimen/_12sdp"
             android:background="@drawable/complain_recived_chat_bubble"
-            android:backgroundTint="@color/highlight_green"
+            android:backgroundTint="@color/primary_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/table_row2_color"
+    android:background="@color/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.meroKhaniPani.ledger.LedgerActivity">
@@ -37,11 +37,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="@color/card_background"
                     app:cardCornerRadius="@dimen/_4sdp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="@color/primary_color"
-                    app:strokeWidth="1dp">
+                    app:cardElevation="4dp"
+                    >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -55,7 +54,7 @@
                             android:paddingTop="@dimen/_12sdp"
                             android:paddingBottom="@dimen/_4sdp"
                             android:text="ग्राहकको नाम :-"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -68,7 +67,7 @@
                             android:paddingTop="@dimen/_12sdp"
                             android:paddingBottom="@dimen/_4sdp"
                             android:text="ठेगाना :-"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvName" />
@@ -81,7 +80,7 @@
                             android:paddingTop="@dimen/_12sdp"
                             android:paddingBottom="@dimen/_4sdp"
                             android:text="धारा न. :-"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvAddress" />
@@ -94,7 +93,7 @@
                             android:paddingTop="@dimen/_12sdp"
                             android:paddingBottom="@dimen/_4sdp"
                             android:text="धाराको प्रकार :-"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvDharaNo" />
