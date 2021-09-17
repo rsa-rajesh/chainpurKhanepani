@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="8dp"
+    app:cardBackgroundColor="@color/card_background"
     app:cardCornerRadius="16dp"
     app:cardUseCompatPadding="true">
 
@@ -15,6 +16,8 @@
         android:layout_marginBottom="12dp">
 
         <ImageView
+            android:background="@drawable/ic_success_for_dilog"
+            android:backgroundTint="@color/white"
             android:id="@+id/ivLogo"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -32,6 +35,7 @@
             android:layout_marginStart="12dp"
             android:text="पिठुवा खानेपानी संस्था"
             android:textSize="18sp"
+            android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/ivLogo"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
-            android:background="@color/primary_color"
+            android:background="@color/background"
             app:layout_constraintTop_toBottomOf="@id/ivLogo" />
 
         <TextView
@@ -54,6 +58,7 @@
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:textSize="16sp"
+            android:textColor="@color/white"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,6 +66,7 @@
             tools:text="This is where the message will come, showing update details and all." />
 
         <TextView
+            android:textStyle="bold"
             android:id="@+id/tvNegAction"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -77,6 +83,7 @@
             tools:text="Cancel" />
 
         <TextView
+            android:textStyle="bold"
             android:id="@+id/tvPosAction"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -93,11 +100,12 @@
             tools:text="Okay" />
 
         <View
+            android:alpha=".6"
             android:id="@+id/viewTwo"
             android:layout_width="1dp"
             android:layout_height="30dp"
             android:layout_marginTop="24dp"
-            android:background="@color/primary_color"
+            android:background="@color/background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tvPosAction"
             app:layout_constraintStart_toEndOf="@id/tvNegAction"
