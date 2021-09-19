@@ -96,7 +96,6 @@ fun Context.showCustomDialog(
 }
 
 fun Context.showAddTapDialog(
-
     onAddClick: (phoneNo: String, pin: String) -> Unit,
     onRequestClick: () -> Unit,
     icon: Int = R.drawable.ic_notification

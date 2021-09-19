@@ -19,8 +19,8 @@ public class SqlServerFunctions {
         StrictMode.setThreadPolicy(policy);
         Connection connection = null;
         try {
-//            String ConnectionString = "jdbc:jtds:sqlserver://heartsun.redirectme.net:2022/"+"DropcareTrial"+";encrypt=fasle;user=rajesh;password=1234560";
-                        String ConnectionString = "jdbc:jtds:sqlserver://192.168.0.105:2022/"+"DropcareTrial"+";encrypt=fasle;user=rajesh;password=1234560";
+            String ConnectionString = "jdbc:jtds:sqlserver://heartsun.redirectme.net:2022/"+"DropcareTrial"+";encrypt=fasle;user=rajesh;password=1234560";
+//                        String ConnectionString = "jdbc:jtds:sqlserver://192.168.0.105:2022/"+"DropcareTrial"+";encrypt=fasle;user=rajesh;password=1234560";
 
             Log.i("Android", ConnectionString);
             Class.forName("net.sourceforge.jtds.jdbc.Driver");

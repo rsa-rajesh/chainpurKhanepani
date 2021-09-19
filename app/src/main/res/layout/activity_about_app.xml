@@ -61,7 +61,7 @@
                         android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginEnd="@dimen/_12sdp"
                         android:gravity="center"
-                        android:text="Pithuwaa Khanepanee"
+                        android:text="पिठुवा खानेपानी"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_16sdp"
                         android:textStyle="bold"
@@ -143,7 +143,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16sdp"
                     android:gravity="start"
-                    android:text="एप्लिकेसन निर्माता"
+                    android:text="एप्लिकेसन मालिक"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_16sdp"
                     android:textStyle="bold" />
@@ -181,33 +181,20 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
-                            <TextView
-                                android:layout_marginTop="@dimen/_4sdp"
-                                android:id="@+id/tvCompanyName"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/_12sdp"
-                                android:gravity="center"
-                                android:text="पिठुवा खानेपानी संस्था- रत्ननगर"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/_16sdp"
-                                android:textStyle="bold"
-                                app:layout_constraintEnd_toStartOf="@id/ivLogo"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/ivLogo" />
 
                             <TextView
+                                android:layout_marginTop="@dimen/_8sdp"
                                 android:id="@+id/tvCompanyTitle"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="@dimen/_12sdp"
                                 android:gravity="center"
-                                android:text="पिठुवा खानेपानी तथा सरसफाइ उपभोक्ता संस्था"
+                                android:text="पिठुवा खानेपानी तथा सरसफाई उपभोक्ता संस्था"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/_10sdp"
+                                android:textSize="@dimen/_18sdp"
                                 app:layout_constraintEnd_toStartOf="@id/ivLogo"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/tvCompanyName" />
+                                app:layout_constraintTop_toBottomOf="@id/ivLogo" />
 
                             <TextView
                                 android:id="@+id/tvCompanyAddress"

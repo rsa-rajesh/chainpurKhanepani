@@ -3,14 +3,11 @@ package com.heartsun.pithuwakhanipani.ui.sameetee
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidcommon.base.ImmutableRecyclerAdapter
 import androidcommon.base.VBViewHolder
 import com.heartsun.pithuwakhanipani.databinding.ItemMemberTypeListBinding
-import com.heartsun.pithuwakhanipani.databinding.ItemUnitRateListBinding
-import com.heartsun.pithuwakhanipani.domain.dbmodel.TBLReadingSetupDtl
 import com.heartsun.pithuwakhanipani.domain.dbmodel.TblBoardMemberType
 import java.util.*
 import kotlin.properties.Delegates

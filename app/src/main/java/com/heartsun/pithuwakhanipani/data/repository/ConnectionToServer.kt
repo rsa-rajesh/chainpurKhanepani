@@ -797,8 +797,8 @@ class ConnectionToServer(prefs: Prefs) {
         stmt = conn.createStatement()
         return try {
             val qry =
-                "Insert into [tblComplaint]([MemberID],[ComplaintMsg],[ContactNumber]) Values(" + memberID + ",'" +
-                        message + "','" + phoneNo + "')"
+                "Insert into [tblComplaint]([MemberID],[ComplaintMsg],[ContactNumber]) Values(" + memberID?.trim() + ",N'" +
+                        message.trim() + "','" + phoneNo?.trim() + "')"
             stmt.execute(qry)
             conn.close()
             "Success"
@@ -807,7 +807,6 @@ class ConnectionToServer(prefs: Prefs) {
             "Error"
         }
     }
-
 
     fun getComplaintList(memberID: String?, phoneNo: String?): MutableList<ComplaintResponse>? {
         var stmt: Statement? = null
