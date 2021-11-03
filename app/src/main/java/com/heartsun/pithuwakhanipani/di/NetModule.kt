@@ -37,7 +37,7 @@ object DataSourceProperties {
     const val APP_NAME = "Khana Pani"
 
     const val SERVER_URL = BuildConfig.BASE_URL
-    const val BASE_PATH = "api/v1"
+    const val BASE_PATH = "dropcare"
 
     const val PRIVACY_POLICY = BuildConfig.BASE_URL + "api/v1/constants/privacy-policy/"
     const val TERMS_AND_CONDITIONS = BuildConfig.BASE_URL + "api/v1/constants/tac/"

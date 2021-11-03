@@ -7,10 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidcommon.RDrawable
 import androidcommon.base.BaseActivity
-import androidcommon.extension.showAddTapDialog
-import androidcommon.extension.showCustomDialog
-import androidcommon.extension.showErrorDialog
-import androidcommon.extension.showRequestPinDialog
+import androidcommon.extension.*
 import com.heartsun.pithuwakhanipani.databinding.ActivityHomeBinding
 import com.ouattararomuald.slider.ImageSlider
 import com.ouattararomuald.slider.SliderAdapter
@@ -35,6 +32,7 @@ import com.heartsun.pithuwakhanipani.ui.meroKhaniPani.personalMenu.PersonalMenu
 import com.heartsun.pithuwakhanipani.ui.noticeBoard.NoticeBoardActivity
 import com.heartsun.pithuwakhanipani.ui.sameetee.SameeteeSelectionActivity
 import com.heartsun.pithuwakhanipani.ui.waterRate.WaterRateActivity
+import com.heartsun.pithuwakhanipani.utils.AppSignatureHelper
 import com.ouattararomuald.slider.ImageLoader
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -78,8 +76,6 @@ class HomeActivity : BaseActivity() {
     @DelicateCoroutinesApi
     private fun initView() {
         with(binding) {
-
-            showProgress()
             slidersFromServerObserver()
             addTapFromServerObserver()
             requestPinFromServerObserver()
@@ -88,6 +84,11 @@ class HomeActivity : BaseActivity() {
             }
             getTapsFromDb()
 
+            val appSignatureHelper: AppSignatureHelper = AppSignatureHelper(this@HomeActivity)
+            var appID: String = appSignatureHelper.appSignatures[0].toString()
+
+            tvAppID.text=appID
+            toastS(appID)
             tvNoOfTaps.text = "धारा स्ख्या:- " + prefs.noOfTaps.orEmpty()
 
             val powered: String =
@@ -357,15 +358,14 @@ class HomeActivity : BaseActivity() {
             if (it.isNullOrEmpty()) {
                 binding.cvLogin.isVisible = true
                 binding.cvUser.isVisible = false
-
 //                prefs.noOfTaps = "0"
                 hideProgress()
 
             } else {
                 binding.cvLogin.isVisible = false
                 binding.cvUser.isVisible = true
-                binding.tvName.text =  "नाम :- " +it[0].MemName.orEmpty()
-                binding.tvMemberId.text ="दर्ता न. :- "+ it[0].MemberID.toString()
+                binding.tvName.text = "नाम :- " + it[0].MemName.orEmpty()
+                binding.tvMemberId.text = "दर्ता न. :- " + it[0].MemberID.toString()
                 member = it[0]
                 hideProgress()
             }

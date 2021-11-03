@@ -1,10 +1,15 @@
 package com.heartsun.pithuwakhanipani.data.repository
 
 import android.content.Context
+import androidcommon.handler.doTryCatch
+import androidcommon.handler.handleResponse
+import androidcommon.utils.UiState
 import com.heartsun.pithuwakhanipani.data.Prefs
 import com.heartsun.pithuwakhanipani.data.apis.AuthApi
 import com.heartsun.pithuwakhanipani.domain.*
+import com.heartsun.pithuwakhanipani.domain.apiResponse.ServerDetailsResponse
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 
 interface AuthRepository {
     suspend fun getRates(status: String): WaterRateListResponse
@@ -22,6 +27,7 @@ interface AuthRepository {
     suspend fun getComplaintList(memberID: String?, phoneNo: String?): MutableList<ComplaintResponse>?
     suspend fun getActivities(): ActivitiesListResponse?
     suspend fun getSliderImages(): SliderListResponse?
+    suspend fun getServerDetailsFromServer(appID: String): UiState<ServerDetailsResponse>?
 }
 
 class AuthRepoImpl(
@@ -98,5 +104,13 @@ class AuthRepoImpl(
 
     override suspend fun getSliderImages(): SliderListResponse? {
         return connection.getSliderImages(context)
+    }
+
+    override suspend fun getServerDetailsFromServer(appID: String): UiState<ServerDetailsResponse>? {
+        return withContext(dispatcher){
+            doTryCatch {
+                authApi.getServerDetails(appID=appID).handleResponse()
+            }
+        }
     }
 }

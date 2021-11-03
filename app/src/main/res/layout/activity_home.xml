@@ -35,6 +35,21 @@
                 android:layout_width="@dimen/_18sdp"
                 android:layout_height="@dimen/_18sdp"/>
 
+            <TextView
+                android:layout_margin="@dimen/_12sdp"
+                android:id="@+id/tvAppID"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 app:layout_constraintStart_toStartOf="parent"
                 android:id="@+id/clHeader"
@@ -67,6 +82,9 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@id/ivLogo"
                     app:layout_constraintTop_toTopOf="parent" />
+
+
+
 
                 <TextView
                     android:id="@+id/tvCompanyAddress"

@@ -18,6 +18,14 @@ class Prefs(private val sharedPreferences: SharedPreferences) {
         const val LAST_SEARCHED_MEMBER_ID = "prefs.last_searched_member_id"
         const val NO_OF_TAPS = "prefs.number_of_taps"
 
+
+        const val DATABASE_NAME = "prefs.DATABASE_NAME"
+        const val SERVER_IP = "prefs.SERVER_IP"
+        const val SERVER_PORT = "prefs.SERVER_PORT"
+        const val DATABASE_USER = "prefs.DATABASE_USER"
+        const val DATABASE_PASSWORD = "prefs.DATABASE_PASSWORD"
+
+
     }
 
 
@@ -116,4 +124,54 @@ class Prefs(private val sharedPreferences: SharedPreferences) {
             sharedPreferences.edit { putString(NO_OF_TAPS, value) }
         }
 
+//    const val SERVER_IP = "prefs.SERVER_IP"
+//    const val SERVER_PORT = "prefs.SERVER_PORT"
+//    const val DATABASE_USER = "prefs.DATABASE_USER"
+//    const val DATABASE_PASSWORD = "prefs.DATABASE_PASSWORD"
+
+
+    var databaseName: String?
+        get() {
+            val databaseName = sharedPreferences.getString(DATABASE_NAME, null)
+            return databaseName ?: return null
+        }
+        set(value) {
+            sharedPreferences.edit { putString(DATABASE_NAME, value) }
+        }
+
+    var databaseUser: String?
+        get() {
+            val databaseUser = sharedPreferences.getString(DATABASE_USER, null)
+            return databaseUser ?: return null
+        }
+        set(value) {
+            sharedPreferences.edit { putString(DATABASE_USER, value) }
+        }
+
+    var databasePassword: String?
+        get() {
+            val databasePassword = sharedPreferences.getString(DATABASE_PASSWORD, null)
+            return databasePassword ?: return null
+        }
+        set(value) {
+            sharedPreferences.edit { putString(DATABASE_PASSWORD, value) }
+        }
+
+    var serverIp: String?
+        get() {
+            val serverIp = sharedPreferences.getString(SERVER_IP, null)
+            return serverIp ?: return null
+        }
+        set(value) {
+            sharedPreferences.edit { putString(SERVER_IP, value) }
+        }
+
+    var serverPort: String?
+        get() {
+            val serverIp = sharedPreferences.getString(SERVER_PORT, null)
+            return serverIp ?: return null
+        }
+        set(value) {
+            sharedPreferences.edit { putString(SERVER_PORT, value) }
+        }
 }

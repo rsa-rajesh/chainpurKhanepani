@@ -55,5 +55,26 @@
             motion:layout_constraintEnd_toEndOf="parent" />
     </ConstraintSet>
     <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/clLoading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            motion:layout_constraintTop_toBottomOf="@id/clHeader"
+            android:layout_marginTop="@dimen/_60sdp" />
+        <Constraint
+            android:id="@+id/clLoading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            motion:layout_constraintTop_toBottomOf="@id/clHeader"
+            android:layout_marginTop="@dimen/_60sdp" />
+        <Constraint
+            android:id="@+id/clLoading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            motion:layout_constraintTop_toBottomOf="@id/clHeader"
+            android:layout_marginTop="@dimen/_60sdp" />
     </ConstraintSet>
 </MotionScene>

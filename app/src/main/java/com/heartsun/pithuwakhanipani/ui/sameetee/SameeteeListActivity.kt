@@ -1,6 +1,5 @@
 package com.heartsun.pithuwakhanipani.ui.sameetee
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle

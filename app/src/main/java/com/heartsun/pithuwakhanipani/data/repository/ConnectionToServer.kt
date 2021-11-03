@@ -28,7 +28,6 @@ import java.util.*
 class ConnectionToServer(prefs: Prefs) {
     var prefs: Prefs = prefs
 
-    //
     fun getRates(): WaterRateListResponse {
         var stmt: Statement? = null
         var resultset: ResultSet? = null
@@ -39,15 +38,11 @@ class ConnectionToServer(prefs: Prefs) {
         val query2 = "select * from TBLReadingSetup"
         val query3 = "select * from tblTapTypeMaster"
 
-
         var tapTypeList: MutableList<TblTapTypeMaster> = arrayListOf()
         var readingSetupList: MutableList<TBLReadingSetup> = arrayListOf()
         var readingSetupDetailsList: MutableList<TBLReadingSetupDtl> = arrayListOf()
 
-
-
         try {
-
             val ss = SqlServerFunctions()
             val conn: Connection = ss.ConnectToSQLServer(prefs)
             stmt = conn.createStatement()
@@ -122,11 +117,9 @@ class ConnectionToServer(prefs: Prefs) {
         var membersList: MutableList<TblContact> = arrayListOf()
 
         try {
-
             val ss = SqlServerFunctions()
             val conn: Connection = ss.ConnectToSQLServer(prefs)
             stmt = conn.createStatement()
-
 
             resultset = stmt.executeQuery(query2)
             while (resultset.next()) {
@@ -204,16 +197,15 @@ class ConnectionToServer(prefs: Prefs) {
             )
         }
 
-
 //        return MembersListResponse(
 //            tblContact = membersList,
 //            tblBoardMemberType = memberTypeList,
 //            status = "success",
 //            message = "success"
 //        )
+
     }
 
-    //
     fun getNotices(context: Context): NoticesListResponse? {
 
         var stmt: Statement? = null
@@ -287,9 +279,7 @@ class ConnectionToServer(prefs: Prefs) {
 
         var stmt: Statement? = null
         var resultset: ResultSet? = null
-
         val query = "select * from TblAboutOrg where Cont_id=1"
-
         var aboutOrg: TblAboutOrg? = null
 
         try {
@@ -307,9 +297,9 @@ class ConnectionToServer(prefs: Prefs) {
                         context.getExternalFilesDir(null),
                         "aboutOrgImage.png"
                     )
+
                     val fos = FileOutputStream(image)
                     fos.use { theImage.compress(Bitmap.CompressFormat.PNG, 100, it) }
-
 
                     val about: TblAboutOrg = TblAboutOrg(
                         Cont_id = resultset.getInt("Cont_id"),
@@ -333,9 +323,9 @@ class ConnectionToServer(prefs: Prefs) {
                     tblAbout = it,
                     status = "success",
                     message = "success"
-
                 )
             }
+
         } catch (e: Exception) {
             return aboutOrg?.let {
                 AboutOrgResponse(
@@ -345,16 +335,11 @@ class ConnectionToServer(prefs: Prefs) {
                 )
             }
         }
-
-
     }
 
-    //
     fun getContactList(context: Context): ContactsListResponse? {
-
         var stmt: Statement? = null
         var resultset: ResultSet? = null
-
         val query = "select * from TblDepartmentContact"
         var contactsList: MutableList<TblDepartmentContact> = arrayListOf()
 
@@ -369,11 +354,9 @@ class ConnectionToServer(prefs: Prefs) {
                     Dept_name = resultset.getString("Dept_name").orEmpty(),
                     Dept_contact = resultset.getString("Dept_contact").orEmpty(),
                     Dept_mail = resultset.getString("Dept_mail").orEmpty(),
-
                     )
                 contactsList.add(contacts)
             }
-
             conn.close()
 
             return ContactsListResponse(
@@ -388,18 +371,13 @@ class ConnectionToServer(prefs: Prefs) {
                 message = "माफ गर्नुहोस् सर्भरमा जडान गर्न सकिएन"
             )
         }
-
-
     }
-//
-    fun getRequiredFiles(context: Context): DocumentTypesResponse? {
 
+    fun getRequiredFiles(context: Context): DocumentTypesResponse? {
         var stmt: Statement? = null
         var resultset: ResultSet? = null
-
         val query = "select * from tblDocumentType"
         var contactsList: MutableList<RegistrationRequest.RequiredDocuments> = arrayListOf()
-
         try {
             val ss = SqlServerFunctions()
             val conn: Connection = ss.ConnectToSQLServer(prefs)
@@ -420,20 +398,14 @@ class ConnectionToServer(prefs: Prefs) {
                 message = "success"
             )
         }catch (e:java.lang.Exception){
-
             return DocumentTypesResponse(
                 documentTypes = contactsList,
                 status = "error",
                 message = "माफ गर्नुहोस् सर्भरमा जडान गर्न सकिएन"
             )
         }
-
-
-
-
     }
 
-    //
     fun requestForReg(data: RegistrationRequest?, context: Context): String? {
         var stmt: Statement? = null
         var maxId: Int = 0
@@ -475,7 +447,6 @@ class ConnectionToServer(prefs: Prefs) {
 
             val pic = BitmapFactory.decodeFile(path)
             val docImg: ByteArray = getBytes(pic)
-
             val picsql =
                 "Insert into tblOnlineTapReqDocImg([ReqID],[DocumentName],[DocImage]) Values(?,?,?)"
             val pics = conn.prepareStatement(picsql)
@@ -509,13 +480,10 @@ class ConnectionToServer(prefs: Prefs) {
 
         var billDetailsList: MutableList<BillDetails> = arrayListOf()
 
-
         try {
             val ss = SqlServerFunctions()
             val conn: Connection = ss.ConnectToSQLServer(prefs)
             stmt = conn.createStatement()
-
-
 
             resultset = stmt.executeQuery(query)
 
@@ -586,15 +554,13 @@ class ConnectionToServer(prefs: Prefs) {
     fun addTapResponce(context: Context, phoneNo: String, pin: String): UserDetailsResponse? {
 
         var stmt: Statement? = null
-
-
         val UID: String = phoneNo
         val PWD: String = pin
-
         var tapCount = 0
 
         val qry =
             "Select * from tblMember where ContactNo='$UID' and PinCode=$PWD"
+
         var tblMember: MutableList<TblMember> = arrayListOf()
 
         try {
@@ -623,8 +589,6 @@ class ConnectionToServer(prefs: Prefs) {
                 status = "error"
             )
         }
-
-
 
         if (tapCount == 0) {
             return UserDetailsResponse(
@@ -655,7 +619,6 @@ class ConnectionToServer(prefs: Prefs) {
         var conn: Connection?=null
         val smsfeatquery =
             "Select * from tblHospitalSetting Where SettingName='OTPSMSEnabled' and SettingValue='True'"
-
 
     try {
         conn= ss.ConnectToSQLServer(prefs)
@@ -689,9 +652,7 @@ class ConnectionToServer(prefs: Prefs) {
         )
 
     }catch (e:Exception){
-
         return "Couldn't connect to server please try again later"
-
     }
 
         if (RC > 0) {
@@ -714,11 +675,9 @@ class ConnectionToServer(prefs: Prefs) {
                 conn.disconnect()
             } catch (e: MalformedURLException) {
                 return "Couldn't connect to SMS server"
-
                 e.printStackTrace()
             } catch (e: IOException) {
                 return "Couldn't connect to SMS server"
-
                 e.printStackTrace()
             }
             if (code == 200) {
@@ -732,24 +691,19 @@ class ConnectionToServer(prefs: Prefs) {
                     Timber.i("SQL Exception Occured")
                 }
                 conn.close()
-
                 return "Access Code is sent to your mobile"
-
             } else {
                 conn.close()
-
                 return "SMS Connection Server Error"
             }
         } else {
-
             conn.close()
-
             return "Either Mobile or MemberID is not registered"
-
         }
 
     }
-//
+
+
     private fun GetFieldData(FieldName: String, qry: String, stmt: Statement?): String {
         val rs = stmt!!.executeQuery(qry)
         var RetVal: String = "0"
@@ -785,8 +739,6 @@ class ConnectionToServer(prefs: Prefs) {
             conn.close()
             "Error"
         }
-
-
     }
 
     //
