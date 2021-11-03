@@ -84,12 +84,12 @@ class HomeActivity : BaseActivity() {
             }
             getTapsFromDb()
 
-            val appSignatureHelper: AppSignatureHelper = AppSignatureHelper(this@HomeActivity)
-            var appID: String = appSignatureHelper.appSignatures[0].toString()
-
-            tvAppID.text=appID
-            toastS(appID)
-            tvNoOfTaps.text = "धारा स्ख्या:- " + prefs.noOfTaps.orEmpty()
+//            val appSignatureHelper: AppSignatureHelper = AppSignatureHelper(this@HomeActivity)
+//            var appID: String = appSignatureHelper.appSignatures[0].toString()
+//
+//            tvAppID.text=appID
+//            toastS(appID)
+//            tvNoOfTaps.text = "धारा स्ख्या:- " + prefs.noOfTaps.orEmpty()
 
             val powered: String =
                 "<font color=#ECE5F0>powered by:- </font><font color=#59114D>Heartsun Technology</font>"

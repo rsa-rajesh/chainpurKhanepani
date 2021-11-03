@@ -36,6 +36,7 @@
                 android:layout_height="@dimen/_18sdp"/>
 
             <TextView
+                android:visibility="gone"
                 android:layout_margin="@dimen/_12sdp"
                 android:id="@+id/tvAppID"
                 android:layout_width="0dp"

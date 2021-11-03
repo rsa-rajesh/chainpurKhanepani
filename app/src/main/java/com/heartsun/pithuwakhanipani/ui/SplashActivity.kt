@@ -2,6 +2,7 @@ package com.heartsun.pithuwakhanipani.ui
 
 import android.os.Bundle
 import androidcommon.base.BaseActivity
+import androidcommon.extension.showErrorDialog
 import androidcommon.extension.toastS
 import androidcommon.utils.UiState
 import androidx.lifecycle.lifecycleScope
@@ -20,7 +21,7 @@ class SplashActivity : BaseActivity() {
     private val binding by lazy {
         ActivitySplashBinding.inflate(layoutInflater)
     }
-
+    lateinit var appID: String
     private val homeViewModel by viewModel<HomeViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +38,7 @@ class SplashActivity : BaseActivity() {
         binding.tvLoading.text = "connecting to server…"
 
         val appSignatureHelper: AppSignatureHelper = AppSignatureHelper(this)
-        var appID: String = appSignatureHelper.appSignatures[0].toString()
+        appID = appSignatureHelper.appSignatures[0].toString()
 
 
         if (prefs.isFirstTime) {
@@ -46,7 +47,7 @@ class SplashActivity : BaseActivity() {
 //            binding.tvLoading.text = "connecting to server"
 //            startActivity(OnBoardingActivity.newIntent(this))
         } else {
-//            startActivity(HomeActivity.newIntent(context = this))
+            startActivity(HomeActivity.newIntent(context = this))
         }
 //        }
 
@@ -65,24 +66,40 @@ class SplashActivity : BaseActivity() {
                     }
                     is UiState.Success -> {
                         hideProgress()
-
-                        if (it.data?.responseCode.equals("0")){
+                        if (it.data?.responseCode.equals("0")) {
                             prefs.databaseUser = it.data?.dbUserName
                             prefs.databasePassword = it.data?.dbPassword
                             prefs.databaseName = it.data?.databaseName
                             prefs.serverIp = it.data?.dbServerName?.split(",")?.get(0)
                             prefs.serverPort = it.data?.dbServerName?.split(",")?.get(1)
+                            startActivity(HomeActivity.newIntent(context = this@SplashActivity))
                         }
-                        it.data?.databaseName
                     }
                     is UiState.Error -> {
                         hideProgress()
+                        showErrorDialog(
+                            isCancellable = false,
+                            message = "सर्भरमा जडान गर्न सकेन!!! \n कृपया फेरि प्रयास गर्नुहोस्",
+                            title = "सर्भरमा जडान गर्न सकेन!!!",
+                            label = "फेरि प्रयास गर्नुहोस्",
+                            onBtnClick = { retryClicked() })
                     }
                     else -> {
+                        showErrorDialog(
+                            isCancellable = false,
+                            message = "सर्भरमा जडान गर्न सकेन!!! \n कृपया फेरि प्रयास गर्नुहोस्",
+                            title = "सर्भरमा जडान गर्न सकेन!!!",
+                            label = "फेरि प्रयास गर्नुहोस्",
+                            onBtnClick = { retryClicked() })
+
                     }
                 }
             }
         })
+    }
+
+    private fun retryClicked() {
+        homeViewModel.getServerDetailsFromAPI(appID)
     }
 
 
