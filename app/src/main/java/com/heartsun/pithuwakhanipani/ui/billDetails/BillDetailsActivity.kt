@@ -153,11 +153,8 @@ class BillDetailsActivity : BaseActivity() {
                             totalBillDetails.Sam_Date = billDetails.Sam_Date
                             totalBillDetails.PaidStatus = billDetails.PaidStatus
                         }
-
                     }
-
                     bills.add(totalBillDetails)
-
 
                     var idsString: String? = prefs.memberIds
 
@@ -168,7 +165,7 @@ class BillDetailsActivity : BaseActivity() {
                             ) == true
                         ) {
                         } else {
-
+//need to change hear change required
                             memberIds?.reverse()
                             memberIds?.set(5, it.billDetails[0].MemberID.toString().orEmpty())
                             memberIds?.reverse()

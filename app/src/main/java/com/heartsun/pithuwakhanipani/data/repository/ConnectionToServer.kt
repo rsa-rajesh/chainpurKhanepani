@@ -21,6 +21,7 @@ import java.io.*
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
+import java.sql.PreparedStatement
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -318,22 +319,34 @@ class ConnectionToServer(prefs: Prefs) {
             }
             conn.close()
 
-            return aboutOrg?.let {
-                AboutOrgResponse(
-                    tblAbout = it,
+            return if (aboutOrg==null){
+                AboutOrgResponse( tblAbout = null,
                     status = "success",
-                    message = "success"
-                )
+                    message = "माफ गर्नुहोस् !! संस्थाको बारेमा पोस्ट गरिएको छैन")
+            }else{
+                AboutOrgResponse( tblAbout = aboutOrg,
+                    status = "success",
+                    message = "success")
             }
 
+//            return aboutOrg?.let {
+//                AboutOrgResponse(
+//                    tblAbout = it,
+//                    status = "success",
+//                    message = "success"
+//                )
+//            }
+
         } catch (e: Exception) {
-            return aboutOrg?.let {
-                AboutOrgResponse(
-                    tblAbout = it,
+            return AboutOrgResponse( tblAbout = null,
                     status = "error",
-                    message = "माफ गर्नुहोस् सर्भरमा जडान गर्न सकिएन"
-                )
-            }
+                    message = "माफ गर्नुहोस् सर्भरमा जडान गर्न सकिएन")
+//            return aboutOrg:AboutOrgResponse(
+//                    tblAbout = it,
+//                    status = "error",
+//                    message = "माफ गर्नुहोस् सर्भरमा जडान गर्न सकिएन"
+//                )
+
         }
     }
 
@@ -484,6 +497,16 @@ class ConnectionToServer(prefs: Prefs) {
             val ss = SqlServerFunctions()
             val conn: Connection = ss.ConnectToSQLServer(prefs)
             stmt = conn.createStatement()
+
+            val sPsql = "EXEC GenerateMemberBillDetail ?"
+
+            val ps = conn.prepareStatement(sPsql)
+            ps.setEscapeProcessing(true)
+            ps.queryTimeout = 30
+            ps.setString(1, memberId.toString())
+            ps.executeUpdate()
+
+
 
             resultset = stmt.executeQuery(query)
 

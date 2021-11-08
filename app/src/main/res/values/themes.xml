@@ -92,7 +92,7 @@
     </style>
 
     <style name="textViewStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="hintTextColor">@color/background</item>
+        <item name="hintTextColor">@color/table_row1_color</item>
         <item name="boxStrokeColor">@color/color_choice_text_view</item>
         <item name="android:textColorHint">@color/color_choice_text_view</item>
         <item name="colorOnSurface">@color/white</item>

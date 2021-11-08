@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidcommon.RDrawable
 import androidcommon.base.BaseActivity
 import androidcommon.extension.showErrorDialog
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heartsun.pithuwakhanipani.databinding.ActivityNoticeBoardBinding
@@ -91,11 +92,18 @@ class NoticeBoardActivity : BaseActivity() {
         homeViewModel.noticesFromServer.observe(this, {
             it ?: return@observe
 
-            if(it.status.equals("success",true)){
-                for (notice in it.tblNotice) {
-                    homeViewModel.insert(notice)
+            if (it.status.equals("success", true)) {
+                hideProgress()
+                if (it.tblNotice.isNullOrEmpty()) {
+                    binding.clEmptyList.isVisible = true
+                } else {
+                    binding.clEmptyList.isGone = true
+                    for (notice in it.tblNotice) {
+                        homeViewModel.insert(notice)
+                    }
                 }
-            }else{
+
+            } else {
                 hideProgress()
                 showErrorDialog(
                     message = "माफ गर्नुहोस्!!! सर्भरमा जडान गर्न सकेन \n" +
@@ -106,7 +114,6 @@ class NoticeBoardActivity : BaseActivity() {
                     color = Color.RED
                 )
             }
-
 
 
         })

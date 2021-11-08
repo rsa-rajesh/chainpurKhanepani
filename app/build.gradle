@@ -62,7 +62,7 @@ android {
             buildConfigField "Boolean", "enableCrashlytics", "true"
             manifestPlaceholders = [crashReporting: "true"]
             resValue "string", "app_name", "WaterSupply-Debug"
-            minifyEnabled true
+//            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             debuggable true
         }
@@ -85,14 +85,14 @@ android {
             versionCode 1
             versionName "0.0.1"
 
-            buildConfigField "String", "BASE_URL", "\"https://staging.heartsun.com.np/\""
+            buildConfigField "String", "BASE_URL", "\"http://bhanchha.redirectme.net:8008\""
         }
         prod {
             dimension "environment"
             versionCode 1
             versionName "0.0.1"
             // Production Url
-            buildConfigField "String", "BASE_URL", "\"https://staging.heartsun.com.np/\""
+            buildConfigField "String", "BASE_URL", "\"http://bhanchha.redirectme.net:8008\""
         }
     }
 

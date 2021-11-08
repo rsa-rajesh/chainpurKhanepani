@@ -50,7 +50,7 @@ class ContactListAdapter(
                 btCall.isVisible=false
             }
 
-            tvMail.text = "गईमेल :- "+item.Dept_mail.toString().trim().orEmpty()
+            tvMail.text = "इमेल :- "+item.Dept_mail.toString().trim().orEmpty()
 
             btCall.setOnClickListener {
                 onCallClick(items[position])

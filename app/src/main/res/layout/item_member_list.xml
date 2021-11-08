@@ -41,12 +41,11 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:background="@drawable/ic_success_for_dilog"
                         android:backgroundTint="@color/white"
                         android:id="@+id/ivProfile"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                         android:src="@drawable/logo"/>
+                         android:src="@drawable/logo_background"/>
 
 
                 </androidx.cardview.widget.CardView>
@@ -66,7 +65,7 @@
                         android:id="@+id/tvName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Rajesh Adhikari "
+                        android:text="n/a"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp"
                         android:textStyle="bold"
@@ -87,7 +86,7 @@
                         android:id="@+id/tvAddress"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Bharatpur-15 chitwan"
+                        android:text="n/a"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12sdp"
                         app:layout_constraintTop_toBottomOf="@id/tvPosition" />
@@ -96,7 +95,7 @@
                         android:id="@+id/tvContact"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="9845180574"
+                        android:text="n/a"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12sdp"
                         app:layout_constraintTop_toBottomOf="@id/tvAddress" />

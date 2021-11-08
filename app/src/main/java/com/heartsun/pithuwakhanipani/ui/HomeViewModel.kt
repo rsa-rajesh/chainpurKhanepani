@@ -8,6 +8,7 @@ import com.heartsun.pithuwakhanipani.domain.*
 import com.heartsun.pithuwakhanipani.domain.apiResponse.ServerDetailsResponse
 import com.heartsun.pithuwakhanipani.domain.dbmodel.*
 import kotlinx.coroutines.launch
+import java.net.URLEncoder
 
 class HomeViewModel(
     private val dbRepository: DbRepository,
@@ -57,7 +58,6 @@ class HomeViewModel(
     fun getMembers(memberTypeId: Int) = viewModelScope.launch {
         membersFromLocal = dbRepository.getContactList(memberTypeId).asLiveData()
     }
-
     //    var oldMembersFromLocal: LiveData<List<TblContact>>? = null
     fun getOldMembers(memberTypeId: Int) = viewModelScope.launch {
         membersFromLocal = dbRepository.getOldContactList(memberTypeId).asLiveData()
@@ -154,7 +154,6 @@ class HomeViewModel(
         }
     }
 
-
     fun deleteAllSlider(slider: TblSliderImages) = viewModelScope.launch {
         dbRepository.deleteAll(tblSliderImages1 = slider)
     }
@@ -165,7 +164,6 @@ class HomeViewModel(
         viewModelScope.launch {
             _serverDetails.value=UiState.Loading()
             _serverDetails.value =homeRepository.getServerDetailsFromServer(appID)
-
         }
     }
 }

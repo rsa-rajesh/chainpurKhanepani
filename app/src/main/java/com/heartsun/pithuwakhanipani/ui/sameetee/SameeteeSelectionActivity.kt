@@ -46,6 +46,7 @@ class SameeteeSelectionActivity : BaseActivity() {
                 this@SameeteeSelectionActivity.finish()
             }
             getMemberTypesFromDb()
+
         }
     }
 

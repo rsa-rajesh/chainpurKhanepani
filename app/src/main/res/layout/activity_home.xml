@@ -232,7 +232,6 @@
                                 android:layout_height="@dimen/_30sdp"
                                 app:tint="@color/white" />
 
-
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </com.google.android.material.card.MaterialCardView>

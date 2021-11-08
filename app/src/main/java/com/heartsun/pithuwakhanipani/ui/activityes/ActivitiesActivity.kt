@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidcommon.RDrawable
 import androidcommon.base.BaseActivity
 import androidcommon.extension.showErrorDialog
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heartsun.pithuwakhanipani.databinding.ActivityNoticeBoardBinding
@@ -92,13 +93,23 @@ class ActivitiesActivity : BaseActivity() {
     private fun activityFromServerObserver() {
         homeViewModel.activitiesFromServer.observe(this, {
             it ?: return@observe
+            hideProgress()
 
             if(it.status.equals("success",true)){
-                for (notice in it.tblActivity) {
-                    homeViewModel.insert(notice)
+
+                if(it.tblActivity.isNullOrEmpty()){
+                    binding.clEmptyList.isVisible=true
+                    binding.tvCompanyTitle.text="माफ गर्नुहोस् !! अहिलेसम्म कुनै क्रियाकलाप पोस्ट गरिएको छैन"
+                }else{
+                    binding.clEmptyList.isGone=true
+
+                    for (notice in it.tblActivity) {
+                        homeViewModel.insert(notice)
+                    }
                 }
+
+
             }else{
-                hideProgress()
                 showErrorDialog(
                     message = "माफ गर्नुहोस्!!! सर्भरमा जडान गर्न सकेन \n" +
                             " कृपया पछि फेरि प्रयास गर्नुहोस्",

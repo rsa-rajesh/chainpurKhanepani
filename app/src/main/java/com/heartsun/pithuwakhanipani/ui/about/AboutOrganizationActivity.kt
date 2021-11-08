@@ -81,12 +81,17 @@ class AboutOrganizationActivity : BaseActivity() {
     private fun aboutOtgFromServerObserver() {
         homeViewModel.aboutOrgFromServer.observe(this, {
             it ?: return@observe
+            hideProgress()
 
-            if (it.status.equals("success",true)){
-                homeViewModel.insert(it.tblAbout)
+            if (it.status.equals("success", true)) {
 
-            }else{
-                hideProgress()
+                if(it.tblAbout==null){
+                    binding.tvAboutOrg.text= it.message
+                }else{
+                    homeViewModel.insert(it.tblAbout!!)
+                }
+
+            } else {
                 showErrorDialog(
                     message = "माफ गर्नुहोस्!!! सर्भरमा जडान गर्न सकेन \n" +
                             " कृपया पछि फेरि प्रयास गर्नुहोस्",
@@ -96,7 +101,6 @@ class AboutOrganizationActivity : BaseActivity() {
                     color = Color.RED
                 )
             }
-
         })
     }
 }

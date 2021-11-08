@@ -5,7 +5,7 @@ import com.heartsun.pithuwakhanipani.di.DataSourceProperties.BASE_PATH
 import com.heartsun.pithuwakhanipani.domain.apiResponse.ServerDetailsResponse
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.Query
 
 
 interface AuthApi {
@@ -17,6 +17,6 @@ interface AuthApi {
     }
 
     @GET(GetServerDetails)
-    suspend fun getServerDetails(@Path("MobAppID") appID: String): Response<ServerDetailsResponse>
+    suspend fun getServerDetails(@Query("MobAppID") appID: String): Response<ServerDetailsResponse>
 
 }

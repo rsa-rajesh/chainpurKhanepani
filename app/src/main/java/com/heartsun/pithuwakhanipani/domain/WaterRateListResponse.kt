@@ -40,7 +40,7 @@ data class SliderListResponse(
 
 
 data class AboutOrgResponse(
-    val tblAbout: TblAboutOrg,
+    val tblAbout: TblAboutOrg?,
     val status:String,
     val message:String
 )

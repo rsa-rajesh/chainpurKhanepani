@@ -60,7 +60,7 @@ class BillDetailsAdapter(
 
 
             if (position==items.size-1){
-                root.setBackgroundColor(Color.parseColor("#213DF2"))
+                root.setBackgroundColor(Color.parseColor("#111111"))
 
                 tvDate.text="कुल"
                 tvDate.setTextColor(Color.WHITE)

@@ -18,6 +18,7 @@ import android.net.Uri
 import androidcommon.RDrawable
 import androidcommon.extension.loggerE
 import androidcommon.extension.showErrorDialog
+import androidx.core.view.isGone
 
 class ContactActivity : BaseActivity() {
 
@@ -98,13 +99,17 @@ class ContactActivity : BaseActivity() {
     private fun contactsFromServerObserver() {
         homeViewModel.contactsFromServer.observe(this, {
             it ?: return@observe
-
-            if(it.status.equals("success",true)){
-                for (memberType in it.tblDepartmentContact) {
-                    homeViewModel.insert(contacts = memberType)
+            hideProgress()
+            if (it.status.equals("success", true)) {
+                if (it.tblDepartmentContact.isNullOrEmpty()) {
+                    binding.clEmptyList.isVisible = true
+                } else {
+                    binding.clEmptyList.isGone = true
+                    for (memberType in it.tblDepartmentContact) {
+                        homeViewModel.insert(contacts = memberType)
+                    }
                 }
-            }else{
-                hideProgress()
+            } else {
                 showErrorDialog(
                     message = "माफ गर्नुहोस्!!! सर्भरमा जडान गर्न सकेन \n" +
                             " कृपया पछि फेरि प्रयास गर्नुहोस्",
@@ -114,7 +119,6 @@ class ContactActivity : BaseActivity() {
                     color = Color.RED
                 )
             }
-
         })
     }
 }

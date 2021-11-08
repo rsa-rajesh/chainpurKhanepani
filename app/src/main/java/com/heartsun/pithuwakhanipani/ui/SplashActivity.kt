@@ -13,6 +13,7 @@ import com.heartsun.pithuwakhanipani.utils.AppSignatureHelper
 import kotlinx.coroutines.delay
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.net.URLEncoder
 
 class SplashActivity : BaseActivity() {
     private val prefs by inject<Prefs>()
@@ -40,10 +41,9 @@ class SplashActivity : BaseActivity() {
         val appSignatureHelper: AppSignatureHelper = AppSignatureHelper(this)
         appID = appSignatureHelper.appSignatures[0].toString()
 
-
+//       appID= URLEncoder.encode(appID, "utf-8").trim()
         if (prefs.isFirstTime) {
             homeViewModel.getServerDetailsFromAPI(appID)
-
 //            binding.tvLoading.text = "connecting to server"
 //            startActivity(OnBoardingActivity.newIntent(this))
         } else {

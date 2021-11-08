@@ -30,6 +30,7 @@ public class AppSignatureHelper extends ContextWrapper {
      *
      * @return
      */
+
     public ArrayList<String> getAppSignatures() {
         ArrayList<String> appCodes = new ArrayList<>();
 
