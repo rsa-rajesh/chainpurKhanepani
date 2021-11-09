@@ -111,6 +111,7 @@
                 app:layout_constraintTop_toBottomOf="@id/clHeader">
 
                 <com.ouattararomuald.slider.ImageSlider
+                    app:sliderBackground="@drawable/slider_defult"
                     android:id="@+id/image_slider"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_120sdp"

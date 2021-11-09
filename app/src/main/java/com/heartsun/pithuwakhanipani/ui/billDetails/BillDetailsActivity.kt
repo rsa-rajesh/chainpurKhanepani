@@ -86,11 +86,6 @@ class BillDetailsActivity : BaseActivity() {
                 cgType.isVisible = false
             }
 
-
-
-
-
-
             toolbar.tvToolbarTitle.text = "बिल विवरण"
 
             toolbar.ivBack.setOnClickListener {
@@ -167,19 +162,30 @@ class BillDetailsActivity : BaseActivity() {
                         } else {
 //need to change hear change required
                             memberIds?.reverse()
-                            memberIds?.set(5, it.billDetails[0].MemberID.toString().orEmpty())
-                            memberIds?.reverse()
+                            var size:Int = memberIds?.size!!
+                            if(size >=5){
+                                memberIds[0]=memberIds[1]
+                                memberIds[1]=memberIds[2]
+                                memberIds[2]=memberIds[3]
+                                memberIds[3]=memberIds[4]
+                                memberIds[4] = it.billDetails[0].MemberID.toString().orEmpty()
+                            }
+                            else{
+                                memberIds.add( it.billDetails[0].MemberID.toString().orEmpty())
+//                                memberIds[memberIds.size] =
+
+                            }
+
+                            memberIds.reverse()
 
                             var ids: String = ""
 
-                            if (memberIds != null) {
-                                for (id in memberIds) {
-                                    ids = "$ids$id-"
-                                }
+                            for (id in memberIds) {
+                                ids = "$ids$id-"
                             }
 
                             if (ids.length > 1) {
-                                ids = ids.substring(0, ids.lastIndex - 1)
+                                ids = ids.substring(0, ids.lastIndex)
                                 prefs.memberIds = ids
                             }
                         }
@@ -221,7 +227,7 @@ class BillDetailsActivity : BaseActivity() {
         }
     }
 
-    fun hideSoftKeyboard(activity: Activity) {
+    private fun hideSoftKeyboard(activity: Activity) {
         val inputMethodManager = activity.getSystemService(
             INPUT_METHOD_SERVICE
         ) as InputMethodManager

@@ -34,7 +34,7 @@ data class RegistrationRequest(
     @SerializedName("files")
     var files: List<RequiredDocuments>?,
 
-) {
+    ) {
     data class RequiredDocuments(
         @SerializedName("documentName")
         var DocumentName: String?,
@@ -46,8 +46,8 @@ data class RegistrationRequest(
 
 data class DocumentTypesResponse(
     val documentTypes: List<RegistrationRequest.RequiredDocuments>,
-    val status:String,
-    val message:String
+    val status: String,
+    val message: String
 )
 
 data class BillDetails(
@@ -83,6 +83,43 @@ data class BillDetails(
 
 data class BillDetailsResponse(
     val billDetails: List<BillDetails>,
-    val status:String,
-    val message:String
+    val status: String,
+    val message: String
+)
+
+data class LedgerDetailsResponse(
+    val billDetails: List<TBLMemberReading>,
+    val status: String,
+    val message: String
+)
+
+data class TBLMemberReading(
+    @SerializedName("MemberID")
+    var MemberID: Int?,
+    @SerializedName("TapNo")
+    var TapNo: Int?,
+    @SerializedName("RID")
+    var RID: Int?,
+    @SerializedName("TotReading")
+    var TotReading: Int?,
+    @SerializedName("Amt")
+    var Amt: Float?,
+    @SerializedName("Inv_Date")
+    var Inv_Date: String?,
+    @SerializedName("Sam_Date")
+    var Sam_Date: String?,
+    @SerializedName("PaidStatus")
+    var PaidStatus: Int?,
+    @SerializedName("Dis")
+    var Dis: Float?,
+    @SerializedName("Fine")
+    var Fine: Float?,
+    @SerializedName("NetAmt")
+    var NetAmt: Float?,
+    @SerializedName("PayDateEng")
+    var PayDateEng: String?,
+    @SerializedName("PayDateNep")
+    var PayDateNep: String?,
+    @SerializedName("PaidAmt")
+    var PaidAmt: Float?,
 )

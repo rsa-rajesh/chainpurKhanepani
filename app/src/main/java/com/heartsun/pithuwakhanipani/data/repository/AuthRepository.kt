@@ -28,6 +28,7 @@ interface AuthRepository {
     suspend fun getActivities(): ActivitiesListResponse?
     suspend fun getSliderImages(): SliderListResponse?
     suspend fun getServerDetailsFromServer(appID: String): UiState<ServerDetailsResponse>?
+    suspend fun getLedgerDetails(memberId: Int): LedgerDetailsResponse?
 }
 
 class AuthRepoImpl(
@@ -112,5 +113,9 @@ class AuthRepoImpl(
                 authApi.getServerDetails(appID=appID).handleResponse()
             }
         }
+    }
+
+    override suspend fun getLedgerDetails(memberId: Int): LedgerDetailsResponse? {
+        return connection.getLedgerDetails(context,memberId)
     }
 }

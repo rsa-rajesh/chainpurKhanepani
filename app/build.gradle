@@ -114,9 +114,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
     implementation 'com.google.android.material:material:1.4.0'
 
+    // required to avoid crash on Android 12 API 31
+    implementation("androidx.work:work-runtime-ktx:2.7.0")
+
     // Update navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.0-beta01'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.0-beta01'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.0-beta02'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.0-beta02'
 
     // network tools
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
@@ -125,7 +128,7 @@ dependencies {
 
     // dev tools
     implementation "com.jakewharton.timber:timber:4.7.1"
-    implementation 'androidx.annotation:annotation:1.2.0'
+    implementation 'androidx.annotation:annotation:1.3.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     debugImplementation "com.github.chuckerteam.chucker:library:3.4.0"
     releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.4.0"
@@ -149,7 +152,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
     // Paging
-    implementation 'androidx.paging:paging-runtime-ktx:3.1.0-beta01'
+    implementation 'androidx.paging:paging-runtime-ktx:3.1.0-rc01'
 
     //image slider
     implementation 'com.ouattararomuald:slider-glide:3.0.1' // If you use Glide

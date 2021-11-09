@@ -319,14 +319,18 @@ class ConnectionToServer(prefs: Prefs) {
             }
             conn.close()
 
-            return if (aboutOrg==null){
-                AboutOrgResponse( tblAbout = null,
+            return if (aboutOrg == null) {
+                AboutOrgResponse(
+                    tblAbout = null,
                     status = "success",
-                    message = "माफ गर्नुहोस् !! संस्थाको बारेमा पोस्ट गरिएको छैन")
-            }else{
-                AboutOrgResponse( tblAbout = aboutOrg,
+                    message = "माफ गर्नुहोस् !! संस्थाको बारेमा पोस्ट गरिएको छैन"
+                )
+            } else {
+                AboutOrgResponse(
+                    tblAbout = aboutOrg,
                     status = "success",
-                    message = "success")
+                    message = "success"
+                )
             }
 
 //            return aboutOrg?.let {
@@ -338,9 +342,11 @@ class ConnectionToServer(prefs: Prefs) {
 //            }
 
         } catch (e: Exception) {
-            return AboutOrgResponse( tblAbout = null,
-                    status = "error",
-                    message = "माफ गर्नुहोस् सर्भरमा जडान गर्न सकिएन")
+            return AboutOrgResponse(
+                tblAbout = null,
+                status = "error",
+                message = "माफ गर्नुहोस् सर्भरमा जडान गर्न सकिएन"
+            )
 //            return aboutOrg:AboutOrgResponse(
 //                    tblAbout = it,
 //                    status = "error",
@@ -367,7 +373,7 @@ class ConnectionToServer(prefs: Prefs) {
                     Dept_name = resultset.getString("Dept_name").orEmpty(),
                     Dept_contact = resultset.getString("Dept_contact").orEmpty(),
                     Dept_mail = resultset.getString("Dept_mail").orEmpty(),
-                    )
+                )
                 contactsList.add(contacts)
             }
             conn.close()
@@ -410,7 +416,7 @@ class ConnectionToServer(prefs: Prefs) {
                 status = "success",
                 message = "success"
             )
-        }catch (e:java.lang.Exception){
+        } catch (e: java.lang.Exception) {
             return DocumentTypesResponse(
                 documentTypes = contactsList,
                 status = "error",
@@ -483,6 +489,7 @@ class ConnectionToServer(prefs: Prefs) {
     //
     fun getBillDetails(context: Context, memberId: Int): BillDetailsResponse? {
 
+
         var stmt: Statement? = null
         var resultset: ResultSet? = null
 
@@ -505,8 +512,6 @@ class ConnectionToServer(prefs: Prefs) {
             ps.queryTimeout = 30
             ps.setString(1, memberId.toString())
             ps.executeUpdate()
-
-
 
             resultset = stmt.executeQuery(query)
 
@@ -565,7 +570,7 @@ class ConnectionToServer(prefs: Prefs) {
                 status = "success"
             )
 
-        }catch (e:Exception){
+        } catch (e: Exception) {
             return BillDetailsResponse(
                 billDetails = billDetailsList,
                 message = "सर्भरमा जडान गर्न सकिएन कृपया पछि फेरि प्रयास गर्नुहोस्",
@@ -635,48 +640,48 @@ class ConnectionToServer(prefs: Prefs) {
         var code = 0
         var stmt: Statement? = null
         var resultset: ResultSet? = null
-        var TokenStr: String?=null
-        var ShortStr: String?=null
+        var TokenStr: String? = null
+        var ShortStr: String? = null
         var SecCode = ""
         val ss: SqlServerFunctions = SqlServerFunctions()
-        var conn: Connection?=null
+        var conn: Connection? = null
         val smsfeatquery =
             "Select * from tblHospitalSetting Where SettingName='OTPSMSEnabled' and SettingValue='True'"
 
-    try {
-        conn= ss.ConnectToSQLServer(prefs)
-        stmt = conn.createStatement()
+        try {
+            conn = ss.ConnectToSQLServer(prefs)
+            stmt = conn.createStatement()
 
-        resultset = stmt.executeQuery(smsfeatquery)
-        while (resultset.next()) {
-            SFRC += 1
+            resultset = stmt.executeQuery(smsfeatquery)
+            while (resultset.next()) {
+                SFRC += 1
+            }
+
+            if (SFRC == 0) {
+                conn.close()
+                return "SMS features is not activated yet"
+            }
+
+            val qry = "select * from tblMember where MemberID=" + memberId +
+                    " and ContactNo='" + phoneNo + "'"
+
+            resultset = stmt.executeQuery(qry)
+            while (resultset.next()) {
+                RC += 1
+            }
+
+            TokenStr = GetFieldData(
+                "SettingValue",
+                "Select * from tblHospitalSetting Where SettingName='SMSTokenValue'", stmt
+            )
+            ShortStr = GetFieldData(
+                "SettingValue",
+                "Select * from tblHospitalSetting Where SettingName='SMSShortName'", stmt
+            )
+
+        } catch (e: Exception) {
+            return "Couldn't connect to server please try again later"
         }
-
-        if (SFRC == 0) {
-            conn.close()
-            return "SMS features is not activated yet"
-        }
-
-        val qry = "select * from tblMember where MemberID=" + memberId +
-                " and ContactNo='" + phoneNo + "'"
-
-        resultset = stmt.executeQuery(qry)
-        while (resultset.next()) {
-            RC += 1
-        }
-
-         TokenStr= GetFieldData(
-            "SettingValue",
-            "Select * from tblHospitalSetting Where SettingName='SMSTokenValue'", stmt
-        )
-       ShortStr = GetFieldData(
-            "SettingValue",
-            "Select * from tblHospitalSetting Where SettingName='SMSShortName'", stmt
-        )
-
-    }catch (e:Exception){
-        return "Couldn't connect to server please try again later"
-    }
 
         if (RC > 0) {
             try {
@@ -946,4 +951,110 @@ class ConnectionToServer(prefs: Prefs) {
             )
         }
     }
+
+    fun getLedgerDetails(context: Context, memberId: Int): LedgerDetailsResponse? {
+
+        var stmt: Statement? = null
+        var resultset: ResultSet? = null
+
+        val query = "SELECT RID" +
+                " ,MemberID" +
+                " ,Inv_Date" +
+                " ,Sam_Date" +
+                " ,TotReading" +
+                " ,Amt" +
+                " ,DisAmt" +
+                " ,FineAmt" +
+                " ,NetAmt" +
+                " ,PayDateNep" +
+                " ,PayDateEng" +
+                " ,TapNo" +
+                " ,PaidAmt" +
+                " ,PaidStatus"+
+                "  FROM TBLMemberReading where MemberID=" + memberId
+            .toString()
+
+        var billDetailsList: MutableList<TBLMemberReading> = arrayListOf()
+
+        try {
+            val ss = SqlServerFunctions()
+            val conn: Connection = ss.ConnectToSQLServer(prefs)
+            stmt = conn.createStatement()
+
+//            val sPsql = "EXEC GenerateMemberBillDetail ?"
+//            val ps = conn.prepareStatement(sPsql)
+//            ps.setEscapeProcessing(true)
+//            ps.queryTimeout = 30
+//            ps.setString(1, memberId.toString())
+//            ps.executeUpdate()
+
+            resultset = stmt.executeQuery(query)
+
+
+            val totalBillDetails: TBLMemberReading = TBLMemberReading(
+                999999, null, 0, 0, 0f, null, null, 0, 0f, 0f, 0f, null, null, 0f
+            )
+
+            while (resultset.next()) {
+                totalBillDetails.RID = resultset.getInt("RID")
+                totalBillDetails.MemberID = resultset.getInt("MemberID")
+                totalBillDetails.Inv_Date = resultset.getString("Inv_Date").orEmpty()
+                totalBillDetails.Sam_Date = resultset.getString("Sam_Date").orEmpty()
+                totalBillDetails.TotReading =
+                    totalBillDetails.TotReading?.plus(resultset.getInt("TotReading"))
+                totalBillDetails.Amt = totalBillDetails.Amt?.plus(resultset.getFloat("Amt"))
+                totalBillDetails.Dis = totalBillDetails.Dis?.plus(resultset.getFloat("DisAmt"))
+                totalBillDetails.Fine = totalBillDetails.Fine?.plus(resultset.getFloat("FineAmt"))
+                totalBillDetails.NetAmt = totalBillDetails.NetAmt?.plus(resultset.getInt("NetAmt"))
+
+                totalBillDetails.PayDateNep = resultset.getString("NetAmt").orEmpty()
+                totalBillDetails.PayDateEng = resultset.getString("NetAmt").orEmpty()
+
+
+
+                totalBillDetails.TapNo = resultset.getInt("TapNo")
+
+                totalBillDetails.PaidAmt = totalBillDetails.NetAmt?.plus(resultset.getFloat("PaidAmt"))
+
+                val billDetails: TBLMemberReading = TBLMemberReading(
+                    RID = resultset.getInt("RID"),
+                    MemberID = resultset.getInt("MemberID"),
+                    TapNo = resultset.getInt("TapNo"),
+                    TotReading = resultset.getInt("TotReading"),
+                    Amt = resultset.getFloat("Amt"),
+                    Inv_Date = resultset.getString("Inv_Date").orEmpty(),
+                    Sam_Date = resultset.getString("Sam_Date").orEmpty(),
+                    Dis = resultset.getFloat("DisAmt"),
+                    Fine = resultset.getFloat("FineAmt"),
+                    NetAmt = resultset.getFloat("NetAmt"),
+                    PaidStatus = resultset.getInt("PaidStatus"),
+                    PaidAmt = resultset.getFloat("PaidAmt"),
+                    PayDateNep = resultset.getString("PayDateNep"),
+                    PayDateEng = resultset.getString("PayDateEng")
+                )
+                billDetailsList.add(billDetails)
+            }
+
+            conn.close()
+
+
+            if (billDetailsList.isNotEmpty()) {
+                billDetailsList.add(totalBillDetails)
+            }
+
+            return LedgerDetailsResponse(
+                billDetails = billDetailsList,
+                message = "success",
+                status = "success"
+            )
+
+        } catch (e: Exception) {
+            return LedgerDetailsResponse(
+                billDetails = billDetailsList,
+                message = "सर्भरमा जडान गर्न सकिएन कृपया पछि फेरि प्रयास गर्नुहोस्",
+                status = "error"
+            )
+        }
+    }
+
 }

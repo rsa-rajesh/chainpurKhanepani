@@ -18,6 +18,7 @@ import com.heartsun.pithuwakhanipani.data.Prefs
 import com.heartsun.pithuwakhanipani.databinding.ActivityBillDetailsBinding
 import com.heartsun.pithuwakhanipani.databinding.ActivityLedgerBinding
 import com.heartsun.pithuwakhanipani.domain.BillDetails
+import com.heartsun.pithuwakhanipani.domain.TBLMemberReading
 import com.heartsun.pithuwakhanipani.ui.billDetails.BillDetailsActivity
 import com.heartsun.pithuwakhanipani.ui.billDetails.BillDetailsAdapter
 import com.heartsun.pithuwakhanipani.ui.memberRegisterRequest.RegisterViewModel
@@ -35,20 +36,37 @@ class LedgerActivity : BaseActivity() {
     private val memberID by lazy {
         intent.getStringExtra(memberId)
     }
+    private val memberName by lazy {
+        intent.getStringExtra(member_Name)
+    }
+    private val memberAddress by lazy {
+        intent.getStringExtra(member_Address)
+    }
+
+    private val memberRegNo by lazy {
+        intent.getStringExtra(member_RegNo)
+    }
 
     private val registerViewModel by viewModel<RegisterViewModel>()
 
-    private lateinit var billDetailsAdapter: BillDetailsAdapter
+    private lateinit var billDetailsAdapter: LedgerDetailsAdapter
 
 
     companion object {
         private const val memberId = "MemberID"
+        private const val member_Name = "member_Name"
+        private const val member_Address = "member_Address"
+        private const val member_RegNo = "member_RegNo"
 
         fun newIntent(
-            context: Context, memberID: String,
+            context: Context, memberID: String,memberName: String,memberAddress: String,memberRegNo: String,
         ): Intent {
             return Intent(context, LedgerActivity::class.java).apply {
                 putExtra(memberId, memberID)
+                putExtra(member_Name, memberName)
+                putExtra(member_Address, memberAddress)
+                putExtra(member_RegNo, memberRegNo)
+
             }
         }
     }
@@ -63,6 +81,7 @@ class LedgerActivity : BaseActivity() {
     private fun initView() {
         with(binding) {
             rateFromServerObserver()
+            showProgress()
             getReport()
 
             toolbar.tvToolbarTitle.text = "लेजर"
@@ -71,46 +90,41 @@ class LedgerActivity : BaseActivity() {
                 super.onBackPressed()
                 this@LedgerActivity.finish()
             }
-
         }
-
     }
 
 
     @SuppressLint("SetTextI18n")
     private fun rateFromServerObserver() {
-        registerViewModel.billDetailsFromServer.observe(this, {
+        registerViewModel.ledgerDetailsFromServer.observe(this, {
 
             it ?: return@observe
-
-            if (it.status.equals("success",true)){
+            hideProgress()
+            if (it.status.equals("success", true)) {
                 if (it.billDetails.isEmpty()) {
                     binding.cvCommunityRate.isVisible = false
                     toastS("सदस्यता नम्बर फेला परेन")
-                }
-                else {
-
-
-                    var bills: MutableList<BillDetails> = arrayListOf()
+                } else {
+                    var bills: MutableList<TBLMemberReading> = arrayListOf()
                     for (billDetails in it.billDetails) {
                         if (billDetails.PaidStatus != 1) {
                             bills.add(billDetails)
                         }
                     }
 
-                    binding.tvName.text = "ग्राहकको नाम :-" + it.billDetails[0].MemName
-                    binding.tvAddress.text = "ठेगाना :-" + it.billDetails[0].Address
-                    binding.tvDharaNo.text = "दर्ता न. :-" + it.billDetails[0].MemberID
-                    binding.tvDharaType.text = "धाराको प्रकार :-" + it.billDetails[0].TapType
+                    binding.tvName.text = "ग्राहकको नाम :- $memberName"
+                    binding.tvAddress.text = "ठेगाना :- $memberAddress"
+                    binding.tvDharaNo.text = "दर्ता न. :- $memberRegNo"
+                    binding.tvDharaType.text = "धाराको प्रकार :-"
 
                     binding.cvCommunityRate.isVisible = true
-                    billDetailsAdapter = BillDetailsAdapter()
+                    billDetailsAdapter = LedgerDetailsAdapter()
                     billDetailsAdapter.items = it.billDetails
 
                     binding.rvCommunityRate.layoutManager = LinearLayoutManager(this)
                     binding.rvCommunityRate.adapter = billDetailsAdapter
                 }
-            }else{
+            } else {
                 showErrorDialog(
                     message = "माफ गर्नुहोस्!!! सर्भरमा जडान गर्न सकेन \n" +
                             " कृपया पछि फेरि प्रयास गर्नुहोस्",
@@ -128,7 +142,7 @@ class LedgerActivity : BaseActivity() {
         showProgress()
         thread {
             Thread.sleep(100)
-            registerViewModel.getBillingDetails(memberId = memberID!!.toInt())
+            registerViewModel.getLedgerDetails(memberId = memberID!!.toInt())
         }
     }
 }

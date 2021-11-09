@@ -119,7 +119,7 @@ class PersonalMenu : BaseActivity() {
                             startActivity(
                                 LedgerActivity.newIntent(
                                     this@PersonalMenu,
-                                    memberId.toString()
+                                    memberId.toString(),name.toString(), address.toString(), memberId.toString()
                                 )
                             )
                         }

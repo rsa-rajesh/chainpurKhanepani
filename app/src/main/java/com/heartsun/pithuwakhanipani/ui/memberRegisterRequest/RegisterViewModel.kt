@@ -4,10 +4,7 @@ import android.content.Context
 import androidx.lifecycle.*
 import com.heartsun.pithuwakhanipani.data.repository.AuthRepository
 import com.heartsun.pithuwakhanipani.data.repository.databaseReppo.DbRepository
-import com.heartsun.pithuwakhanipani.domain.BillDetailsResponse
-import com.heartsun.pithuwakhanipani.domain.ContactsListResponse
-import com.heartsun.pithuwakhanipani.domain.DocumentTypesResponse
-import com.heartsun.pithuwakhanipani.domain.RegistrationRequest
+import com.heartsun.pithuwakhanipani.domain.*
 import com.heartsun.pithuwakhanipani.domain.dbmodel.TblBoardMemberType
 import com.heartsun.pithuwakhanipani.domain.dbmodel.TblDepartmentContact
 import com.heartsun.pithuwakhanipani.domain.dbmodel.TblDocumentType
@@ -51,6 +48,13 @@ class RegisterViewModel(
         }
     }
 
+    private val _ledgerDetails = MutableLiveData<LedgerDetailsResponse>()
+    val ledgerDetailsFromServer: LiveData<LedgerDetailsResponse> = _ledgerDetails
+    fun getLedgerDetails(memberId:Int) {
+        viewModelScope.launch {
+            _ledgerDetails.value = homeRepository.getLedgerDetails(memberId)
+        }
+    }
 
 
 
