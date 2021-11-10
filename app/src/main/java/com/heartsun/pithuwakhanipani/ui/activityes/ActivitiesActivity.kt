@@ -13,9 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.heartsun.pithuwakhanipani.databinding.ActivityNoticeBoardBinding
 import com.heartsun.pithuwakhanipani.ui.HomeViewModel
 import com.heartsun.pithuwakhanipani.ui.noticeBoard.NoticeDetailsActivity
-import com.heartsun.pithuwakhanipani.ui.noticeBoard.NoticeListAdapter
-import com.heartsun.pithuwakhanipani.ui.sameetee.MemberTypeAdapter
-import com.heartsun.pithuwakhanipani.ui.sameetee.SameeteeListActivity
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

@@ -25,6 +25,7 @@ class Prefs(private val sharedPreferences: SharedPreferences) {
         const val DATABASE_USER = "prefs.DATABASE_USER"
         const val DATABASE_PASSWORD = "prefs.DATABASE_PASSWORD"
 
+        const val FCM_TOKEN = "prefs.FCM_TOKEN"
 
     }
 
@@ -173,5 +174,15 @@ class Prefs(private val sharedPreferences: SharedPreferences) {
         }
         set(value) {
             sharedPreferences.edit { putString(SERVER_PORT, value) }
+        }
+
+
+    var fcmToken: String?
+        get() {
+            val serverIp = sharedPreferences.getString(FCM_TOKEN, null)
+            return serverIp ?: return null
+        }
+        set(value) {
+            sharedPreferences.edit { putString(FCM_TOKEN, value) }
         }
 }

@@ -1,14 +1,24 @@
 package com.heartsun.pithuwakhanipani.ui
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidcommon.base.BaseActivity
 import androidcommon.extension.showErrorDialog
 import androidcommon.extension.toastS
 import androidcommon.utils.UiState
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
+import com.heartsun.pithuwakhanipani.R
 import com.heartsun.pithuwakhanipani.data.Prefs
 import com.heartsun.pithuwakhanipani.databinding.ActivitySplashBinding
 import com.heartsun.pithuwakhanipani.utils.AppSignatureHelper
+import com.heartsun.pithuwakhanipani.utils.AppSignatureHelper.TAG
 
 import kotlinx.coroutines.delay
 import org.koin.android.ext.android.inject
@@ -33,6 +43,58 @@ class SplashActivity : BaseActivity() {
             delay(4000)
             navigateNext()
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create channel to show notifications.
+            val channelId = getString(R.string.default_notification_channel_id)
+            val channelName = getString(R.string.default_notification_channel_name)
+            val notificationManager = getSystemService(NotificationManager::class.java)
+            notificationManager?.createNotificationChannel(
+                NotificationChannel(channelId,
+                channelName, NotificationManager.IMPORTANCE_LOW)
+            )
+        }
+
+        Firebase.messaging.subscribeToTopic("weather")
+            .addOnCompleteListener { task ->
+                var msg = getString(R.string.msg_subscribed)
+                if (!task.isSuccessful) {
+                    msg = getString(R.string.msg_subscribe_failed)
+                }
+                Log.d(TAG, msg)
+                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+            }
+
+        // Get token
+        // [START log_reg_token]
+        Firebase.messaging.token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+            prefs.fcmToken=token
+            // Log and toast
+            val msg = getString(R.string.msg_token_fmt, token)
+            Log.d(TAG, msg)
+            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+        })
+        // [END log_reg_token]
+
+
+
+
+
+
+        intent.extras?.let {
+            for (key in it.keySet()) {
+                val value = intent.extras?.get(key)
+                Log.d("FCM", "Key: $key Value: $value")
+            }
+        }
+
     }
 
     private fun navigateNext() {

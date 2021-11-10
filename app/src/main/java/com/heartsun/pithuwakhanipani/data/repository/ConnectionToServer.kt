@@ -105,7 +105,6 @@ class ConnectionToServer(prefs: Prefs) {
 
     }
 
-    //
     fun getMembers(context: Context): MembersListResponse {
         var stmt: Statement? = null
         var resultset: ResultSet? = null
@@ -275,7 +274,6 @@ class ConnectionToServer(prefs: Prefs) {
 
     }
 
-    //
     fun getAboutOrg(context: Context): AboutOrgResponse? {
 
         var stmt: Statement? = null
@@ -486,7 +484,6 @@ class ConnectionToServer(prefs: Prefs) {
         return stream.toByteArray()
     }
 
-    //
     fun getBillDetails(context: Context, memberId: Int): BillDetailsResponse? {
 
 
@@ -580,12 +577,10 @@ class ConnectionToServer(prefs: Prefs) {
     }
 
     fun addTapResponce(context: Context, phoneNo: String, pin: String): UserDetailsResponse? {
-
         var stmt: Statement? = null
         val UID: String = phoneNo
         val PWD: String = pin
         var tapCount = 0
-
         val qry =
             "Select * from tblMember where ContactNo='$UID' and PinCode=$PWD"
 
@@ -609,6 +604,14 @@ class ConnectionToServer(prefs: Prefs) {
                 )
                 tblMember.add(member)
             }
+
+            if(tapCount>0){
+                val qry2 =
+                    "UPDATE tblMember SET FCMToken = '${prefs.fcmToken}' WHERE MemberID=${tblMember[0].MemberID}"
+                stmt.execute(qry2)
+
+            }
+
             conn.close()
         } catch (e: Exception) {
             return UserDetailsResponse(
@@ -633,7 +636,6 @@ class ConnectionToServer(prefs: Prefs) {
         )
     }
 
-    //
     fun requestPin(phoneNo: String, memberId: String): String? {
         var RC = 0
         var SFRC = 0
@@ -731,7 +733,6 @@ class ConnectionToServer(prefs: Prefs) {
 
     }
 
-
     private fun GetFieldData(FieldName: String, qry: String, stmt: Statement?): String {
         val rs = stmt!!.executeQuery(qry)
         var RetVal: String = "0"
@@ -741,14 +742,12 @@ class ConnectionToServer(prefs: Prefs) {
         return RetVal
     }
 
-    //
     fun UpdateSecurityCode(mn: String, mmid: Int, sc: Int, stmt: Statement) {
         val qry =
             "Update tblMember Set PinCode=$sc where MemberID=$mmid and ContactNo='$mn'"
         stmt.executeUpdate(qry)
     }
 
-    //
     fun changePin(phoneNo: String?, memberId: String?, newPin: String): String? {
         var stmt: Statement? = null
         val ss = SqlServerFunctions()
@@ -769,7 +768,6 @@ class ConnectionToServer(prefs: Prefs) {
         }
     }
 
-    //
     fun addComplaint(message: String, memberID: String?, phoneNo: String?): String {
         var stmt: Statement? = null
         val ss = SqlServerFunctions()
@@ -970,7 +968,7 @@ class ConnectionToServer(prefs: Prefs) {
                 " ,PayDateEng" +
                 " ,TapNo" +
                 " ,PaidAmt" +
-                " ,PaidStatus"+
+                " ,PaidStatus" +
                 "  FROM TBLMemberReading where MemberID=" + memberId
             .toString()
 
@@ -1010,11 +1008,10 @@ class ConnectionToServer(prefs: Prefs) {
                 totalBillDetails.PayDateNep = resultset.getString("NetAmt").orEmpty()
                 totalBillDetails.PayDateEng = resultset.getString("NetAmt").orEmpty()
 
-
-
                 totalBillDetails.TapNo = resultset.getInt("TapNo")
 
-                totalBillDetails.PaidAmt = totalBillDetails.NetAmt?.plus(resultset.getFloat("PaidAmt"))
+                totalBillDetails.PaidAmt =
+                    totalBillDetails.NetAmt?.plus(resultset.getFloat("PaidAmt"))
 
                 val billDetails: TBLMemberReading = TBLMemberReading(
                     RID = resultset.getInt("RID"),
@@ -1037,7 +1034,6 @@ class ConnectionToServer(prefs: Prefs) {
 
             conn.close()
 
-
             if (billDetailsList.isNotEmpty()) {
                 billDetailsList.add(totalBillDetails)
             }
@@ -1056,5 +1052,4 @@ class ConnectionToServer(prefs: Prefs) {
             )
         }
     }
-
 }
