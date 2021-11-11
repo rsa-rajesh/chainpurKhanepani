@@ -1,9 +1,13 @@
 package com.heartsun.pithuwakhanipani.ui.memberRegisterRequest
 
+import android.app.DownloadManager
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.Toast
 import androidcommon.RDrawable
 import androidcommon.base.BaseActivity
 import androidcommon.extension.showErrorDialog
@@ -13,7 +17,22 @@ import com.heartsun.pithuwakhanipani.domain.RegistrationRequest
 import com.heartsun.pithuwakhanipani.domain.dbmodel.TblDocumentType
 import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
+import java.util.*
 import kotlin.concurrent.thread
+import android.net.Uri
+import android.content.ActivityNotFoundException
+import android.os.Environment
+import androidx.core.app.ActivityCompat.startActivityForResult
+import android.app.Activity
+
+import androidx.activity.result.ActivityResultCallback
+
+import androidx.activity.result.contract.ActivityResultContracts
+
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+
 
 class MemberRegisterActivity : BaseActivity() {
 
@@ -21,6 +40,7 @@ class MemberRegisterActivity : BaseActivity() {
         ActivityMemberRegisterBinding.inflate(layoutInflater)
     }
     private val registerViewModel by viewModel<RegisterViewModel>()
+    private val downloadID: Long = 0
 
     companion object {
         var registerRequest: RegistrationRequest? =
@@ -31,16 +51,79 @@ class MemberRegisterActivity : BaseActivity() {
         }
     }
 
+
+    // Receiver
+    private val getResult =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val uri: Uri? = it.data?.data
+                if (uri != null) {
+                    downloadAndOpenPdf(
+                        "https://drive.google.com/file/d/1tWQrxUSvyV1eF6VL3lNNXuxCgjzJUQfF/view?usp=sharing",
+                        uri
+                    )
+                }
+            }
+        }
+
+    // using broadcast method
+    private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            //Fetching the download id received with the broadcast
+            val id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            //Checking if the received broadcast is for our enqueued download by matching download id
+            if (downloadID === id) {
+                Toast.makeText(
+                    this@MemberRegisterActivity,
+                    "Download Completed",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+
     @DelicateCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         initView()
+        // using broadcast method
+        registerReceiver(
+            onDownloadComplete,
+            IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+        );
     }
 
     @DelicateCoroutinesApi
     private fun initView() {
         with(binding) {
+
+            btDownloadForm.setOnClickListener {
+
+
+                val exportIntent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+                exportIntent.addCategory(Intent.CATEGORY_OPENABLE)
+                exportIntent.type = "*/*"
+                exportIntent.putExtra(
+                    Intent.EXTRA_TITLE,
+                    "member_form.pdf"
+                )
+                getResult.launch(exportIntent)
+            }
+
+            btDownloadForm2.setOnClickListener {
+                val exportIntent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+                exportIntent.addCategory(Intent.CATEGORY_OPENABLE)
+                exportIntent.type = "*/*"
+                exportIntent.putExtra(
+                    Intent.EXTRA_TITLE,
+                    "member_form.pdf"
+                )
+                getResult.launch(exportIntent)
+            }
 
             toolbar.ivBack.setOnClickListener {
                 onBackPressed()
@@ -52,6 +135,7 @@ class MemberRegisterActivity : BaseActivity() {
         getFilesRequirementFromDb()
         requestObserver()
     }
+
 
     private fun getFilesRequirementFromDb() {
 
@@ -82,14 +166,14 @@ class MemberRegisterActivity : BaseActivity() {
             it ?: return@observe
 
 
-            if (it.status.equals("success",true)){
+            if (it.status.equals("success", true)) {
                 var count: Int = 1
                 for (fileType in it.documentTypes) {
                     val file: TblDocumentType = TblDocumentType(count, fileType.DocumentName)
                     count++
                     registerViewModel.insert(fileTypes = file)
                 }
-            }else {
+            } else {
                 hideProgress()
                 showErrorDialog(
                     message = "माफ गर्नुहोस्!!! सर्भरमा जडान गर्न सकेन \n" +
@@ -141,6 +225,41 @@ class MemberRegisterActivity : BaseActivity() {
                 )
             }
         })
+    }
+
+    fun downloadAndOpenPdf(url: String?, uri: Uri) {
+
+        val dm = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+        val req = DownloadManager.Request(Uri.parse(url))
+        req.setDestinationUri(uri)
+        req.setTitle("Downloading new member form")
+        val receiver: BroadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                unregisterReceiver(this)
+                openPdfDocument(uri)
+            }
+        }
+        registerReceiver(
+            receiver, IntentFilter(
+                DownloadManager.ACTION_DOWNLOAD_COMPLETE
+            )
+        )
+        dm.enqueue(req)
+        Toast.makeText(this, "Download started", Toast.LENGTH_SHORT).show()
+
+    }
+
+    fun openPdfDocument(uri: Uri?): Boolean {
+        val target = Intent(Intent.ACTION_VIEW)
+        target.setDataAndType(uri, "application/pdf")
+        target.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+        return try {
+            startActivity(target)
+            true
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(this, "No PDF reader found", Toast.LENGTH_LONG).show()
+            false
+        }
     }
 
 }
