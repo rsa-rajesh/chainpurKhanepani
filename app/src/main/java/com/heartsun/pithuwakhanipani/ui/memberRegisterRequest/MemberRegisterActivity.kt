@@ -40,7 +40,7 @@ class MemberRegisterActivity : BaseActivity() {
         ActivityMemberRegisterBinding.inflate(layoutInflater)
     }
     private val registerViewModel by viewModel<RegisterViewModel>()
-    private val downloadID: Long = 0
+    private var downloadID: Long = -1
 
     companion object {
         var registerRequest: RegistrationRequest? =
@@ -60,10 +60,10 @@ class MemberRegisterActivity : BaseActivity() {
             if (it.resultCode == Activity.RESULT_OK) {
                 val uri: Uri? = it.data?.data
                 if (uri != null) {
-                    downloadAndOpenPdf(
-                        "https://drive.google.com/file/d/1tWQrxUSvyV1eF6VL3lNNXuxCgjzJUQfF/view?usp=sharing",
-                        uri
-                    )
+//                    downloadAndOpenPdf(
+//                        "https://drive.google.com/file/d/1tWQrxUSvyV1eF6VL3lNNXuxCgjzJUQfF/view?usp=sharing",
+//                        uri
+//                    )
                 }
             }
         }
@@ -74,12 +74,14 @@ class MemberRegisterActivity : BaseActivity() {
             //Fetching the download id received with the broadcast
             val id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             //Checking if the received broadcast is for our enqueued download by matching download id
-            if (downloadID === id) {
+            if (downloadID == id) {
                 Toast.makeText(
                     this@MemberRegisterActivity,
                     "Download Completed",
                     Toast.LENGTH_SHORT
                 ).show()
+
+
             }
         }
     }
@@ -95,6 +97,7 @@ class MemberRegisterActivity : BaseActivity() {
             onDownloadComplete,
             IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
         );
+
     }
 
     @DelicateCoroutinesApi
@@ -102,27 +105,30 @@ class MemberRegisterActivity : BaseActivity() {
         with(binding) {
 
             btDownloadForm.setOnClickListener {
+                downloadAndOpenPdf()
 
-
-                val exportIntent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-                exportIntent.addCategory(Intent.CATEGORY_OPENABLE)
-                exportIntent.type = "*/*"
-                exportIntent.putExtra(
-                    Intent.EXTRA_TITLE,
-                    "member_form.pdf"
-                )
-                getResult.launch(exportIntent)
+//                val exportIntent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+//                exportIntent.addCategory(Intent.CATEGORY_OPENABLE)
+//                exportIntent.type = "*/*"
+//                exportIntent.putExtra(
+//                    Intent.EXTRA_TITLE,
+//                    "member_form.pdf"
+//                )
+//                getResult.launch(exportIntent)
             }
 
             btDownloadForm2.setOnClickListener {
-                val exportIntent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-                exportIntent.addCategory(Intent.CATEGORY_OPENABLE)
-                exportIntent.type = "*/*"
-                exportIntent.putExtra(
-                    Intent.EXTRA_TITLE,
-                    "member_form.pdf"
-                )
-                getResult.launch(exportIntent)
+
+                downloadAndOpenPdf()
+
+//                val exportIntent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+//                exportIntent.addCategory(Intent.CATEGORY_OPENABLE)
+//                exportIntent.type = "*/*"
+//                exportIntent.putExtra(
+//                    Intent.EXTRA_TITLE,
+//                    "member_form.pdf"
+//                )
+//                getResult.launch(exportIntent)
             }
 
             toolbar.ivBack.setOnClickListener {
@@ -227,39 +233,16 @@ class MemberRegisterActivity : BaseActivity() {
         })
     }
 
-    fun downloadAndOpenPdf(url: String?, uri: Uri) {
+    private fun downloadAndOpenPdf() {
 
-        val dm = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-        val req = DownloadManager.Request(Uri.parse(url))
-        req.setDestinationUri(uri)
-        req.setTitle("Downloading new member form")
-        val receiver: BroadcastReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                unregisterReceiver(this)
-                openPdfDocument(uri)
-            }
-        }
-        registerReceiver(
-            receiver, IntentFilter(
-                DownloadManager.ACTION_DOWNLOAD_COMPLETE
-            )
-        )
-        dm.enqueue(req)
-        Toast.makeText(this, "Download started", Toast.LENGTH_SHORT).show()
+        var manager: DownloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+        val uri =
+            Uri.parse("https://drive.google.com/uc?id=1tWQrxUSvyV1eF6VL3lNNXuxCgjzJUQfF&export=download")
+        val request = DownloadManager.Request(uri)
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+        downloadID = manager.enqueue(request)
 
     }
 
-    fun openPdfDocument(uri: Uri?): Boolean {
-        val target = Intent(Intent.ACTION_VIEW)
-        target.setDataAndType(uri, "application/pdf")
-        target.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-        return try {
-            startActivity(target)
-            true
-        } catch (e: ActivityNotFoundException) {
-            Toast.makeText(this, "No PDF reader found", Toast.LENGTH_LONG).show()
-            false
-        }
-    }
 
 }

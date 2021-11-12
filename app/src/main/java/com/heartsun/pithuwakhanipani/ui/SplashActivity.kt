@@ -62,7 +62,7 @@ class SplashActivity : BaseActivity() {
                     msg = getString(R.string.msg_subscribe_failed)
                 }
                 Log.d(TAG, msg)
-                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+//                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
             }
 
         // Get token
@@ -79,7 +79,7 @@ class SplashActivity : BaseActivity() {
             // Log and toast
             val msg = getString(R.string.msg_token_fmt, token)
             Log.d(TAG, msg)
-            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+//            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
         })
         // [END log_reg_token]
 
@@ -102,20 +102,11 @@ class SplashActivity : BaseActivity() {
 
         val appSignatureHelper: AppSignatureHelper = AppSignatureHelper(this)
         appID = appSignatureHelper.appSignatures[0].toString()
-
-//       appID= URLEncoder.encode(appID, "utf-8").trim()
         if (prefs.isFirstTime) {
             homeViewModel.getServerDetailsFromAPI(appID)
-//            binding.tvLoading.text = "connecting to server"
-//            startActivity(OnBoardingActivity.newIntent(this))
         } else {
             startActivity(HomeActivity.newIntent(context = this))
         }
-//        }
-
-//        startActivity(HomeActivity.newIntent(context = this))
-
-//        this@SplashActivity.finish()
     }
 
     private fun serverDetailsObserver() {
