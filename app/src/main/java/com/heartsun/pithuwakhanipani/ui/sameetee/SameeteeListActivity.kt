@@ -1,8 +1,12 @@
 package com.heartsun.pithuwakhanipani.ui.sameetee
 
+import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.print.PrintAttributes
 import android.view.View
 import android.widget.AdapterView
 import androidcommon.base.BaseActivity
@@ -11,10 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.heartsun.pithuwakhanipani.databinding.ActivitySameeteeListBinding
 import com.heartsun.pithuwakhanipani.ui.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.ArrayList
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidcommon.RLayout
+import androidx.core.content.FileProvider
 import com.heartsun.pithuwakhanipani.domain.dbmodel.TblContact
+import com.uttampanchasara.pdfgenerator.CreatePdf
+import java.io.File
+import java.util.*
 
 
 class SameeteeListActivity : BaseActivity() {
@@ -71,17 +79,94 @@ class SameeteeListActivity : BaseActivity() {
             onBackPressed()
         }
 
+        binding.btMakePDF.setOnClickListener {
+            showProgress("Generating PDF ....")
+            var mType=memberType
 
+//            mType = if(isOldMember==0){
+//                memberType
+//            }else{
+//                memberType+" (${binding.tvSelectYear.text.toString().orEmpty()} ${binding.spYear.selectedItem.toString().orEmpty()})"
+//            }
+
+            var htmlString: String =
+                "<html><head><style>table {font-family: arial, sans-serif;border-collapse: collapse;width: 100%;}td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}tr:nth-child(even) {background-color: #dddddd;}</style>" +
+                        "</head><body><h1 style=text-align:center>पिठुवा खानेपानी तथा सरसफाई उपभोक्ता संस्था</h1><h4 style=text-align:center>रत्ननगर-१५ माधवपुर,चितवन</h4><h2 style=text-align:center>$mType</h2><br><br><table><tr><th>नाम</th><th>पद</th><th>ठेगाना</th><th>सम्पर्क</th></tr>"
+
+
+            for (data in listItems) {
+                htmlString =
+                    "$htmlString<tr><td>${data.ContactName}</td><td>${data.Post}</td><td>${data.Address}</td><td>${data.ContactNumber}</td></tr>"
+            }
+            htmlString = "$htmlString</table></body></html>"
+
+            val date = Date()
+            CreatePdf(this)
+                .setPdfName("PK-Member_list$date")
+                .openPrintDialog(false)
+                .setContentBaseUrl(null)
+                .setPageSize(PrintAttributes.MediaSize.ISO_A4)
+                .setContent(htmlString)
+                .setFilePath(getExternalFilesDir(null)!!.absolutePath + "/MyPdf")
+                .setCallbackListener(object : CreatePdf.PdfCallbackListener {
+                    override fun onFailure(s: String) {
+                        hideProgress()
+                        Toast.makeText(
+                            this@SameeteeListActivity,
+                            "Error while generating PDF",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    override fun onSuccess(s: String) {
+                        hideProgress()
+//                        val mActivity: Activity = this@SameeteeListActivity
+//                        try {
+//                            val pdfFile = File(s)
+//                            val intent = Intent(Intent.ACTION_VIEW)
+//                            val uri = FileProvider.getUriForFile(
+//                                applicationContext,
+//                                "com.bihanitech.dahalpratisthan.fileprovider",
+//                                pdfFile
+//                            )
+//                            val resInfoList = application.packageManager.queryIntentActivities(
+//                                intent,
+//                                PackageManager.MATCH_DEFAULT_ONLY
+//                            )
+//                            for (resolveInfo in resInfoList) {
+//                                val packageName = resolveInfo.activityInfo.packageName
+//                                application.grantUriPermission(
+//                                    packageName,
+//                                    uri,
+//                                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+//                                )
+//                            }
+//                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+//                            intent.setDataAndType(uri, "application/pdf")
+//                            startActivity(intent)
+                            Toast.makeText(this@SameeteeListActivity, "Pdf Saved", Toast.LENGTH_SHORT)
+                                .show()
+//                        } catch (e: ActivityNotFoundException) {
+//                            Toast.makeText(mActivity, "No PDF Viewer Installed", Toast.LENGTH_LONG)
+//                                .show()
+//                        }
+                    }
+                })
+                .create()
+
+        }
 
         binding.spYear.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>,
-                                        view: View, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View, position: Int, id: Long
+            ) {
 
                 var year: String = binding.spYear.selectedItem.toString()
                 if (year.equals("all", true)) {
                     listItems = originalItems
-                    memberListAdapter.items=listItems
+                    memberListAdapter.items = listItems
 
                 } else {
                     if (year.isNotEmpty()) {
@@ -96,7 +181,7 @@ class SameeteeListActivity : BaseActivity() {
                             }
                         }
                         listItems = tempItems
-                        memberListAdapter.items=listItems
+                        memberListAdapter.items = listItems
                     }
                 }
 
@@ -117,7 +202,7 @@ class SameeteeListActivity : BaseActivity() {
             if (!it.isNullOrEmpty()) {
                 binding.btMakePDF.isVisible = true
                 binding.clEmptyList.isVisible = false
-                binding.rvMembers.isVisible=true
+                binding.rvMembers.isVisible = true
                 memberListAdapter = MemberListAdapter(this)
                 originalItems = it
                 listItems = originalItems
@@ -152,7 +237,7 @@ class SameeteeListActivity : BaseActivity() {
     private fun getNumbersInRange(): List<String> {
         var array2: ArrayList<String>? = ArrayList()
         array2?.add("all")
-        for (i in minYear until maxYear+1 step 1) {
+        for (i in minYear until maxYear + 1 step 1) {
             array2?.add(i.toString())
         }
         return array2?.toList().orEmpty()

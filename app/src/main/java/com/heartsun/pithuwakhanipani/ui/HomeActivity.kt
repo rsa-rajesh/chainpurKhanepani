@@ -360,7 +360,6 @@ class HomeActivity : BaseActivity() {
                 binding.cvUser.isVisible = false
 //                prefs.noOfTaps = "0"
                 hideProgress()
-
             } else {
                 binding.cvLogin.isVisible = false
                 binding.cvUser.isVisible = true

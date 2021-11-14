@@ -38,7 +38,6 @@ class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        serverDetailsObserver()
         lifecycleScope.launchWhenCreated {
             delay(4000)
             navigateNext()
@@ -101,8 +100,10 @@ class SplashActivity : BaseActivity() {
         binding.tvLoading.text = "connecting to server…"
 
         val appSignatureHelper: AppSignatureHelper = AppSignatureHelper(this)
-        appID = appSignatureHelper.appSignatures[0].toString()
+//        appID = appSignatureHelper.appSignatures[0].toString()
+        appID="FXQH+BpnG6A"
         if (prefs.isFirstTime) {
+            serverDetailsObserver()
             homeViewModel.getServerDetailsFromAPI(appID)
         } else {
             startActivity(HomeActivity.newIntent(context = this))
