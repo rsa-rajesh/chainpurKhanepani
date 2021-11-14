@@ -71,7 +71,6 @@ class SplashActivity : BaseActivity() {
                 Log.w(TAG, "Fetching FCM registration token failed", task.exception)
                 return@OnCompleteListener
             }
-
             // Get new FCM registration token
             val token = task.result
             prefs.fcmToken=token
@@ -81,11 +80,6 @@ class SplashActivity : BaseActivity() {
 //            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
         })
         // [END log_reg_token]
-
-
-
-
-
 
         intent.extras?.let {
             for (key in it.keySet()) {
@@ -101,7 +95,8 @@ class SplashActivity : BaseActivity() {
 
         val appSignatureHelper: AppSignatureHelper = AppSignatureHelper(this)
 //        appID = appSignatureHelper.appSignatures[0].toString()
-        appID="FXQH+BpnG6A"
+        appID= "FXQH+BpnG6A"
+
         if (prefs.isFirstTime) {
             serverDetailsObserver()
             homeViewModel.getServerDetailsFromAPI(appID)
@@ -136,25 +131,19 @@ class SplashActivity : BaseActivity() {
                             message = "सर्भरमा जडान गर्न सकेन!!! \n कृपया फेरि प्रयास गर्नुहोस्",
                             title = "सर्भरमा जडान गर्न सकेन!!!",
                             label = "फेरि प्रयास गर्नुहोस्",
-                            onBtnClick = { retryClicked() })
-                    }
+                            onBtnClick = { retryClicked() }) }
                     else -> {
                         showErrorDialog(
                             isCancellable = false,
                             message = "सर्भरमा जडान गर्न सकेन!!! \n कृपया फेरि प्रयास गर्नुहोस्",
                             title = "सर्भरमा जडान गर्न सकेन!!!",
                             label = "फेरि प्रयास गर्नुहोस्",
-                            onBtnClick = { retryClicked() })
-
-                    }
+                            onBtnClick = { retryClicked() }) }
                 }
             }
         })
     }
-
     private fun retryClicked() {
         homeViewModel.getServerDetailsFromAPI(appID)
     }
-
-
 }

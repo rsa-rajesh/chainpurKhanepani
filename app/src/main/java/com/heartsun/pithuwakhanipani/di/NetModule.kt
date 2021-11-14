@@ -128,7 +128,6 @@ fun createRestOkHttpClient(
         .addInterceptor(UserAgentInterceptor())
         .addInterceptor { chain ->
             val original = chain.request()
-
             val requestBuilder = original.newBuilder()
             prefs.authToken?.let { token ->
                 requestBuilder.header("Authorization", token)

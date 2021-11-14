@@ -49,6 +49,7 @@ class HomeActivity : BaseActivity() {
         ActivityHomeBinding.inflate(layoutInflater)
     }
 
+    private var count = 0
     private val homeViewModel by viewModel<HomeViewModel>()
     private val myTapViewModel by viewModel<MyTapViewModel>()
     private lateinit var imageSliderNew: ImageSlider
@@ -84,12 +85,16 @@ class HomeActivity : BaseActivity() {
             }
             getTapsFromDb()
 
-//            val appSignatureHelper: AppSignatureHelper = AppSignatureHelper(this@HomeActivity)
-//            var appID: String = appSignatureHelper.appSignatures[0].toString()
-//
-//            tvAppID.text=appID
-//            toastS(appID)
-//            tvNoOfTaps.text = "धारा स्ख्या:- " + prefs.noOfTaps.orEmpty()
+            ivLogo.setOnClickListener {
+                val appSignatureHelper: AppSignatureHelper = AppSignatureHelper(this@HomeActivity)
+
+                count += 1
+                 if(count==5){
+                     toastL(appSignatureHelper.appSignatures[0].toString())
+                     count=0
+                 }
+            }
+
 
             val powered: String =
                 "<font color=#ECE5F0>powered by:- </font><font color=#59114D>Heartsun Technology</font>"
@@ -204,7 +209,7 @@ class HomeActivity : BaseActivity() {
                 binding.imageSlider.adapter = SliderAdapter(
                     this@HomeActivity,
                     getImageLoader(),
-//                GlideImageLoaderFactory(),
+//                    GlideImageLoaderFactory(),
                     imageUrls = imageUrls,
                     descriptions = descriptions,
                 )
@@ -218,26 +223,24 @@ class HomeActivity : BaseActivity() {
             it ?: return@observe
 
             if (it.status.equals("success", true)) {
-                getSliderFromDb()
-
-
                 if (!homeViewModel.sliderImagesFromLocalDb.value.isNullOrEmpty()) {
                     homeViewModel.deleteAllSlider(it.tblSliderImages[0])
                 }
-
                 for (slider in it.tblSliderImages) {
                     homeViewModel.insert(slider)
                 }
+                getSliderFromDb()
             } else {
-
                 hideProgress()
-                showErrorDialog(
-                    message = "माफ गर्नुहोस्!!! सर्भरमा जडान गर्न सकेन",
-                    "पुन: प्रयास गर्नुहोस्",
-                    "त्रुटि",
-                    RDrawable.ic_error_for_dilog,
-                    color = Color.RED
-                )
+                getSliderFromDb()
+
+//                showErrorDialog(
+//                    message = "माफ गर्नुहोस्!!! सर्भरमा जडान गर्न सकेन",
+//                    "पुन: प्रयास गर्नुहोस्",
+//                    "त्रुटि",
+//                    RDrawable.ic_error_for_dilog,
+//                    color = Color.RED
+//                )
             }
 
 
@@ -272,7 +275,6 @@ class HomeActivity : BaseActivity() {
             .placeholder(R.drawable.loading_anim)
         return GlideImageLoaderFactory(requestOptions = requestOptions)
     }
-
 
     private fun openAddDialog() {
 
@@ -319,8 +321,6 @@ class HomeActivity : BaseActivity() {
                     myTapViewModel.insert(members = member)
                 }
             }
-
-
         })
     }
 
