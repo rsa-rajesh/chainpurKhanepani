@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidcommon.RString
 import androidcommon.base.BaseActivity
 import com.heartsun.pithuwakhanipani.databinding.ActivityAboutAppBinding
 import com.heartsun.pithuwakhanipani.databinding.ActivityAboutOrganizationBinding
@@ -34,6 +35,7 @@ class AboutAppActivity : BaseActivity() {
                 onBackPressed()
                 this@AboutAppActivity.finish()
             }
+            tvAppVersion.text = "version ${RString.app_version}"
         }
     }
 }

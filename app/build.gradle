@@ -62,7 +62,7 @@ android {
             //buildConfigField "Boolean", "developerTest", "false"
             buildConfigField "Boolean", "enableCrashlytics", "true"
             manifestPlaceholders = [crashReporting: "true"]
-            resValue "string", "app_name", "Pithuwa Khanipani"
+            resValue "string", "app_name", "Pithuwa Khanepani"
 //            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             debuggable true
@@ -72,7 +72,7 @@ android {
             //buildConfigField "Boolean", "developerTest", "false"
             buildConfigField "Boolean", "enableCrashlytics", "true"
             manifestPlaceholders = [crashReporting: "true"]
-            resValue "string", "app_name", "Pithuwa Khanipani"
+            resValue "string", "app_name", "Pithuwa Khanepani"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             //signingConfig signingConfigs.release
@@ -83,15 +83,15 @@ android {
     productFlavors {
         dev {
             dimension "environment"
-            versionCode 2
-            versionName "0.0.2"
+            versionCode 3
+            versionName "0.0.3"
 
             buildConfigField "String", "BASE_URL", "\"http://bhanchha.redirectme.net:8008\""
         }
         prod {
             dimension "environment"
-            versionCode 2
-            versionName "0.0.2"
+            versionCode 3
+            versionName "0.0.3"
             // Production Url
             buildConfigField "String", "BASE_URL", "\"http://bhanchha.redirectme.net:8008\""
         }
@@ -101,7 +101,7 @@ android {
         variant.outputs.all {
             def flavor = variant.name
             def versionName = variant.versionName
-            outputFileName = "Pithuwa Khanipani_${flavor}_${versionName}.apk"
+            outputFileName = "Pithuwa Khanepani_${flavor}_${versionName}.apk"
         }
     }
 }

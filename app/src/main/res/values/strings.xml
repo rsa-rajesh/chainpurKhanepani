@@ -26,7 +26,7 @@
     <string name="onboard_third_details">हाम्रो एप मार्फत संगठन र संगठन सदस्यको बारेमा जानकारी लिनुहोस् र यदि नीति परिवर्तन भयो भने सूचना प्राप्त गर्नुहोस् ।</string>
 
     <string name="read_more">पूरा पढ्नुहोस् …</string>
-    <string name="app_version">1.1.1</string>
+    <string name="app_version">0.0.3</string>
 
     <string-array name="month">
         <item>January</item>

@@ -39,7 +39,7 @@ class SplashActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         lifecycleScope.launchWhenCreated {
-            delay(4000)
+            delay(3000)
             navigateNext()
         }
 
@@ -54,7 +54,7 @@ class SplashActivity : BaseActivity() {
             )
         }
 
-        Firebase.messaging.subscribeToTopic("weather")
+        Firebase.messaging.subscribeToTopic("pithuwakhanepani")
             .addOnCompleteListener { task ->
                 var msg = getString(R.string.msg_subscribed)
                 if (!task.isSuccessful) {
@@ -94,8 +94,8 @@ class SplashActivity : BaseActivity() {
         binding.tvLoading.text = "connecting to server…"
 
         val appSignatureHelper: AppSignatureHelper = AppSignatureHelper(this)
-//        appID = appSignatureHelper.appSignatures[0].toString()
-        appID= "FXQH+BpnG6A"
+        appID = appSignatureHelper.appSignatures[0].toString()
+//        appID= "FXQH+BpnG6A"
 
         if (prefs.isFirstTime) {
             serverDetailsObserver()
