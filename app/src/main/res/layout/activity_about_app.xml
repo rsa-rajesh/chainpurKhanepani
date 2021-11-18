@@ -75,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_12sdp"
                         android:gravity="center"
-                        android:text="version 1.1.1 (beta)"
+                        android:text=""
                         android:textColor="@color/white"
                         android:textSize="@dimen/_10sdp"
                         app:layout_constraintEnd_toStartOf="@id/ivAppIcon"

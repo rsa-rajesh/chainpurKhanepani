@@ -102,6 +102,7 @@ class SplashActivity : BaseActivity() {
             homeViewModel.getServerDetailsFromAPI(appID)
         } else {
             startActivity(HomeActivity.newIntent(context = this))
+            this.finish()
         }
     }
 

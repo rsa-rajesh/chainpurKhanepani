@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidcommon.RDrawable
 import androidcommon.base.BaseActivity
 import androidcommon.extension.*
@@ -48,6 +50,8 @@ class HomeActivity : BaseActivity() {
     private val binding by lazy {
         ActivityHomeBinding.inflate(layoutInflater)
     }
+
+    private var doubleBackToExitPressedOnce = false
 
     private var count = 0
     private val homeViewModel by viewModel<HomeViewModel>()
@@ -370,5 +374,15 @@ class HomeActivity : BaseActivity() {
             }
         })
     }
-}
 
+    override fun onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            return
+        }
+
+        this.doubleBackToExitPressedOnce = true
+        toastS("Please click BACK again to exit")
+        Handler(Looper.getMainLooper()).postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
+    }
+}

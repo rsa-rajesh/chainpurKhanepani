@@ -13,7 +13,6 @@
     <color name="orange_dark">#C55202</color>
     <color name="lite_gray">#E5E5E5</color>
 
-
     <color name="shipment_blue">#1980FA</color>
     <color name="lite_blue">#A0D7F5</color>
     <color name="table_gray">#E8E8E8</color>
@@ -22,8 +21,6 @@
     <color name="highlight_green">#27AE60</color>
     <color name="highlight_red">#EF4D4D</color>
     <color name="divider">#A0D7F5</color>
-
-
     <color name="colorPurple">#6c63ff</color>
     <color name="colorIndigo">#303F9F</color>
     <color name="colorBlueMidnight">#003366</color>
@@ -40,7 +37,6 @@
     <color name="sub_text_color">#99111111</color>
     <color name="background">#E98A15</color>
     <color name="card_background">#59114D</color>
-
 
     <color name="table_row1_color">#D2F4C4</color>
     <color name="table_row2_color">#87F3F2F2</color>

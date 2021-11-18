@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidcommon.RString
 import androidcommon.base.BaseActivity
+import com.heartsun.pithuwakhanipani.R
 import com.heartsun.pithuwakhanipani.databinding.ActivityAboutAppBinding
 import com.heartsun.pithuwakhanipani.databinding.ActivityAboutOrganizationBinding
 import com.heartsun.pithuwakhanipani.ui.noticeBoard.NoticeDetailsActivity
@@ -35,7 +36,8 @@ class AboutAppActivity : BaseActivity() {
                 onBackPressed()
                 this@AboutAppActivity.finish()
             }
-            tvAppVersion.text = "version ${RString.app_version}"
+            val version = getString(R.string.app_version)
+            tvAppVersion.text = "version $version"
         }
     }
 }
