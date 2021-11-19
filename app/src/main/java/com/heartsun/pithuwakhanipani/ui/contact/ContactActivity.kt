@@ -109,7 +109,8 @@ class ContactActivity : BaseActivity() {
                         homeViewModel.insert(contacts = memberType)
                     }
                 }
-            } else {
+            }
+            else {
                 showErrorDialog(
                     message = "माफ गर्नुहोस्!!! सर्भरमा जडान गर्न सकेन \n" +
                             " कृपया पछि फेरि प्रयास गर्नुहोस्",

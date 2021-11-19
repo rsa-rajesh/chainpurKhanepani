@@ -16,6 +16,7 @@ class HomeViewModel(
 ) : ViewModel() {
 
     private val _rates = MutableLiveData<WaterRateListResponse>()
+
     val ratesFromServer: LiveData<WaterRateListResponse> = _rates
     fun getRatesFromServer(status: String) {
         viewModelScope.launch {
@@ -41,6 +42,11 @@ class HomeViewModel(
 
     val ratesFromLocalDb: LiveData<List<TBLReadingSetupDtl>> =
         dbRepository.tBLReadingSetupDtls.asLiveData()
+
+
+    val tapTypesObserver: LiveData<List<TblTapTypeMaster>> =
+        dbRepository.tblTapTypeMaster.asLiveData()
+
 
     //for members activity
 

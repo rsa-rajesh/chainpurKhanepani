@@ -4,14 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import androidcommon.RDrawable
+import androidcommon.RLayout
 import androidcommon.base.BaseActivity
 import androidcommon.extension.showErrorDialog
+import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.chip.Chip
 import com.heartsun.pithuwakhanipani.databinding.ActivityWaterRateBinding
 import com.heartsun.pithuwakhanipani.domain.dbmodel.TBLReadingSetupDtl
 import com.heartsun.pithuwakhanipani.ui.HomeViewModel
@@ -27,8 +28,8 @@ class WaterRateActivity : BaseActivity() {
     }
     private lateinit var waterRateAdapter1: WaterRateAdapter
     private lateinit var waterRateAdapter2: WaterRateAdapter
-    private val items1 = mutableListOf<TBLReadingSetupDtl>()
-    private val items2 = mutableListOf<TBLReadingSetupDtl>()
+    private var allItems = mutableListOf<TBLReadingSetupDtl>()
+    private var selectedItems = mutableListOf<TBLReadingSetupDtl>()
 
     companion object {
         fun newIntent(context: Context): Intent {
@@ -49,7 +50,9 @@ class WaterRateActivity : BaseActivity() {
     @DelicateCoroutinesApi
     private fun initViews() {
         showProgress()
+        getTapTypeFromLocalDb()
         getRatesFromLocalDb()
+
         with(binding) {
             toolbar.tvToolbarTitle.text = "पानीको दर"
             toolbar.ivBack.setOnClickListener {
@@ -69,10 +72,10 @@ class WaterRateActivity : BaseActivity() {
                     clUnit.isVisible = true
                     var unit: Int = etUnit.text.toString().toInt()
 
-                    if (chipPersonal.isChecked) {
+//                    if (chipPersonal.isChecked) {
                         rs = 0f
 
-                        for (item in items1) {
+                        for (item in selectedItems) {
                             if (item.Amt != 0f) {
                                 rs += item.Amt!!
                             } else {
@@ -90,27 +93,28 @@ class WaterRateActivity : BaseActivity() {
                             }
                         }
 
-                    } else {
-                        rs = 0f
-
-                        for (item in items2) {
-                            if (item.Amt != 0f) {
-                                rs += item.Amt!!
-                            } else {
-
-                                if (unit > item.MnNo!! - 1) {
-                                    if (unit > (item.MnNo!! - 1) && unit < item.MxNo!!) {
-                                        var remUnit = unit - (item.MnNo!! - 1)
-                                        rs += (remUnit * item.Rate!!)
-                                    } else {
-                                        var remUnit = item.MxNo!! - (item.MnNo!! - 1)
-                                        rs += (remUnit * item.Rate!!)
-                                    }
-                                }
-
-                            }
-                        }
-                    }
+//                    }
+//                    else {
+//                        rs = 0f
+//
+//                        for (item in items2) {
+//                            if (item.Amt != 0f) {
+//                                rs += item.Amt!!
+//                            } else {
+//
+//                                if (unit > item.MnNo!! - 1) {
+//                                    if (unit > (item.MnNo!! - 1) && unit < item.MxNo!!) {
+//                                        var remUnit = unit - (item.MnNo!! - 1)
+//                                        rs += (remUnit * item.Rate!!)
+//                                    } else {
+//                                        var remUnit = item.MxNo!! - (item.MnNo!! - 1)
+//                                        rs += (remUnit * item.Rate!!)
+//                                    }
+//                                }
+//
+//                            }
+//                        }
+//                    }
 
                     tvAmount.text = rs.toString()
 
@@ -123,9 +127,58 @@ class WaterRateActivity : BaseActivity() {
         }
     }
 
+    private fun getTapTypeFromLocalDb() {
+        homeViewModel.tapTypesObserver.observe(this, {
+            it ?: return@observe
+            hideProgress()
+            if (it.isNullOrEmpty()) {
+                rateFromServerObserver()
+                GlobalScope.launch {
+                    homeViewModel.getRatesFromServer("test")
+                }
+            } else {
+
+                for (types in it) {
+                    val chip =
+                        layoutInflater.inflate(RLayout.chip_layout, binding.cgType, false) as Chip
+                    chip.text = types.TapTypeName
+                    chip.setOnClickListener {
+                        binding.tvListTitle1.text=types.TapTypeName
+
+                        selectedItems.clear()
+                        for (items in allItems){
+                            if(items.VNO==types.TapTypeID){
+                                selectedItems.add(items)
+                            }
+                        }
+//                        selectedItems=types
+//                        showProgress()
+//                        etUnit.setText(id)
+//                        getReport()
+//                            registerViewModel.getBillingDetails(etUnit.text.toString().toInt())
+                    }
+                    binding.cgType.addView(chip)
+                }
+
+                binding.cgType.check(binding.cgType[0].id)
+
+                var chip:Chip = findViewById(binding.cgType[0].id)
+
+
+                binding.tvListTitle1.text=chip.text
+
+
+            }
+
+
+        })
+    }
+
     private fun getRatesFromLocalDb() {
         homeViewModel.ratesFromLocalDb.observe(this, {
             it ?: return@observe
+
+            hideProgress()
 
             if (it.isNullOrEmpty()) {
                 rateFromServerObserver()
@@ -134,36 +187,37 @@ class WaterRateActivity : BaseActivity() {
                 }
             } else {
                 hideProgress()
-                items1.clear()
-                items2.clear()
+                allItems.clear()
+                selectedItems.clear()
+
+                allItems= it as MutableList<TBLReadingSetupDtl>
+
                 for (item in it) {
                     if (item.VNO == 1) {
-                        items1.add(item)
-                    } else {
-                        items2.add(item)
+                        selectedItems.add(item)
                     }
                 }
 
-                if (!items1.isNullOrEmpty()) {
-                    binding.cvPersonalRate.isVisible = true
+                if (!selectedItems.isNullOrEmpty()) {
+                    binding.rvCommunityRate.isVisible = true
                     waterRateAdapter1 = WaterRateAdapter()
-                    waterRateAdapter1.items = items1
-                    binding.rvPersonalRate.layoutManager = LinearLayoutManager(this)
-                    binding.rvPersonalRate.adapter = waterRateAdapter1
-                } else {
-                    binding.cvPersonalRate.isVisible = false
-                }
-
-
-                if (!items1.isNullOrEmpty()) {
-                    binding.cvCommunityRate.isVisible = true
-                    waterRateAdapter2 = WaterRateAdapter()
-                    waterRateAdapter2.items = items2
+                    waterRateAdapter1.items = selectedItems
                     binding.rvCommunityRate.layoutManager = LinearLayoutManager(this)
                     binding.rvCommunityRate.adapter = waterRateAdapter1
                 } else {
-                    binding.cvCommunityRate.isVisible = false
+                    binding.rvCommunityRate.isVisible = false
                 }
+
+
+//                if (!items1.isNullOrEmpty()) {
+//                    binding.cvCommunityRate.isVisible = true
+//                    waterRateAdapter2 = WaterRateAdapter()
+//                    waterRateAdapter2.items = items2
+//                    binding.rvCommunityRate.layoutManager = LinearLayoutManager(this)
+//                    binding.rvCommunityRate.adapter = waterRateAdapter1
+//                } else {
+//                    binding.cvCommunityRate.isVisible = false
+//                }
             }
 
 

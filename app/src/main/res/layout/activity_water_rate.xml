@@ -72,26 +72,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            app:checkedChip="@id/chipPersonal"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvCalcuTitle1"
                             app:selectionRequired="true"
                             app:singleSelection="true">
-
-                            <com.google.android.material.chip.Chip
-                                android:id="@+id/chipPersonal"
-                                style="@style/Colors_Widget.MaterialComponents.Chip.Choice"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="व्यक्तिगत" />
-
-                            <com.google.android.material.chip.Chip
-                                android:id="@+id/chipCommunity"
-                                style="@style/Colors_Widget.MaterialComponents.Chip.Choice"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="सामुदायिक" />
-
 
                         </com.google.android.material.chip.ChipGroup>
 
@@ -302,6 +286,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cvPersonalRate"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_12sdp"

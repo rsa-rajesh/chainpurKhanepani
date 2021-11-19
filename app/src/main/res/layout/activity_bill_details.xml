@@ -63,7 +63,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            app:checkedChip="@id/chipPersonal"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvCalcuTitle1"
                             app:selectionRequired="true"
