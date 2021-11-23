@@ -36,7 +36,6 @@ class WaterRateAdapter(
                 root.setBackgroundColor(Color.parseColor("#EBBA7D"))
             }
 
-
             tvFrom.text = item.MnNo.toString().orEmpty()
             tvTo.text = item.MxNo.toString().orEmpty()
 
@@ -45,9 +44,7 @@ class WaterRateAdapter(
                 tvRate.setTypeface(Typeface.DEFAULT,Typeface.BOLD)
             } else {
                 tvRate.text = "रु. "+item.Rate.toString().orEmpty()
-
             }
-
         }
     }
 }
