@@ -176,7 +176,6 @@ class MembersRegistrationFilesFragment : BaseFragment<FragmentMembersRegisterati
                         MemberRegisterActivity.registerRequest?.files?.get(indexOfImage)?.DocImage = displayOnUi.toString()
                         filesListAdapter.items = details?.files.orEmpty()
                         filesListAdapter.notifyItemChanged(indexOfImage)
-
                     }
                 }
                 ImagePicker.RESULT_ERROR -> {

@@ -55,7 +55,4 @@ class RegisterViewModel(
             _ledgerDetails.value = homeRepository.getLedgerDetails(memberId)
         }
     }
-
-
-
 }

@@ -199,8 +199,6 @@ class MemberRegisterActivity : BaseActivity() {
             Thread.sleep(100)
             registerViewModel.sendRegistrationRequestToServer(registerRequest, this)
         }
-
-
     }
 
     private fun requestObserver() {
@@ -241,7 +239,6 @@ class MemberRegisterActivity : BaseActivity() {
         val request = DownloadManager.Request(uri)
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
         downloadID = manager.enqueue(request)
-
     }
 
 
