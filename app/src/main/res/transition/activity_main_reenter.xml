@@ -11,11 +11,11 @@
                 />
         </targets>
         <transition
-                class="com.heartsun.pithuwakhanipani.core.PopTransition"
+                class="com.heartsun.chainpurkhanepani.core.PopTransition"
                 app:startScale="0.95"
                 app:endScale="1.0"/>
         <transition
-                class="com.heartsun.pithuwakhanipani.core.FadeTransition"
+                class="com.heartsun.chainpurkhanepani.core.FadeTransition"
                 app:startAlpha="0.3"
                 app:endAlpha="1.0"/>
     </transitionSet>

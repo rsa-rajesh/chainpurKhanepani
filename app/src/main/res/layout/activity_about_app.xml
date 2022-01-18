@@ -44,12 +44,10 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:backgroundTint="@color/white"
-                        android:background="@drawable/ic_success_for_dilog"
                         android:id="@+id/ivAppIcon"
                         android:layout_width="@dimen/_90sdp"
                         android:layout_height="@dimen/_90sdp"
-                        android:src="@drawable/logo"
+                        android:src="@drawable/logo_background"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +59,7 @@
                         android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginEnd="@dimen/_12sdp"
                         android:gravity="center"
-                        android:text="पिठुवा खानेपानी"
+                        android:text="चैनपुर खानेपानी"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_16sdp"
                         android:textStyle="bold"
@@ -128,7 +126,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:padding="@dimen/_12sdp"
-                            android:text="पिठुवा खानेपानी एप्लिकेसन पिठुवा खानेपनी तथा सरसफाई
+                            android:text="चैनपुर खानेपानी एप्लिकेसन चैनपुर खानेपानी तथा सरसफाई
 उपभोक्ता संस्थाका उपभोक्ता तथा सदस्यहरुका लागि
 डिजाइन गरिएको mobile एप्लिकेसन हो |"
                             android:textColor="@color/white"
@@ -171,12 +169,10 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <ImageView
-                                android:backgroundTint="@color/white"
-                                android:background="@drawable/ic_success_for_dilog"
                                 android:id="@+id/ivLogo"
                                 android:layout_width="@dimen/_60sdp"
                                 android:layout_height="@dimen/_60sdp"
-                                android:src="@drawable/logo"
+                                android:src="@drawable/logo_background"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -189,7 +185,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="@dimen/_12sdp"
                                 android:gravity="center"
-                                android:text="पिठुवा खानेपानी तथा सरसफाई उपभोक्ता संस्था"
+                                android:text="चैनपुर खानेपानी तथा सरसफाई उपभोक्ता संस्था"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_18sdp"
                                 app:layout_constraintEnd_toStartOf="@id/ivLogo"
@@ -262,12 +258,10 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <ImageView
-                                android:backgroundTint="@color/white"
-                                android:background="@drawable/ic_success_for_dilog"
                                 android:id="@+id/ivDeveloperLogo"
                                 android:layout_width="@dimen/_60sdp"
                                 android:layout_height="@dimen/_60sdp"
-                                android:src="@drawable/logo"
+                                android:src="@drawable/logo_background"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />

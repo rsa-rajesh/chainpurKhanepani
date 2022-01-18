@@ -1,6 +1,6 @@
 package androidcommon
 
-import com.heartsun.pithuwakhanipani.R
+import com.heartsun.chainpurkhanepani.R
 
 
 typealias RColor = R.color
@@ -12,4 +12,4 @@ typealias RString = R.string
 typealias RStyle = R.style
 typealias RFont = R.font
 
-typealias App = com.heartsun.pithuwakhanipani.App
+typealias App = com.heartsun.chainpurkhanepani.App

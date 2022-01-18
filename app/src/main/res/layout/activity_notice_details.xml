@@ -10,7 +10,7 @@
 
 
     <ImageView
-        android:src="@drawable/logo"
+        android:src="@drawable/logo_background"
         android:rotationY="180"
         android:alpha=".1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +88,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/logo" />
+                        android:src="@drawable/logo_background" />
 
 
                 </androidx.cardview.widget.CardView>
@@ -100,11 +100,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:autoLink="all"
-                    android:text="पिठुवा खानेपानी तथा स उ संस्थाको खानेपानी महशुल अब घरमा बसी बसी अनलाइन पेमेन्ट मार्फत भुक्तानी गर्न सक्नुहुनेछ।अब हामी १,IME PAY (अाइएमी पे) २,KHALTI (खल्ती) अनलाइन पेमेन्टमा जोडिएका छौं।
+                    android:text="चैनपुर खानेपानी तथा स उ संस्थाको खानेपानी महशुल अब घरमा बसी बसी अनलाइन पेमेन्ट मार्फत भुक्तानी गर्न सक्नुहुनेछ।अब हामी १,IME PAY (अाइएमी पे) २,KHALTI (खल्ती) अनलाइन पेमेन्टमा जोडिएका छौं।
 
-पिठुवा खानेपानी तथा स उ संस्थाको खानेपानी महशुल अब घरमा बसी बसी अनलाइन पेमेन्ट मार्फत भुक्तानी गर्न सक्नुहुनेछ।अब हामी १,IME PAY (अाइएमी पे) २,KHALTI (खल्ती) अनलाइन पेमेन्टमा जोडिएका छौं।
+चैनपुर खानेपानी तथा स उ संस्थाको खानेपानी महशुल अब घरमा बसी बसी अनलाइन पेमेन्ट मार्फत भुक्तानी गर्न सक्नुहुनेछ।अब हामी १,IME PAY (अाइएमी पे) २,KHALTI (खल्ती) अनलाइन पेमेन्टमा जोडिएका छौं।
 
-पिठुवा खानेपानी तथा स उ संस्थाको खानेपानी महशुल अब घरमा बसी बसी अनलाइन पेमेन्ट मार्फत भुक्तानी गर्न सक्नुहुनेछ।अब हामी १,IME PAY (अाइएमी पे) २,KHALTI (खल्ती) अनलाइन पेमेन्टमा जोडिएका छौं।"
+चैनपुर खानेपानी तथा स उ संस्थाको खानेपानी महशुल अब घरमा बसी बसी अनलाइन पेमेन्ट मार्फत भुक्तानी गर्न सक्नुहुनेछ।अब हामी १,IME PAY (अाइएमी पे) २,KHALTI (खल्ती) अनलाइन पेमेन्टमा जोडिएका छौं।"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12sdp" />
 

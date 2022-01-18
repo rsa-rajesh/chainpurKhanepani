@@ -1,6 +1,6 @@
 package androidcommon.extension
 
-import com.heartsun.pithuwakhanipani.BuildConfig
+import com.heartsun.chainpurkhanepani.BuildConfig
 
 
 const val developerTest: Boolean = true

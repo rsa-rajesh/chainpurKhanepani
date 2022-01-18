@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_height="@dimen/_160sdp"
-                app:tint="#003B36" />
+                app:tint="@color/primary_color" />
 
             <ImageView
                 android:visibility="gone"
@@ -62,12 +62,10 @@
                 tools:layout_editor_absoluteX="15dp">
 
                 <ImageView
-                    android:background="@drawable/bg_circle_primary"
                     android:id="@+id/ivLogo"
-                    android:backgroundTint="@color/white"
                     android:layout_width="@dimen/_60sdp"
                     android:layout_height="@dimen/_60sdp"
-                    android:src="@drawable/logo"
+                    android:src="@drawable/logo_background"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -77,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_12sdp"
                     android:gravity="center"
-                    android:text="पिठुवा खानेपानी तथा सरसफाई \n उपभोक्ता संस्था"
+                    android:text="चैनपुर खानेपानी तथा सरसफाई \n उपभोक्ता संस्था"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_14sdp"
                     android:textStyle="bold"
@@ -202,7 +200,7 @@
                         android:id="@+id/cvLogin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardBackgroundColor="#59114D"
+                        app:cardBackgroundColor="@color/card_background"
                         app:cardCornerRadius="@dimen/_4sdp"
                         app:cardElevation="4dp"
                         app:layout_constraintTop_toBottomOf="@id/cvMeroKahiPani">
@@ -309,7 +307,7 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_90sdp"
                         android:layout_marginTop="@dimen/_12sdp"
-                        app:cardBackgroundColor="#003B36"
+                        app:cardBackgroundColor="@color/primary_color"
                          app:cardCornerRadius="@dimen/_4sdp"
                         app:cardElevation="4dp"
                         app:layout_constraintEnd_toStartOf="@id/cvPanikoDar"
@@ -366,7 +364,7 @@
                         android:layout_marginTop="@dimen/_12sdp"
                         app:cardCornerRadius="@dimen/_4sdp"
                         app:cardElevation="4dp"
-                        app:cardBackgroundColor="#003B36"
+                        app:cardBackgroundColor="@color/primary_color"
 
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/cvSamitee"

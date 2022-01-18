@@ -10,8 +10,8 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.core.view.isGone
-import com.heartsun.pithuwakhanipani.R
-import com.heartsun.pithuwakhanipani.databinding.LayoutProgressDialogBinding
+import com.heartsun.chainpurkhanepani.R
+import com.heartsun.chainpurkhanepani.databinding.LayoutProgressDialogBinding
 
 object ProgressDialogHelper {
     fun getProgressDialog(context: Context): Dialog {

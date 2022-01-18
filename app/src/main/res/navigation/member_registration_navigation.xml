@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/membersRegistrationFilesFragment"
-        android:name="com.heartsun.pithuwakhanipani.ui.memberRegisterRequest.MembersRegistrationFilesFragment"
+        android:name="com.heartsun.chainpurkhanepani.ui.memberRegisterRequest.MembersRegistrationFilesFragment"
         android:label="fragment_members_registeration_files"
         tools:layout="@layout/fragment_members_registeration_files" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/membersRegistrationFormFragment"
-        android:name="com.heartsun.pithuwakhanipani.ui.memberRegisterRequest.MembersRegistrationFormFragment"
+        android:name="com.heartsun.chainpurkhanepani.ui.memberRegisterRequest.MembersRegistrationFormFragment"
         android:label="fragment_members_registeration_form"
         tools:layout="@layout/fragment_members_registeration_form" >
         <action

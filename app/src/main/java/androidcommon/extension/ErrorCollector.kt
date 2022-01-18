@@ -2,7 +2,7 @@ package androidcommon.extension
 
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.RetentionManager
-import com.heartsun.pithuwakhanipani.App
+import com.heartsun.chainpurkhanepani.App
 
 val chuckerCollector by lazy {
     ChuckerCollector(App.instance, true, RetentionManager.Period.ONE_HOUR)

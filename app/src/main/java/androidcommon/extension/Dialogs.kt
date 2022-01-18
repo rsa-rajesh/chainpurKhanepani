@@ -1,18 +1,14 @@
 package androidcommon.extension
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.Window
-import androidcommon.RColor
 import androidcommon.RStyle
-import androidx.annotation.ColorLong
-import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import com.heartsun.pithuwakhanipani.R
-import com.heartsun.pithuwakhanipani.databinding.*
+import com.heartsun.chainpurkhanepani.R
+import com.heartsun.chainpurkhanepani.databinding.*
 
 fun Context.getBaseDialog(): Dialog {
     return Dialog(this, R.style.WideDialog).apply {
@@ -65,7 +61,7 @@ fun Context.showCustomDialog(
     posLabel: String = "ठीक छ",
     onPosClick: () -> Unit = {},
     onNegClick: () -> Unit = {},
-    icon: Int = R.drawable.logo
+    icon: Int = R.drawable.logo_background
 ) {
     val dialog = getBaseDialog()
     val dialogView = DialogPosNegOptionBinding.inflate(LayoutInflater.from(this), null, false)

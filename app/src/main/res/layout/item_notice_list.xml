@@ -83,7 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lines= "3"
-                    android:text= "पिठुवा खानेपानी तथा स उ संस्थाको खानेपानी महशुल अब घरमा बसी
+                    android:text= "चैनपुर खानेपानी तथा स उ संस्थाको खानेपानी महशुल अब घरमा बसी
 बसी अनलाइन पेमेन्ट मार्फत भुक्तानी गर्न सक्नुहुनेछ।अब हामी १, IME
 PAY (अाइएमी पे) ..."
                     android:textColor="@color/white"

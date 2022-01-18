@@ -1,77 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.heartsun.pithuwakhanipani">
+    package="com.heartsun.chainpurkhanepani">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".App"
+        android:name="com.heartsun.chainpurkhanepani.App"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Khanipani.NoActionBar"
-        tools:ignore="AllowBackup">
+        tools:ignore="AllowBackup"
+        tools:targetApi="m">
         <activity
-            android:name=".ui.meroKhaniPani.complaint.ComplaintActivity"
+            android:name="com.heartsun.chainpurkhanepani.ui.meroKhaniPani.complaint.ComplaintActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.meroKhaniPani.ledger.LedgerActivity"
+            android:name="com.heartsun.chainpurkhanepani.ui.meroKhaniPani.ledger.LedgerActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.meroKhaniPani.personalMenu.PersonalMenu"
+            android:name="com.heartsun.chainpurkhanepani.ui.meroKhaniPani.personalMenu.PersonalMenu"
             android:exported="true" />
         <activity
-            android:name=".ui.billDetails.BillDetailsActivity"
+            android:name="com.heartsun.chainpurkhanepani.ui.billDetails.BillDetailsActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.memberRegisterRequest.MemberRegisterActivity"
+            android:name="com.heartsun.chainpurkhanepani.ui.memberRegisterRequest.MemberRegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.about.AboutAppActivity"
+            android:name="com.heartsun.chainpurkhanepani.ui.about.AboutAppActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.contact.ContactActivity"
+            android:name="com.heartsun.chainpurkhanepani.ui.contact.ContactActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.about.AboutOrganizationActivity"
+            android:name="com.heartsun.chainpurkhanepani.ui.about.AboutOrganizationActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.noticeBoard.NoticeDetailsActivity"
+            android:name="com.heartsun.chainpurkhanepani.ui.noticeBoard.NoticeDetailsActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.noticeBoard.NoticeBoardActivity"
+            android:name="com.heartsun.chainpurkhanepani.ui.noticeBoard.NoticeBoardActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.activityes.ActivitiesActivity"
+            android:name="com.heartsun.chainpurkhanepani.ui.activityes.ActivitiesActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.sameetee.SameeteeListActivity"
+            android:name="com.heartsun.chainpurkhanepani.ui.sameetee.SameeteeListActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.sameetee.SameeteeSelectionActivity"
+            android:name="com.heartsun.chainpurkhanepani.ui.sameetee.SameeteeSelectionActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.meroKhaniPani.MeroKhaniPaniActivity"
+            android:name="com.heartsun.chainpurkhanepani.ui.meroKhaniPani.MeroKhaniPaniActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.waterRate.WaterRateActivity"
+            android:name="com.heartsun.chainpurkhanepani.ui.waterRate.WaterRateActivity"
             android:exported="true" />
-        <activity android:name=".ui.HomeActivity"
+        <activity android:name="com.heartsun.chainpurkhanepani.ui.HomeActivity"
             android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-
         </activity>
         <activity
-            android:name=".ui.SplashActivity"
+            android:name="com.heartsun.chainpurkhanepani.ui.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.Khanipani.OnBoarding">
             <intent-filter>
@@ -81,7 +76,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.OnBoardingActivity"
+            android:name="com.heartsun.chainpurkhanepani.ui.OnBoardingActivity"
             android:theme="@style/Theme.Khanipani.OnBoarding" />
     </application>
 

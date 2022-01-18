@@ -30,13 +30,13 @@
     <color name="shimmer_bg">#E8E4E4</color>
 
 <!--   water supply colors-->
-    <color name="primary_color">#003B36</color>
+    <color name="primary_color">#59114D</color>
     <color name="secondary_color">#99223AF1</color>
     <color name="tiles_background_color">#26223AF1</color>
     <color name="main_text_color">#CC111111</color>
     <color name="sub_text_color">#99111111</color>
-    <color name="background">#E98A15</color>
-    <color name="card_background">#59114D</color>
+    <color name="background">#EE4266</color>
+    <color name="card_background">#043b87</color>
 
     <color name="table_row1_color">#D2F4C4</color>
     <color name="table_row2_color">#87F3F2F2</color>

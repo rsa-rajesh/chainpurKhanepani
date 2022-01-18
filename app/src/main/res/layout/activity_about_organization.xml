@@ -13,7 +13,7 @@
         android:layout_marginTop="@dimen/_22sdp"
         android:alpha=".1"
         android:rotationY="180"
-        android:src="@drawable/logo"
+        android:src="@drawable/logo_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -6,7 +6,7 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import com.heartsun.pithuwakhanipani.R
+import com.heartsun.chainpurkhanepani.R
 
 fun AppCompatActivity.setBackNavigation(
     toolbar: Toolbar,

@@ -1,7 +1,7 @@
 package androidcommon.utils
 
 import android.text.format.DateUtils
-import com.heartsun.pithuwakhanipani.StandardDateTimeFormat
+import com.heartsun.chainpurkhanepani.StandardDateTimeFormat
 import java.text.SimpleDateFormat
 import java.util.*
 

@@ -10,7 +10,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
-import com.heartsun.pithuwakhanipani.R
+import com.heartsun.chainpurkhanepani.R
 
 fun ImageView.load(
     url: String?,

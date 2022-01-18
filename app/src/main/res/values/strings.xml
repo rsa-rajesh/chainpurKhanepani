@@ -1,6 +1,5 @@
 <resources>
 
-
     <string name="onboarding_slide1_title">Create an account</string>
     <string name="onboarding_slide1_desc">User will be able to give you live, chat and meet
         with people nearby.</string>
@@ -26,7 +25,7 @@
     <string name="onboard_third_details">हाम्रो एप मार्फत संगठन र संगठन सदस्यको बारेमा जानकारी लिनुहोस् र यदि नीति परिवर्तन भयो भने सूचना प्राप्त गर्नुहोस् ।</string>
 
     <string name="read_more">पूरा पढ्नुहोस् …</string>
-    <string name="app_version">0.0.3</string>
+    <string name="app_version">0.0.1</string>
 
     <string-array name="month">
         <item>January</item>
@@ -43,22 +42,18 @@
         <item>December</item>
     </string-array>
 
-
     <string name="loading_app_data">Loading App Data…</string>
-
-    <string name="subscribe_to_weather">Subscribe To पिठुवा खानेपानी</string>
+    <string name="subscribe_to_weather">Subscribe To चैनपुर खानेपानी</string>
     <string name="log_token">Log Token</string>
-
-    <string name="msg_subscribed">Subscribed to पिठुवा खानेपानी topic</string>
+    <string name="msg_subscribed">Subscribed to चैनपुर खानेपानी topic</string>
     <string name="msg_token_fmt" translatable="false">FCM registration Token: %s</string>
-
-    <string name="default_notification_channel_id" translatable="false">पिठुवा खानेपानी</string>
+    <string name="default_notification_channel_id" translatable="false">चैनपुर खानेपानी</string>
     <!--
         This is the name that users will see when interacting with this channel.
         It should describe the category of notifications that will be sent through this channel
      -->
     <!-- [START fcm_default_icon_string] -->
-    <string name="default_notification_channel_name" translatable="true">पिठुवा खानेपानी</string>
+    <string name="default_notification_channel_name" translatable="true">चैनपुर खानेपानी</string>
     <!-- [END fcm_default_icon_string] -->
     <string name="msg_subscribe_failed">Failed to subscribe to weather topic</string>
     <string name="fcm_message">FCM Message</string>

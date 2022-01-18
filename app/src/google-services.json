@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "831089884746",
+    "project_id": "chainpurkhanepani",
+    "storage_bucket": "chainpurkhanepani.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831089884746:android:45778a9176ad9b3f6f30b3",
+        "android_client_info": {
+          "package_name": "com.heartsun.chainpurkhanepani"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "831089884746-jfhbecfttjtul1k2cptakfp7435hi9cc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRXKCpf3MWIt0JmK_k9ivYJiUn-hnKmPc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "831089884746-jfhbecfttjtul1k2cptakfp7435hi9cc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

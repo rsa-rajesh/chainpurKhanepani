@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="पिठुवा खानेपानी तथा सरसफाई उपभोक्ता संस्था"
+                    android:text="चैनपुर खानेपानी तथा सरसफाई उपभोक्ता संस्था"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_16sdp"
                     android:textStyle="bold"
