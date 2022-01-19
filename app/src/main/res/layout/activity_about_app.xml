@@ -261,7 +261,7 @@
                                 android:id="@+id/ivDeveloperLogo"
                                 android:layout_width="@dimen/_60sdp"
                                 android:layout_height="@dimen/_60sdp"
-                                android:src="@drawable/logo_background"
+                                android:src="@drawable/heartsun_stamp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
