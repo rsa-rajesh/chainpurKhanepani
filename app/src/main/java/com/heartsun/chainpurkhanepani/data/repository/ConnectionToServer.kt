@@ -1,5 +1,6 @@
 package com.heartsun.chainpurkhanepani.data.repository
 
+import android.annotation.SuppressLint
 import com.heartsun.chainpurkhanepani.data.Prefs
 import com.heartsun.chainpurkhanepani.domain.dbmodel.*
 import com.heartsun.chainpurkhanepani.utils.connectionUtils.SqlServerFunctions
@@ -12,9 +13,8 @@ import android.graphics.BitmapFactory
 
 import android.graphics.Bitmap
 import android.net.Uri
-import android.util.Log
+import androidcommon.extension.loggerE
 import androidcommon.utils.FilePath
-
 import com.heartsun.chainpurkhanepani.domain.*
 import timber.log.Timber
 import java.io.*
@@ -25,57 +25,56 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ConnectionToServer(prefs: Prefs) {
-    var prefs: Prefs = prefs
+class ConnectionToServer(var prefs: Prefs) {
 
     fun getRates(): WaterRateListResponse {
-        var stmt: Statement? = null
-        var resultset: ResultSet? = null
-        var resultset2: ResultSet? = null
-        var resultset3: ResultSet? = null
+        val stmt: Statement?
+        val resultSet: ResultSet?
+        val resultSet2: ResultSet?
+        val resultSet3: ResultSet?
 
         val query = "select * from TBLReadingSetupDtl"
         val query2 = "select * from TBLReadingSetup"
         val query3 = "select * from tblTapTypeMaster"
 
-        var tapTypeList: MutableList<TblTapTypeMaster> = arrayListOf()
-        var readingSetupList: MutableList<TBLReadingSetup> = arrayListOf()
-        var readingSetupDetailsList: MutableList<TBLReadingSetupDtl> = arrayListOf()
+        val tapTypeList: MutableList<TblTapTypeMaster> = arrayListOf()
+        val readingSetupList: MutableList<TBLReadingSetup> = arrayListOf()
+        val readingSetupDetailsList: MutableList<TBLReadingSetupDtl> = arrayListOf()
 
         try {
             val ss = SqlServerFunctions()
             val conn: Connection = ss.ConnectToSQLServer(prefs)
             stmt = conn.createStatement()
 
-            resultset = stmt.executeQuery(query)
-            while (resultset.next()) {
-                val readingSetupDetails: TBLReadingSetupDtl = TBLReadingSetupDtl(
-                    VNO = resultset.getInt("VNO"),
-                    SrNo = resultset.getInt("SrNo"),
-                    MnNo = resultset.getInt("MnNo"),
-                    MxNo = resultset.getInt("MxNo"),
-                    Amt = resultset.getFloat("Amt"),
-                    Rate = resultset.getFloat("Rate")
+            resultSet = stmt.executeQuery(query)
+            while (resultSet.next()) {
+                val readingSetupDetails = TBLReadingSetupDtl(
+                    VNO = resultSet.getInt("VNO"),
+                    SrNo = resultSet.getInt("SrNo"),
+                    MnNo = resultSet.getInt("MnNo"),
+                    MxNo = resultSet.getInt("MxNo"),
+                    Amt = resultSet.getFloat("Amt"),
+                    Rate = resultSet.getFloat("Rate")
                 )
                 readingSetupDetailsList.add(readingSetupDetails)
             }
-            resultset2 = stmt.executeQuery(query2)
-            while (resultset2.next()) {
-                val readingSetup: TBLReadingSetup = TBLReadingSetup(
-                    VNO = resultset2.getInt("VNO"),
-                    FixCharges = resultset2.getInt("FixCharges"),
-                    TapTypeID = resultset2.getInt("TapTypeID"),
-                    TapSizeID = resultset2.getInt("TapSizeID"),
-                    Remarks = resultset2.getString("Remarks")
+            resultSet2 = stmt.executeQuery(query2)
+            while (resultSet2.next()) {
+                val readingSetup = TBLReadingSetup(
+                    VNO = resultSet2.getInt("VNO"),
+                    FixCharges = resultSet2.getInt("FixCharges"),
+                    TapTypeID = resultSet2.getInt("TapTypeID"),
+                    TapSizeID = resultSet2.getInt("TapSizeID"),
+                    Remarks = resultSet2.getString("Remarks")
                 )
                 readingSetupList.add(readingSetup)
             }
 
-            resultset3 = stmt.executeQuery(query3)
-            while (resultset3.next()) {
-                val tapType: TblTapTypeMaster = TblTapTypeMaster(
-                    TapTypeID = resultset3.getInt("TapTypeID"),
-                    TapTypeName = resultset3.getString("TapTypeName")
+            resultSet3 = stmt.executeQuery(query3)
+            while (resultSet3.next()) {
+                val tapType = TblTapTypeMaster(
+                    TapTypeID = resultSet3.getInt("TapTypeID"),
+                    TapTypeName = resultSet3.getString("TapTypeName")
                 )
                 tapTypeList.add(tapType)
             }
@@ -104,10 +103,10 @@ class ConnectionToServer(prefs: Prefs) {
 
     }
 
-    fun getMembers(context: Context): MembersListResponse {
-        var stmt: Statement? = null
-        var resultset: ResultSet? = null
-        var resultset2: ResultSet? = null
+    fun getMembers(): MembersListResponse {
+        val stmt: Statement?
+        val resultSet: ResultSet?
+        val resultSet2: ResultSet?
         val query = "select * from tblBoardMemberType"
         val query2 = "select * from tblContact WHERE membertype IS NOT NULL"
 
@@ -118,29 +117,29 @@ class ConnectionToServer(prefs: Prefs) {
             val ss = SqlServerFunctions()
             val conn: Connection = ss.ConnectToSQLServer(prefs)
             stmt = conn.createStatement()
-            resultset = stmt.executeQuery(query2)
-            while (resultset.next()) {
+            resultSet = stmt.executeQuery(query2)
+            while (resultSet.next()) {
 
-                    val tblContact: TblContact = TblContact(
-                        ContID = resultset.getInt("ContID"),
-                        ContactName = resultset.getString("ContactName"),
-                        ContactNumber = resultset.getString("ContactNumber"),
-                        IsActive = resultset.getInt("IsActive"),
-                        Post = resultset.getString("Post"),
-                        MemberType = resultset.getInt("MemberType"),
-                        Tenure = resultset.getString("Tenure"),
-                        Address = resultset.getString("Address"),
-                        Image = resultset.getString("ImgUrl")
+                    val tblContact = TblContact(
+                        ContID = resultSet.getInt("ContID"),
+                        ContactName = resultSet.getString("ContactName"),
+                        ContactNumber = resultSet.getString("ContactNumber"),
+                        IsActive = resultSet.getInt("IsActive"),
+                        Post = resultSet.getString("Post"),
+                        MemberType = resultSet.getInt("MemberType"),
+                        Tenure = resultSet.getString("Tenure"),
+                        Address = resultSet.getString("Address"),
+                        Image = resultSet.getString("ImgUrl")
                     )
                     membersList.add(tblContact)
             }
 
-            resultset2 = stmt.executeQuery(query)
-            while (resultset2.next()) {
-                val tblBoardMemberType: TblBoardMemberType = TblBoardMemberType(
-                    MemTypeID = resultset2.getInt("MemTypeID"),
-                    MemberType = resultset2.getString("MemberType"),
-                    isOldMember = resultset2.getInt("isOldMember"),
+            resultSet2 = stmt.executeQuery(query)
+            while (resultSet2.next()) {
+                val tblBoardMemberType = TblBoardMemberType(
+                    MemTypeID = resultSet2.getInt("MemTypeID"),
+                    MemberType = resultSet2.getString("MemberType"),
+                    isOldMember = resultSet2.getInt("isOldMember"),
                 )
                 memberTypeList.add(tblBoardMemberType)
             }
@@ -163,10 +162,10 @@ class ConnectionToServer(prefs: Prefs) {
 
     }
 
-    fun getNotices(context: Context): NoticesListResponse? {
+    fun getNotices(context: Context): NoticesListResponse {
 
-        var stmt: Statement? = null
-        var resultset: ResultSet? = null
+        val stmt: Statement?
+        val resultSet: ResultSet?
 
         val query = "select * from tblNotice where IsActive=1"
 
@@ -177,36 +176,36 @@ class ConnectionToServer(prefs: Prefs) {
             val ss = SqlServerFunctions()
             val conn: Connection = ss.ConnectToSQLServer(prefs)
             stmt = conn.createStatement()
-            resultset = stmt.executeQuery(query)
-            while (resultset.next()) {
-                if (resultset.getBytes("NoticeFile") != null) {
-                    val data: ByteArray = resultset.getBytes("NoticeFile")
+            resultSet = stmt.executeQuery(query)
+            while (resultSet.next()) {
+                if (resultSet.getBytes("NoticeFile") != null) {
+                    val data: ByteArray = resultSet.getBytes("NoticeFile")
                     val imageStream = ByteArrayInputStream(data)
                     val theImage = BitmapFactory.decodeStream(imageStream)
                     val image = File(
                         context.getExternalFilesDir(null),
-                        "noticeImage" + resultset.getInt("NoticeID").toString() + ".png"
+                        "noticeImage" + resultSet.getInt("NoticeID").toString() + ".png"
                     )
                     val fos = FileOutputStream(image)
                     fos.use { theImage.compress(Bitmap.CompressFormat.PNG, 100, it) }
 
-                    val notices: TblNotice = TblNotice(
-                        NoticeID = resultset.getInt("NoticeID"),
-                        NoticeHeadline = resultset.getString("NoticeHeadline"),
-                        NoticeDesc = resultset.getString("NoticeDesc"),
-                        DateNep = resultset.getString("DateNep"),
-                        DateTimeEng = resultset.getString("DateTimeEng"),
+                    val notices = TblNotice(
+                        NoticeID = resultSet.getInt("NoticeID"),
+                        NoticeHeadline = resultSet.getString("NoticeHeadline"),
+                        NoticeDesc = resultSet.getString("NoticeDesc"),
+                        DateNep = resultSet.getString("DateNep"),
+                        DateTimeEng = resultSet.getString("DateTimeEng"),
                         NoticeFile = Uri.parse(image.path).toString()
                     )
                     noticesList.add(notices)
                 } else {
 
-                    val notices: TblNotice = TblNotice(
-                        NoticeID = resultset.getInt("NoticeID"),
-                        NoticeHeadline = resultset.getString("NoticeHeadline"),
-                        NoticeDesc = resultset.getString("NoticeDesc"),
-                        DateNep = resultset.getString("DateNep"),
-                        DateTimeEng = resultset.getString("DateTimeEng"),
+                    val notices = TblNotice(
+                        NoticeID = resultSet.getInt("NoticeID"),
+                        NoticeHeadline = resultSet.getString("NoticeHeadline"),
+                        NoticeDesc = resultSet.getString("NoticeDesc"),
+                        DateNep = resultSet.getString("DateNep"),
+                        DateTimeEng = resultSet.getString("DateTimeEng"),
                         NoticeFile = null
                     )
                     noticesList.add(notices)
@@ -230,9 +229,9 @@ class ConnectionToServer(prefs: Prefs) {
 
     }
 
-    fun getAboutOrg(context: Context): AboutOrgResponse? {
-        var stmt: Statement? = null
-        var resultset: ResultSet? = null
+    fun getAboutOrg(): AboutOrgResponse {
+        val stmt: Statement?
+        val resultSet: ResultSet?
         val query = "select * from TblAboutOrg where Cont_id=1"
         var aboutOrg: TblAboutOrg? = null
         try {
@@ -240,10 +239,10 @@ class ConnectionToServer(prefs: Prefs) {
             val conn: Connection = ss.ConnectToSQLServer(prefs)
             stmt = conn.createStatement()
 
-            resultset = stmt.executeQuery(query)
-            while (resultset.next()) {
-//                if (resultset.getBytes("Cont_image") != null) {
-//                    val data: ByteArray = resultset.getBytes("Cont_image")
+            resultSet = stmt.executeQuery(query)
+            while (resultSet.next()) {
+//                if (resultSet.getBytes("Cont_image") != null) {
+//                    val data: ByteArray = resultSet.getBytes("Cont_image")
 //                    val imageStream = ByteArrayInputStream(data)
 //                    val theImage = BitmapFactory.decodeStream(imageStream)
 //                    val image = File(
@@ -255,16 +254,16 @@ class ConnectionToServer(prefs: Prefs) {
 //                    fos.use { theImage.compress(Bitmap.CompressFormat.PNG, 100, it) }
 //
 //                    val about: TblAboutOrg = TblAboutOrg(
-//                        Cont_id = resultset.getInt("Cont_id"),
-//                        Cont_details = resultset.getString("Cont_details"),
+//                        Cont_id = resultSet.getInt("Cont_id"),
+//                        Cont_details = resultSet.getString("Cont_details"),
 //                        Cont_image = Uri.parse(image.path).toString()
 //                    )
 //                    aboutOrg = about
 //                } else {
-                    val about: TblAboutOrg = TblAboutOrg(
-                        Cont_id = resultset.getInt("Cont_id"),
-                        Cont_details = resultset.getString("Cont_details"),
-                        Cont_image = resultset.getString("Cont_image")
+                    val about = TblAboutOrg(
+                        Cont_id = resultSet.getInt("Cont_id"),
+                        Cont_details = resultSet.getString("Cont_details"),
+                        Cont_image = resultSet.getString("Cont_image")
                     )
                     aboutOrg = about
 //                }
@@ -295,22 +294,22 @@ class ConnectionToServer(prefs: Prefs) {
         }
     }
 
-    fun getContactList(context: Context): ContactsListResponse? {
-        var stmt: Statement? = null
-        var resultset: ResultSet? = null
+    fun getContactList(): ContactsListResponse {
+        val stmt: Statement?
+        val resultSet: ResultSet?
         val query = "select * from TblDepartmentContact"
         val contactsList: MutableList<TblDepartmentContact> = arrayListOf()
         try {
             val ss = SqlServerFunctions()
             val conn: Connection = ss.ConnectToSQLServer(prefs)
             stmt = conn.createStatement()
-            resultset = stmt.executeQuery(query)
-            while (resultset.next()) {
-                val contacts: TblDepartmentContact = TblDepartmentContact(
-                    Dept_id = resultset.getInt("Dept_id"),
-                    Dept_name = resultset.getString("Dept_name").orEmpty(),
-                    Dept_contact = resultset.getString("Dept_contact").orEmpty(),
-                    Dept_mail = resultset.getString("Dept_mail").orEmpty(),
+            resultSet = stmt.executeQuery(query)
+            while (resultSet.next()) {
+                val contacts = TblDepartmentContact(
+                    Dept_id = resultSet.getInt("Dept_id"),
+                    Dept_name = resultSet.getString("Dept_name").orEmpty(),
+                    Dept_contact = resultSet.getString("Dept_contact").orEmpty(),
+                    Dept_mail = resultSet.getString("Dept_mail").orEmpty(),
                 )
                 contactsList.add(contacts)
             }
@@ -329,20 +328,20 @@ class ConnectionToServer(prefs: Prefs) {
         }
     }
 
-    fun getRequiredFiles(context: Context): DocumentTypesResponse? {
-        var stmt: Statement? = null
-        var resultset: ResultSet? = null
+    fun getRequiredFiles(): DocumentTypesResponse {
+        val stmt: Statement?
+        val resultSet: ResultSet?
         val query = "select * from tblDocumentType"
         val contactsList: MutableList<RegistrationRequest.RequiredDocuments> = arrayListOf()
         try {
             val ss = SqlServerFunctions()
             val conn: Connection = ss.ConnectToSQLServer(prefs)
             stmt = conn.createStatement()
-            resultset = stmt.executeQuery(query)
-            while (resultset.next()) {
+            resultSet = stmt.executeQuery(query)
+            while (resultSet.next()) {
                 val contacts: RegistrationRequest.RequiredDocuments =
                     RegistrationRequest.RequiredDocuments(
-                        DocumentName = resultset.getString("DocTypeName"),
+                        DocumentName = resultSet.getString("DocTypeName"),
                         DocImage = null,
                     )
                 contactsList.add(contacts)
@@ -362,9 +361,9 @@ class ConnectionToServer(prefs: Prefs) {
         }
     }
 
-    fun requestForReg(data: RegistrationRequest?, context: Context): String? {
-        var stmt: Statement? = null
-        var maxId: Int = 0
+    fun requestForReg(data: RegistrationRequest?, context: Context): String {
+        val stmt: Statement?
+        var maxId = 0
         val ss = SqlServerFunctions()
         val conn: Connection = ss.ConnectToSQLServer(prefs)
         stmt = conn.createStatement()
@@ -375,10 +374,11 @@ class ConnectionToServer(prefs: Prefs) {
                 maxId = Integer.parseInt(rs.getString("ReqID")) + 1
             }
         } catch (e: Exception) {
-            Log.e("DBTest", "Unable Connect to Server", e)
+            loggerE("Unable Connect to Server: $e","DBTest")
+//            Log.e("DBTest", "Unable Connect to Server", e)
         }
         val query1 =
-            "INSERT INTO [DropcareTrial].[dbo].[tblOnlineTapRequest] (ReqID,MemName,Address,Gender,CitNo,ContactNo,FHName,GFILName,MaleCount,FemaleCount) " +
+            "INSERT INTO tblOnlineTapRequest (ReqID,MemName,Address,Gender,CitNo,ContactNo,FHName,GFILName,MaleCount,FemaleCount) " +
                     "VALUES ($maxId,'${data?.MemName.toString()}', '${
                         data?.Address.toString()
                     }', '${data?.Gender.toString()}', '${
@@ -398,9 +398,9 @@ class ConnectionToServer(prefs: Prefs) {
             }
             val pic = BitmapFactory.decodeFile(path)
             val docImg: ByteArray = getBytes(pic)
-            val picsql =
-                "Insert into tblOnlineTapReqDocImg([ReqID],[DocumentName],[DocImage]) Values(?,?,?)"
-            val pics = conn.prepareStatement(picsql)
+            val picSql =
+                "Insert into tblOnlineTapReqDocImg(ReqID,DocumentName,DocImage) Values(?,?,?)"
+            val pics = conn.prepareStatement(picSql)
             pics.setInt(1, maxId)
             pics.setString(2, files.DocumentName.toString())
             pics.setBytes(3, docImg)
@@ -417,12 +417,12 @@ class ConnectionToServer(prefs: Prefs) {
         return stream.toByteArray()
     }
 
-    fun getBillDetails(context: Context, memberId: Int): BillDetailsResponse? {
-        var stmt: Statement? = null
-        var resultset: ResultSet? = null
-        val query = "SELECT [MemberID],[MemName],[TapNo],[Address],[TapType],[RID]" +
-                ",[TotReading],[Amt],[Inv_Date],[Sam_Date],[PaidStatus],[Dis],[Fine]" +
-                ",[NetAmt] FROM [tblTempBillDetail] Where Amt>0 and MemberID=" + memberId
+    fun getBillDetails(memberId: Int): BillDetailsResponse {
+        val stmt: Statement?
+        val resultSet: ResultSet?
+        val query = "SELECT MemberID,MemName,TapNo,Address,TapType,RID" +
+                ",TotReading,Amt,Inv_Date,Sam_Date,PaidStatus,Dis,Fine" +
+                ",NetAmt FROM tblTempBillDetail Where Amt>0 and MemberID=" + memberId
             .toString()
         val billDetailsList: MutableList<BillDetails> = arrayListOf()
 
@@ -436,41 +436,41 @@ class ConnectionToServer(prefs: Prefs) {
             ps.queryTimeout = 30
             ps.setString(1, memberId.toString())
             ps.executeUpdate()
-            resultset = stmt.executeQuery(query)
-            val totalBillDetails: BillDetails = BillDetails(
+            resultSet = stmt.executeQuery(query)
+            val totalBillDetails = BillDetails(
                 999999, null, 0, null, null, null, 0, 0f, null, null, 1, 0f, 0f, 0f
             )
-            while (resultset.next()) {
+            while (resultSet.next()) {
                 totalBillDetails.TotReading =
-                    totalBillDetails.TotReading?.plus(resultset.getInt("TotReading"))
-                totalBillDetails.Amt = totalBillDetails.Amt?.plus(resultset.getInt("Amt"))
-                totalBillDetails.Dis = totalBillDetails.Dis?.plus(resultset.getInt("Dis"))
-                totalBillDetails.Fine = totalBillDetails.Fine?.plus(resultset.getInt("Fine"))
-                totalBillDetails.NetAmt = totalBillDetails.NetAmt?.plus(resultset.getInt("NetAmt"))
-                totalBillDetails.MemberID = resultset.getInt("MemberID")
-                totalBillDetails.MemName = resultset.getString("MemName")
-                totalBillDetails.TapNo = resultset.getInt("TapNo")
-                totalBillDetails.Address = resultset.getString("Address").orEmpty()
-                totalBillDetails.TapType = resultset.getString("TapType").orEmpty()
-                totalBillDetails.RID = resultset.getInt("RID")
-                totalBillDetails.Inv_Date = resultset.getString("Inv_Date").orEmpty()
-                totalBillDetails.Sam_Date = resultset.getString("Sam_Date").orEmpty()
+                    totalBillDetails.TotReading?.plus(resultSet.getInt("TotReading"))
+                totalBillDetails.Amt = totalBillDetails.Amt?.plus(resultSet.getInt("Amt"))
+                totalBillDetails.Dis = totalBillDetails.Dis?.plus(resultSet.getInt("Dis"))
+                totalBillDetails.Fine = totalBillDetails.Fine?.plus(resultSet.getInt("Fine"))
+                totalBillDetails.NetAmt = totalBillDetails.NetAmt?.plus(resultSet.getInt("NetAmt"))
+                totalBillDetails.MemberID = resultSet.getInt("MemberID")
+                totalBillDetails.MemName = resultSet.getString("MemName")
+                totalBillDetails.TapNo = resultSet.getInt("TapNo")
+                totalBillDetails.Address = resultSet.getString("Address").orEmpty()
+                totalBillDetails.TapType = resultSet.getString("TapType").orEmpty()
+                totalBillDetails.RID = resultSet.getInt("RID")
+                totalBillDetails.Inv_Date = resultSet.getString("Inv_Date").orEmpty()
+                totalBillDetails.Sam_Date = resultSet.getString("Sam_Date").orEmpty()
 
-                val billDetails: BillDetails = BillDetails(
-                    MemberID = resultset.getInt("MemberID"),
-                    MemName = resultset.getString("MemName").orEmpty(),
-                    TapNo = resultset.getInt("TapNo"),
-                    Address = resultset.getString("Address").orEmpty(),
-                    TapType = resultset.getString("TapType").orEmpty(),
-                    RID = resultset.getInt("RID"),
-                    TotReading = resultset.getInt("TotReading"),
-                    Amt = resultset.getFloat("Amt"),
-                    Inv_Date = resultset.getString("Inv_Date").orEmpty(),
-                    Sam_Date = resultset.getString("Sam_Date").orEmpty(),
-                    Dis = resultset.getFloat("Dis"),
-                    Fine = resultset.getFloat("Fine"),
-                    NetAmt = resultset.getFloat("NetAmt"),
-                    PaidStatus = resultset.getInt("PaidStatus")
+                val billDetails = BillDetails(
+                    MemberID = resultSet.getInt("MemberID"),
+                    MemName = resultSet.getString("MemName").orEmpty(),
+                    TapNo = resultSet.getInt("TapNo"),
+                    Address = resultSet.getString("Address").orEmpty(),
+                    TapType = resultSet.getString("TapType").orEmpty(),
+                    RID = resultSet.getInt("RID"),
+                    TotReading = resultSet.getInt("TotReading"),
+                    Amt = resultSet.getFloat("Amt"),
+                    Inv_Date = resultSet.getString("Inv_Date").orEmpty(),
+                    Sam_Date = resultSet.getString("Sam_Date").orEmpty(),
+                    Dis = resultSet.getFloat("Dis"),
+                    Fine = resultSet.getFloat("Fine"),
+                    NetAmt = resultSet.getFloat("NetAmt"),
+                    PaidStatus = resultSet.getInt("PaidStatus")
                 )
                 billDetailsList.add(billDetails)
             }
@@ -492,28 +492,28 @@ class ConnectionToServer(prefs: Prefs) {
         }
     }
 
-    fun addTapResponce(context: Context, phoneNo: String, pin: String): UserDetailsResponse? {
-        var stmt: Statement? = null
-        val UID: String = phoneNo
-        val PWD: String = pin
+    fun addTapResponse(phoneNo: String, pin: String): UserDetailsResponse {
+        val stmt: Statement?
+        val uID: String = phoneNo
+        val pWD: String = pin
         var tapCount = 0
         val qry =
-            "Select * from tblMember where ContactNo='$UID' and PinCode=$PWD"
+            "Select * from tblMember where ContactNo='$uID' and PinCode=$pWD"
         val tblMember: MutableList<TblMember> = arrayListOf()
         try {
             val ss = SqlServerFunctions()
             val conn: Connection = ss.ConnectToSQLServer(prefs)
             stmt = conn.createStatement()
-            val resultset: ResultSet? = stmt.executeQuery(qry)
-            while (resultset!!.next()) {
+            val resultSet: ResultSet? = stmt.executeQuery(qry)
+            while (resultSet!!.next()) {
                 tapCount += 1
-                val member: TblMember = TblMember(
-                    MemberID = resultset.getInt("MemberID"),
-                    ContactNo = resultset.getString("ContactNo"),
-                    MemName = resultset.getString("MemName"),
-                    PinCode = resultset.getString("PinCode"),
-                    Address = resultset.getString("Address"),
-                    RegDateTime = resultset.getString("RegDateTime")
+                val member = TblMember(
+                    MemberID = resultSet.getInt("MemberID"),
+                    ContactNo = resultSet.getString("ContactNo"),
+                    MemName = resultSet.getString("MemName"),
+                    PinCode = resultSet.getString("PinCode"),
+                    Address = resultSet.getString("Address"),
+                    RegDateTime = resultSet.getString("RegDateTime")
                 )
                 tblMember.add(member)
             }
@@ -544,29 +544,30 @@ class ConnectionToServer(prefs: Prefs) {
         )
     }
 
-    fun requestPin(phoneNo: String, memberId: String): String? {
-        var RC = 0
-        var SFRC = 0
-        var code = 0
-        var stmt: Statement? = null
-        var resultset: ResultSet? = null
-        var TokenStr: String? = null
-        var ShortStr: String? = null
-        var SecCode = ""
-        val ss: SqlServerFunctions = SqlServerFunctions()
-        var conn: Connection? = null
-        val smsfeatquery =
+    @SuppressLint("SimpleDateFormat")
+    fun requestPin(phoneNo: String, memberId: String): String {
+        var rC = 0
+        var sFRC = 0
+        val code: Int
+        val stmt: Statement?
+        var resultSet: ResultSet?
+        val tokenStr: String?
+        val shortStr: String?
+        val secCode: String
+        val ss = SqlServerFunctions()
+        val conn: Connection?
+        val smsFeatQuery =
             "Select * from tblHospitalSetting Where SettingName='OTPSMSEnabled' and SettingValue='True'"
         try {
             conn = ss.ConnectToSQLServer(prefs)
             stmt = conn.createStatement()
 
-            resultset = stmt.executeQuery(smsfeatquery)
-            while (resultset.next()) {
-                SFRC += 1
+            resultSet = stmt.executeQuery(smsFeatQuery)
+            while (resultSet.next()) {
+                sFRC += 1
             }
 
-            if (SFRC == 0) {
+            if (sFRC == 0) {
                 conn.close()
                 return "SMS features is not activated yet"
             }
@@ -574,16 +575,16 @@ class ConnectionToServer(prefs: Prefs) {
             val qry = "select * from tblMember where MemberID=" + memberId +
                     " and ContactNo='" + phoneNo + "'"
 
-            resultset = stmt.executeQuery(qry)
-            while (resultset.next()) {
-                RC += 1
+            resultSet = stmt.executeQuery(qry)
+            while (resultSet.next()) {
+                rC += 1
             }
 
-            TokenStr = GetFieldData(
+            tokenStr = getFieldData(
                 "SettingValue",
                 "Select * from tblHospitalSetting Where SettingName='SMSTokenValue'", stmt
             )
-            ShortStr = GetFieldData(
+            shortStr = getFieldData(
                 "SettingValue",
                 "Select * from tblHospitalSetting Where SettingName='SMSShortName'", stmt
             )
@@ -592,40 +593,43 @@ class ConnectionToServer(prefs: Prefs) {
             return "Couldn't connect to server please try again later"
         }
 
-        if (RC > 0) {
+        if (rC > 0) {
             try {
                 val d = Calendar.getInstance().time
                 val df1 = SimpleDateFormat("smd") //second minute date
-                SecCode = df1.format(d)
+                secCode = df1.format(d)
                 val url = URL("https://api.sparrowsms.com/v2/sms/")
-                val conn = url.openConnection() as HttpURLConnection
-                conn.doOutput = true
-                conn.requestMethod = "POST"
-                conn.setRequestProperty("Content-Type", "application/json")
+                val connn = url.openConnection() as HttpURLConnection
+                connn.doOutput = true
+                connn.requestMethod = "POST"
+                connn.setRequestProperty("Content-Type", "application/json")
                 val input =
-                    "{\"token\":\"" + TokenStr + "\",\"from\":\"" + ShortStr + "\",\"to\":\"" + phoneNo +
-                            "\",\"text\":\"Your Access Code for Dropcare is: " + SecCode + "\"}"
-                val os = conn.outputStream
+                    "{\"token\":\"" + tokenStr + "\",\"from\":\"" + shortStr + "\",\"to\":\"" + phoneNo +
+                            "\",\"text\":\"Your Access Code for Dropcare is: " + secCode + "\"}"
+                val os = connn.outputStream
                 os.write(input.toByteArray())
                 os.flush()
-                code = conn.responseCode
-                conn.disconnect()
+                code = connn.responseCode
+                connn.disconnect()
             } catch (e: MalformedURLException) {
-                return "Couldn't connect to SMS server"
+                loggerE(e.toString(),"connError")
                 e.printStackTrace()
+                return "Couldn't connect to SMS server"
             } catch (e: IOException) {
-                return "Couldn't connect to SMS server"
+                loggerE(e.toString(),"connError")
                 e.printStackTrace()
+
+                return "Couldn't connect to SMS server"
             }
             if (code == 200) {
                 try {
-                    val MN: String = phoneNo
-                    val MMID: Int = memberId.toInt()
-                    val SC = SecCode.toInt()
-                    UpdateSecurityCode(MN, MMID, SC, stmt)
+                    val mN: String = phoneNo
+                    val mMID: Int = memberId.toInt()
+                    val sC = secCode.toInt()
+                    updateSecurityCode(mN, mMID, sC, stmt)
                     conn.commit()
                 } catch (ex: Exception) {
-                    Timber.i("SQL Exception Occured")
+                    Timber.i("SQL Exception Occurred")
                 }
                 conn.close()
                 return "Access Code is sent to your mobile"
@@ -639,28 +643,28 @@ class ConnectionToServer(prefs: Prefs) {
         }
     }
 
-    private fun GetFieldData(FieldName: String, qry: String, stmt: Statement?): String {
+    private fun getFieldData(fieldName: String, qry: String, stmt: Statement?): String {
         val rs = stmt!!.executeQuery(qry)
-        var RetVal: String = "0"
+        var retVal = "0"
         while (rs.next()) {
-            RetVal = rs.getString(FieldName)
+            retVal = rs.getString(fieldName)
         }
-        return RetVal
+        return retVal
     }
 
-    fun UpdateSecurityCode(mn: String, mmid: Int, sc: Int, stmt: Statement) {
+    private fun updateSecurityCode(mn: String, mmId: Int, sc: Int, stmt: Statement) {
         val qry =
-            "Update tblMember Set PinCode=$sc where MemberID=$mmid and ContactNo='$mn'"
+            "Update tblMember Set PinCode=$sc where MemberID=$mmId and ContactNo='$mn'"
         stmt.executeUpdate(qry)
     }
 
     fun changePin(phoneNo: String?, memberId: String?, newPin: String): String? {
-        var stmt: Statement? = null
+        val stmt: Statement?
         val ss = SqlServerFunctions()
         val conn: Connection = ss.ConnectToSQLServer(prefs)
         stmt = conn.createStatement()
         return try {
-            UpdateSecurityCode(
+            updateSecurityCode(
                 phoneNo.toString(),
                 memberId.toString().toInt(),
                 newPin.toInt(),
@@ -675,7 +679,7 @@ class ConnectionToServer(prefs: Prefs) {
     }
 
     fun addComplaint(message: String, memberID: String?, phoneNo: String?): String {
-        var stmt: Statement? = null
+        val stmt: Statement?
         val ss = SqlServerFunctions()
         val conn: Connection = ss.ConnectToSQLServer(prefs)
         stmt = conn.createStatement()
@@ -693,27 +697,27 @@ class ConnectionToServer(prefs: Prefs) {
     }
 
     fun getComplaintList(memberID: String?, phoneNo: String?): MutableList<ComplaintResponse>? {
-        var stmt: Statement? = null
+        val stmt: Statement?
         val ss = SqlServerFunctions()
         val conn: Connection = ss.ConnectToSQLServer(prefs)
         stmt = conn.createStatement()
         val complaintList: MutableList<ComplaintResponse> = arrayListOf()
         return try {
-            var resultset: ResultSet? = null
+            val resultSet: ResultSet?
             val qry =
                 "SELECT TOP 100 * " +
                         "FROM tblComplaint " +
                         "where MemberID=${memberID?.toInt()} and ContactNumber='$phoneNo' "
 //                        "ORDER BY ComptID DESC "
-            resultset = stmt.executeQuery(qry)
+            resultSet = stmt.executeQuery(qry)
 
-            while (resultset.next()) {
-                val list: ComplaintResponse = ComplaintResponse(
-                    ComptID = resultset.getInt("ComptID"),
-                    MemberID = resultset.getInt("MemberID"),
-                    ComplaintMsg = resultset.getString("ComplaintMsg"),
-                    ComptDate = resultset.getString("ComptDate"),
-                    IsRectified = resultset.getInt("IsRectified")
+            while (resultSet.next()) {
+                val list = ComplaintResponse(
+                    ComptID = resultSet.getInt("ComptID"),
+                    MemberID = resultSet.getInt("MemberID"),
+                    ComplaintMsg = resultSet.getString("ComplaintMsg"),
+                    ComptDate = resultSet.getString("ComptDate"),
+                    IsRectified = resultSet.getInt("IsRectified")
                 )
                 complaintList.add(list)
             }
@@ -725,45 +729,45 @@ class ConnectionToServer(prefs: Prefs) {
         }
     }
 
-    fun getActivities(context: Context): ActivitiesListResponse? {
-        var stmt: Statement? = null
-        var resultset: ResultSet? = null
+    fun getActivities(context: Context): ActivitiesListResponse {
+        val stmt: Statement?
+        val resultSet: ResultSet?
         val query = "select * from TblActivity where IsActive=1"
         val activitiesList: MutableList<TblActivity> = arrayListOf()
         try {
             val ss = SqlServerFunctions()
             val conn: Connection = ss.ConnectToSQLServer(prefs)
             stmt = conn.createStatement()
-            resultset = stmt.executeQuery(query)
-            while (resultset.next()) {
-                if (resultset.getBytes("ActivityFile") != null) {
-                    val data: ByteArray = resultset.getBytes("ActivityFile")
+            resultSet = stmt.executeQuery(query)
+            while (resultSet.next()) {
+                if (resultSet.getBytes("ActivityFile") != null) {
+                    val data: ByteArray = resultSet.getBytes("ActivityFile")
                     val imageStream = ByteArrayInputStream(data)
                     val theImage = BitmapFactory.decodeStream(imageStream)
                     val image = File(
                         context.getExternalFilesDir(null),
-                        "activityImage" + resultset.getInt("ActivityID").toString() + ".png"
+                        "activityImage" + resultSet.getInt("ActivityID").toString() + ".png"
                     )
                     val fos = FileOutputStream(image)
                     fos.use { theImage.compress(Bitmap.CompressFormat.PNG, 100, it) }
-                    val notices: TblActivity = TblActivity(
-                        ActivityID = resultset.getInt("ActivityID"),
-                        ActivityHeadline = resultset.getString("ActivityHeadline"),
-                        ActivityDesc = resultset.getString("ActivityDesc"),
-                        DateNep = resultset.getString("DateNep"),
-                        DateTimeEng = resultset.getString("DateTimeEng"),
+                    val notices = TblActivity(
+                        ActivityID = resultSet.getInt("ActivityID"),
+                        ActivityHeadline = resultSet.getString("ActivityHeadline"),
+                        ActivityDesc = resultSet.getString("ActivityDesc"),
+                        DateNep = resultSet.getString("DateNep"),
+                        DateTimeEng = resultSet.getString("DateTimeEng"),
                         ActivityFile = Uri.parse(image.path).toString()
 
                     )
                     activitiesList.add(notices)
                 } else {
 
-                    val notices: TblActivity = TblActivity(
-                        ActivityID = resultset.getInt("ActivityID"),
-                        ActivityHeadline = resultset.getString("ActivityHeadline"),
-                        ActivityDesc = resultset.getString("ActivityDesc"),
-                        DateNep = resultset.getString("DateNep"),
-                        DateTimeEng = resultset.getString("DateTimeEng"),
+                    val notices = TblActivity(
+                        ActivityID = resultSet.getInt("ActivityID"),
+                        ActivityHeadline = resultSet.getString("ActivityHeadline"),
+                        ActivityDesc = resultSet.getString("ActivityDesc"),
+                        DateNep = resultSet.getString("DateNep"),
+                        DateTimeEng = resultSet.getString("DateTimeEng"),
                         ActivityFile = null
                     )
                     activitiesList.add(notices)
@@ -784,41 +788,41 @@ class ConnectionToServer(prefs: Prefs) {
         }
     }
 
-    fun getSliderImages(context: Context): SliderListResponse? {
-        var stmt: Statement? = null
-        var resultset: ResultSet? = null
+    fun getSliderImages(context: Context): SliderListResponse {
+        val stmt: Statement?
+        val resultSet: ResultSet?
         val query = "SELECT TOP 4 * FROM TblSliderImages"
         val sliderList: MutableList<TblSliderImages> = arrayListOf()
         try {
             val ss = SqlServerFunctions()
             val conn: Connection = ss.ConnectToSQLServer(prefs)
             stmt = conn.createStatement()
-            resultset = stmt.executeQuery(query)
-            while (resultset.next()) {
-                if (resultset.getBytes("SliderImageFile") != null) {
-                    val data: ByteArray = resultset.getBytes("SliderImageFile")
+            resultSet = stmt.executeQuery(query)
+            while (resultSet.next()) {
+                if (resultSet.getBytes("SliderImageFile") != null) {
+                    val data: ByteArray = resultSet.getBytes("SliderImageFile")
                     val imageStream = ByteArrayInputStream(data)
                     val theImage = BitmapFactory.decodeStream(imageStream)
                     val image = File(
                         context.getExternalFilesDir(null),
-                        "SliderImage" + resultset.getInt("SliderID").toString() + ".png"
+                        "SliderImage" + resultSet.getInt("SliderID").toString() + ".png"
                     )
                     val fos = FileOutputStream(image)
                     fos.use { theImage.compress(Bitmap.CompressFormat.PNG, 100, it) }
-                    val notices: TblSliderImages = TblSliderImages(
-                        SliderID = resultset.getInt("SliderID"),
-                        SliderTitle = resultset.getString("SliderTitle"),
-                        SliderImageUrl = resultset.getString("SliderImageUrl"),
-                        Url = resultset.getString("DateNep"),
+                    val notices = TblSliderImages(
+                        SliderID = resultSet.getInt("SliderID"),
+                        SliderTitle = resultSet.getString("SliderTitle"),
+                        SliderImageUrl = resultSet.getString("SliderImageUrl"),
+                        Url = resultSet.getString("DateNep"),
                         SliderImageFile = Uri.parse(image.path).toString()
                     )
                     sliderList.add(notices)
                 } else {
-                    val notices: TblSliderImages = TblSliderImages(
-                        SliderID = resultset.getInt("SliderID"),
-                        SliderTitle = resultset.getString("SliderTitle"),
-                        SliderImageUrl = resultset.getString("SliderImageUrl"),
-                        Url = resultset.getString("Url"),
+                    val notices = TblSliderImages(
+                        SliderID = resultSet.getInt("SliderID"),
+                        SliderTitle = resultSet.getString("SliderTitle"),
+                        SliderImageUrl = resultSet.getString("SliderImageUrl"),
+                        Url = resultSet.getString("Url"),
                         SliderImageFile = null
                     )
                     sliderList.add(notices)
@@ -840,10 +844,10 @@ class ConnectionToServer(prefs: Prefs) {
         }
     }
 
-    fun getLedgerDetails(context: Context, memberId: Int): LedgerDetailsResponse? {
+    fun getLedgerDetails(memberId: Int): LedgerDetailsResponse {
 
-        var stmt: Statement? = null
-        var resultset: ResultSet? = null
+        val stmt: Statement?
+        val resultSet: ResultSet?
 
         val query = "SELECT RID" +
                 " ,MemberID" +
@@ -869,44 +873,44 @@ class ConnectionToServer(prefs: Prefs) {
             val conn: Connection = ss.ConnectToSQLServer(prefs)
             stmt = conn.createStatement()
 
-            resultset = stmt.executeQuery(query)
+            resultSet = stmt.executeQuery(query)
 
-            val totalBillDetails: TBLMemberReading = TBLMemberReading(
+            val totalBillDetails = TBLMemberReading(
                 999999, null, 0, 0, 0f, null, null, 0, 0f, 0f, 0f, null, null, 0f
             )
 
-            while (resultset.next()) {
-                totalBillDetails.RID = resultset.getInt("RID")
-                totalBillDetails.MemberID = resultset.getInt("MemberID")
-                totalBillDetails.Inv_Date = resultset.getString("Inv_Date").orEmpty()
-                totalBillDetails.Sam_Date = resultset.getString("Sam_Date").orEmpty()
+            while (resultSet.next()) {
+                totalBillDetails.RID = resultSet.getInt("RID")
+                totalBillDetails.MemberID = resultSet.getInt("MemberID")
+                totalBillDetails.Inv_Date = resultSet.getString("Inv_Date").orEmpty()
+                totalBillDetails.Sam_Date = resultSet.getString("Sam_Date").orEmpty()
                 totalBillDetails.TotReading =
-                    totalBillDetails.TotReading?.plus(resultset.getInt("TotReading"))
-                totalBillDetails.Amt = totalBillDetails.Amt?.plus(resultset.getFloat("Amt"))
-                totalBillDetails.Dis = totalBillDetails.Dis?.plus(resultset.getFloat("DisAmt"))
-                totalBillDetails.Fine = totalBillDetails.Fine?.plus(resultset.getFloat("FineAmt"))
-                totalBillDetails.NetAmt = totalBillDetails.NetAmt?.plus(resultset.getInt("NetAmt"))
-                totalBillDetails.PayDateNep = resultset.getString("NetAmt").orEmpty()
-                totalBillDetails.PayDateEng = resultset.getString("NetAmt").orEmpty()
-                totalBillDetails.TapNo = resultset.getInt("TapNo")
+                    totalBillDetails.TotReading?.plus(resultSet.getInt("TotReading"))
+                totalBillDetails.Amt = totalBillDetails.Amt?.plus(resultSet.getFloat("Amt"))
+                totalBillDetails.Dis = totalBillDetails.Dis?.plus(resultSet.getFloat("DisAmt"))
+                totalBillDetails.Fine = totalBillDetails.Fine?.plus(resultSet.getFloat("FineAmt"))
+                totalBillDetails.NetAmt = totalBillDetails.NetAmt?.plus(resultSet.getInt("NetAmt"))
+                totalBillDetails.PayDateNep = resultSet.getString("NetAmt").orEmpty()
+                totalBillDetails.PayDateEng = resultSet.getString("NetAmt").orEmpty()
+                totalBillDetails.TapNo = resultSet.getInt("TapNo")
                 totalBillDetails.PaidAmt =
-                    totalBillDetails.NetAmt?.plus(resultset.getFloat("PaidAmt"))
+                    totalBillDetails.NetAmt?.plus(resultSet.getFloat("PaidAmt"))
 
-                val billDetails: TBLMemberReading = TBLMemberReading(
-                    RID = resultset.getInt("RID"),
-                    MemberID = resultset.getInt("MemberID"),
-                    TapNo = resultset.getInt("TapNo"),
-                    TotReading = resultset.getInt("TotReading"),
-                    Amt = resultset.getFloat("Amt"),
-                    Inv_Date = resultset.getString("Inv_Date").orEmpty(),
-                    Sam_Date = resultset.getString("Sam_Date").orEmpty(),
-                    Dis = resultset.getFloat("DisAmt"),
-                    Fine = resultset.getFloat("FineAmt"),
-                    NetAmt = resultset.getFloat("NetAmt"),
-                    PaidStatus = resultset.getInt("PaidStatus"),
-                    PaidAmt = resultset.getFloat("PaidAmt"),
-                    PayDateNep = resultset.getString("PayDateNep"),
-                    PayDateEng = resultset.getString("PayDateEng")
+                val billDetails = TBLMemberReading(
+                    RID = resultSet.getInt("RID"),
+                    MemberID = resultSet.getInt("MemberID"),
+                    TapNo = resultSet.getInt("TapNo"),
+                    TotReading = resultSet.getInt("TotReading"),
+                    Amt = resultSet.getFloat("Amt"),
+                    Inv_Date = resultSet.getString("Inv_Date").orEmpty(),
+                    Sam_Date = resultSet.getString("Sam_Date").orEmpty(),
+                    Dis = resultSet.getFloat("DisAmt"),
+                    Fine = resultSet.getFloat("FineAmt"),
+                    NetAmt = resultSet.getFloat("NetAmt"),
+                    PaidStatus = resultSet.getInt("PaidStatus"),
+                    PaidAmt = resultSet.getFloat("PaidAmt"),
+                    PayDateNep = resultSet.getString("PayDateNep"),
+                    PayDateEng = resultSet.getString("PayDateEng")
                 )
                 billDetailsList.add(billDetails)
             }

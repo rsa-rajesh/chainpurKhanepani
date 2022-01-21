@@ -1,6 +1,9 @@
 package com.heartsun.chainpurkhanepani.ui.memberRegisterRequest
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
+import androidcommon.extension.loggerE
 import androidx.lifecycle.*
 import com.heartsun.chainpurkhanepani.data.repository.AuthRepository
 import com.heartsun.chainpurkhanepani.data.repository.databaseReppo.DbRepository
@@ -25,7 +28,14 @@ class RegisterViewModel(
     val registrationResponse: LiveData<String> = _sendRegistrationRequest
     fun sendRegistrationRequestToServer(details: RegistrationRequest?,context:Context) {
         viewModelScope.launch {
-            _sendRegistrationRequest.value = homeRepository.sendRegistrationRequest(details,context)
+            loggerE("calling data", "specTest")
+            val a: String? = homeRepository.sendRegistrationRequest(details,context)
+            if (a != null) {
+                Handler(Looper.getMainLooper()).post(Runnable {
+                    _sendRegistrationRequest.value = a!!
+                })
+            }
+//            _sendRegistrationRequest.value = homeRepository.sendRegistrationRequest(details,context)
         }
     }
 

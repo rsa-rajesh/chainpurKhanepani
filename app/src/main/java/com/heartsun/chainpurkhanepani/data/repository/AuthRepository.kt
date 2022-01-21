@@ -4,7 +4,6 @@ import android.content.Context
 import androidcommon.handler.doTryCatch
 import androidcommon.handler.handleResponse
 import androidcommon.utils.UiState
-import com.heartsun.chainpurkhanepani.data.Prefs
 import com.heartsun.chainpurkhanepani.data.apis.AuthApi
 import com.heartsun.chainpurkhanepani.domain.*
 import com.heartsun.chainpurkhanepani.domain.apiResponse.ServerDetailsResponse
@@ -18,7 +17,7 @@ interface AuthRepository {
     suspend fun getAboutOrg(): AboutOrgResponse?
     suspend fun getContacts(): ContactsListResponse?
     suspend  fun getFilesRequirement(): DocumentTypesResponse?
-    suspend fun sendRegistrationRequest(details: RegistrationRequest?, context: Context): String?
+    fun sendRegistrationRequest(details: RegistrationRequest?, context: Context): String?
     suspend fun getBillDetails(memberId: Int): BillDetailsResponse?
     suspend fun getUserDetails(phoneNo: String, pin: String): UserDetailsResponse?
     suspend fun requestPin(phoneNo: String, memberId: String): String?
@@ -34,7 +33,6 @@ interface AuthRepository {
 class AuthRepoImpl(
     private val authApi: AuthApi,
     private val connection: ConnectionToServer,
-    private val prefs: Prefs,
     private val dispatcher: CoroutineDispatcher,
     private val context: Context
 ) : AuthRepository {
@@ -43,38 +41,38 @@ class AuthRepoImpl(
     }
 
     override suspend fun getMembers(): MembersListResponse {
-        return connection.getMembers(context)
+        return connection.getMembers()
     }
 
-    override suspend fun getNotices(): NoticesListResponse? {
+    override suspend fun getNotices(): NoticesListResponse {
         return connection.getNotices(context)
     }
 
-    override suspend fun getAboutOrg(): AboutOrgResponse? {
-        return connection.getAboutOrg(context)
+    override suspend fun getAboutOrg(): AboutOrgResponse {
+        return connection.getAboutOrg()
     }
 
-    override suspend fun getContacts(): ContactsListResponse? {
-        return connection.getContactList(context)
+    override suspend fun getContacts(): ContactsListResponse {
+        return connection.getContactList()
     }
 
-    override suspend fun getFilesRequirement(): DocumentTypesResponse? {
-        return connection.getRequiredFiles(context)
+    override suspend fun getFilesRequirement(): DocumentTypesResponse {
+        return connection.getRequiredFiles()
     }
 
-    override suspend fun sendRegistrationRequest(details: RegistrationRequest?, context: Context): String? {
+    override fun sendRegistrationRequest(details: RegistrationRequest?, context: Context): String {
         return connection.requestForReg(details,context)
     }
 
-    override suspend fun getBillDetails(memberId:Int): BillDetailsResponse? {
-        return connection.getBillDetails(context,memberId)
+    override suspend fun getBillDetails(memberId:Int): BillDetailsResponse {
+        return connection.getBillDetails(memberId)
     }
 
-    override suspend fun getUserDetails(phoneNo: String, pin: String): UserDetailsResponse? {
-        return connection.addTapResponce(context,phoneNo,pin)
+    override suspend fun getUserDetails(phoneNo: String, pin: String): UserDetailsResponse {
+        return connection.addTapResponse(phoneNo, pin)
     }
 
-    override suspend fun requestPin(phoneNo: String, memberId: String): String? {
+    override suspend fun requestPin(phoneNo: String, memberId: String): String {
         return connection.requestPin(phoneNo,memberId)
     }
 
@@ -99,15 +97,15 @@ class AuthRepoImpl(
 
 
 
-    override suspend fun getActivities(): ActivitiesListResponse? {
+    override suspend fun getActivities(): ActivitiesListResponse {
         return connection.getActivities(context)
     }
 
-    override suspend fun getSliderImages(): SliderListResponse? {
+    override suspend fun getSliderImages(): SliderListResponse {
         return connection.getSliderImages(context)
     }
 
-    override suspend fun getServerDetailsFromServer(appID: String): UiState<ServerDetailsResponse>? {
+    override suspend fun getServerDetailsFromServer(appID: String): UiState<ServerDetailsResponse> {
         return withContext(dispatcher){
             doTryCatch {
                 authApi.getServerDetails(appID=appID).handleResponse()
@@ -115,7 +113,7 @@ class AuthRepoImpl(
         }
     }
 
-    override suspend fun getLedgerDetails(memberId: Int): LedgerDetailsResponse? {
-        return connection.getLedgerDetails(context,memberId)
+    override suspend fun getLedgerDetails(memberId: Int): LedgerDetailsResponse {
+        return connection.getLedgerDetails(memberId)
     }
 }

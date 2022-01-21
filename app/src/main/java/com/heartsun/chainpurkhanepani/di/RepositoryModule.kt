@@ -9,7 +9,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single<AuthRepository> { AuthRepoImpl(get(), get(), get(), get(), get()) }
+    single<AuthRepository> { AuthRepoImpl(get(), get(), get(), get()) }
     single { DbRepository(get()) }
     single { KanipaniDatabase.getKanipaniDatabase(androidContext(), get()) }
     single { ConnectionToServer(get()) }

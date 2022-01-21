@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#E98A15"
+    android:background="@color/background"
     android:layout_height="match_parent"
     tools:context=".ui.meroKhaniPani.personalMenu.PersonalMenu">
 
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_height="@dimen/_140sdp"
-        app:tint="#003B36" />
+        app:tint="@color/primary_color" />
     <com.google.android.material.card.MaterialCardView
         android:layout_marginHorizontal="@dimen/_12sdp"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_12sdp"
-        app:cardBackgroundColor="#59114D"
+        app:cardBackgroundColor="@color/card_background"
         app:cardCornerRadius="@dimen/_4sdp"
         app:cardElevation="4dp"
         >
@@ -84,11 +84,6 @@
                 android:textSize="@dimen/_12sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvDharaNo" />
-
-
-
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
@@ -105,8 +100,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_22sdp"
             app:layout_constraintTop_toTopOf="parent">
-
-
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvLedger"
                 android:layout_width="0dp"
@@ -117,9 +110,7 @@
                 app:cardElevation="0dp"
                 app:layout_constraintEnd_toStartOf="@id/cvComplain"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                >
-
+                app:layout_constraintTop_toTopOf="parent">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -155,10 +146,7 @@
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv1" />
-
                     </LinearLayout>
-
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
@@ -173,8 +161,7 @@
                 app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/cvLedger"
-                app:layout_constraintTop_toTopOf="@id/cvLedger"
-                >
+                app:layout_constraintTop_toTopOf="@id/cvLedger">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -211,9 +198,7 @@
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv1" />
-
                     </LinearLayout>
-
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -229,8 +214,7 @@
                 app:cardElevation="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cvLedger"
-                app:layout_constraintEnd_toEndOf="@id/cvLedger"
-               >
+                app:layout_constraintEnd_toEndOf="@id/cvLedger">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -267,9 +251,7 @@
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv1" />
-
                     </LinearLayout>
-
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -323,21 +305,11 @@
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv1" />
-
                     </LinearLayout>
-
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
             </com.google.android.material.card.MaterialCardView>
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

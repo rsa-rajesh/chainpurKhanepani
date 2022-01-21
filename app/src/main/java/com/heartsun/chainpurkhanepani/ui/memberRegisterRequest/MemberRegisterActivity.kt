@@ -19,9 +19,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.concurrent.thread
 import android.net.Uri
-import android.app.Activity
-
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 
 
@@ -41,23 +38,21 @@ class MemberRegisterActivity : BaseActivity() {
             return Intent(context, MemberRegisterActivity::class.java)
         }
     }
-
-
     // Receiver
-    private val getResult =
-        registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                val uri: Uri? = it.data?.data
-                if (uri != null) {
-//                    downloadAndOpenPdf(
-//                        "https://drive.google.com/file/d/1tWQrxUSvyV1eF6VL3lNNXuxCgjzJUQfF/view?usp=sharing",
-//                        uri
-//                    )
-                }
-            }
-        }
+//    private val getResult =
+//        registerForActivityResult(
+//            ActivityResultContracts.StartActivityForResult()
+//        ) {
+//            if (it.resultCode == Activity.RESULT_OK) {
+//                val uri: Uri? = it.data?.data
+//                if (uri != null) {
+////                    downloadAndOpenPdf(
+////                        "https://drive.google.com/file/d/1tWQrxUSvyV1eF6VL3lNNXuxCgjzJUQfF/view?usp=sharing",
+////                        uri
+////                    )
+//                }
+//            }
+//        }
 
     // using broadcast method
     private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
@@ -86,8 +81,7 @@ class MemberRegisterActivity : BaseActivity() {
         registerReceiver(
             onDownloadComplete,
             IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-        );
-
+        )
     }
 
     @DelicateCoroutinesApi
@@ -135,7 +129,7 @@ class MemberRegisterActivity : BaseActivity() {
 
     private fun getFilesRequirementFromDb() {
 
-        registerViewModel.fileTypeFromLocalDb.observe(this, { it ->
+        registerViewModel.fileTypeFromLocalDb.observe(this, {
             it ?: return@observe
             if (it.isNullOrEmpty()) {
                 rateFromServerObserver()
@@ -143,9 +137,9 @@ class MemberRegisterActivity : BaseActivity() {
                     registerViewModel.getFileRequirementFromServer()
                 }
             } else {
-                var docs: MutableList<RegistrationRequest.RequiredDocuments> = arrayListOf()
+                val docs: MutableList<RegistrationRequest.RequiredDocuments> = arrayListOf()
                 for (fileType in it) {
-                    var file: RegistrationRequest.RequiredDocuments =
+                    val file: RegistrationRequest.RequiredDocuments =
                         RegistrationRequest.RequiredDocuments(fileType.DocTypeName, null)
                     docs.add(file)
                 }
@@ -163,9 +157,9 @@ class MemberRegisterActivity : BaseActivity() {
 
 
             if (it.status.equals("success", true)) {
-                var count: Int = 1
+                var count = 1
                 for (fileType in it.documentTypes) {
-                    val file: TblDocumentType = TblDocumentType(count, fileType.DocumentName)
+                    val file = TblDocumentType(count, fileType.DocumentName)
                     count++
                     registerViewModel.insert(fileTypes = file)
                 }
@@ -186,7 +180,6 @@ class MemberRegisterActivity : BaseActivity() {
     fun requestRegistrationToServer() {
         showProgress()
         thread {
-            Thread.sleep(100)
             registerViewModel.sendRegistrationRequestToServer(registerRequest, this)
         }
     }
@@ -222,14 +215,11 @@ class MemberRegisterActivity : BaseActivity() {
     }
 
     private fun downloadAndOpenPdf() {
-
-        var manager: DownloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+        val manager: DownloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
         val uri =
-            Uri.parse("https://drive.google.com/uc?id=1tWQrxUSvyV1eF6VL3lNNXuxCgjzJUQfF&export=download")
+            Uri.parse("https://drive.google.com/uc?id=1foLr85xO8xyBB6g8qHhkkauwdUREs4YR&export=download")
         val request = DownloadManager.Request(uri)
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
         downloadID = manager.enqueue(request)
     }
-
-
 }
