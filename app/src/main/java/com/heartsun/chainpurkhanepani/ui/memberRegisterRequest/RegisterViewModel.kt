@@ -35,7 +35,6 @@ class RegisterViewModel(
                     _sendRegistrationRequest.value = a!!
                 })
             }
-//            _sendRegistrationRequest.value = homeRepository.sendRegistrationRequest(details,context)
         }
     }
 

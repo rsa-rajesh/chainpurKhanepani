@@ -145,7 +145,6 @@ class MemberRegisterActivity : BaseActivity() {
                 }
                 registerRequest?.files = docs
                 binding.clError.isVisible = false
-
                 hideProgress()
             }
         })

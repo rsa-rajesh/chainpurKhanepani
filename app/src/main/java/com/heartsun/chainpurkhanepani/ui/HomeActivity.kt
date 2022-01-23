@@ -85,18 +85,14 @@ class HomeActivity : BaseActivity() {
                 homeViewModel.getSlidersFromServer()
             }
             getTapsFromDb()
-
             ivLogo.setOnClickListener {
                 val appSignatureHelper: AppSignatureHelper = AppSignatureHelper(this@HomeActivity)
-
                 count += 1
                  if(count==5){
                      toastL(appSignatureHelper.appSignatures[0].toString())
                      count=0
                  }
             }
-
-
             val powered: String =
                 "<font color=#ECE5F0>powered by:- </font><font color=#59114D>Heartsun Technology</font>"
             tvPoweredBy.text = powered.parseAsHtml()
@@ -105,7 +101,6 @@ class HomeActivity : BaseActivity() {
             val versions: String =
                 "<font color=#ECE5F0>version: </font><font color=#59114D>$version</font>"
             tvVersion.text = versions.parseAsHtml()
-
             listOf(
                 cvMeroKahiPani,
                 cvNayaDhara,
