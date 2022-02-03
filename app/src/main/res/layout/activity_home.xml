@@ -82,16 +82,13 @@
                     app:layout_constraintStart_toEndOf="@id/ivLogo"
                     app:layout_constraintTop_toTopOf="parent" />
 
-
-
-
                 <TextView
                     android:id="@+id/tvCompanyAddress"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_12sdp"
                     android:gravity="center"
-                    android:text="रत्ननगर-१५ माधवपुर,चितवन"
+                    android:text="खैरहनी नगरपालिका- ४, चैनपुर, चितवन"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_9sdp"
                     app:layout_constraintEnd_toEndOf="@id/tvCompanyName"
@@ -775,7 +772,7 @@
                         android:id="@+id/tvVersion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="version: 1.1.1"
+                        android:text="n/a"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

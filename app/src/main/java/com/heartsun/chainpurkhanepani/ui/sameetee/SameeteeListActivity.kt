@@ -54,7 +54,7 @@ class SameeteeListActivity : BaseActivity() {
 
         var htmlString: String =
             "<html><head><style>table {font-family: arial, sans-serif;border-collapse: collapse;width: 100%;}td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}tr:nth-child(even) {background-color: #dddddd;}</style>" +
-                    "</head><body><h1 style=text-align:center>चैनपुर खानेपानी तथा सरसफाई उपभोक्ता संस्था</h1><h4 style=text-align:center>रत्ननगर-१५ माधवपुर,चितवन</h4><h2 style=text-align:center>$mType</h2><br><br><table><tr><th>नाम</th><th>पद</th><th>ठेगाना</th><th>सम्पर्क</th></tr>"
+                    "</head><body><h1 style=text-align:center>चैनपुर खानेपानी तथा सरसफाई उपभोक्ता संस्था</h1><h4 style=text-align:center>खैरहनी नगरपालिका- ४, चैनपुर, चितवन</h4><h2 style=text-align:center>$mType</h2><br><br><table><tr><th>नाम</th><th>पद</th><th>ठेगाना</th><th>सम्पर्क</th></tr>"
 
 
         for (data in listItems) {
